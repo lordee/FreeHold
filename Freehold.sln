@@ -1,0 +1,19 @@
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Freehold", "Freehold.csproj", "{10DC7E57-0635-42FF-82EA-B877796CFD7F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+	Debug|Any CPU = Debug|Any CPU
+	Release|Any CPU = Release|Any CPU
+	Tools|Any CPU = Tools|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{10DC7E57-0635-42FF-82EA-B877796CFD7F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{10DC7E57-0635-42FF-82EA-B877796CFD7F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{10DC7E57-0635-42FF-82EA-B877796CFD7F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{10DC7E57-0635-42FF-82EA-B877796CFD7F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{10DC7E57-0635-42FF-82EA-B877796CFD7F}.Tools|Any CPU.ActiveCfg = Tools|Any CPU
+		{10DC7E57-0635-42FF-82EA-B877796CFD7F}.Tools|Any CPU.Build.0 = Tools|Any CPU
+	EndGlobalSection
+EndGlobal
