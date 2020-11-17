@@ -15,8 +15,7 @@ public class Game : Spatial
     static public UIManager UIManager;
     string playerResource = "res://Scenes/Player.tscn";
     PackedScene playerScene;
-    public Player Player;
-
+    static public Player Player;
 
     static public List<BindingObject> Binds = new List<BindingObject>();
     
@@ -40,6 +39,7 @@ public class Game : Spatial
         // for now just single player
         Player = playerScene.Instance() as Player;
         this.AddChild(Player);
+
 
         Player.Init();
     }

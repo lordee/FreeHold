@@ -35,6 +35,7 @@ public class RtsCameraController : Spatial
 
     static public List<InputCommand> InputCommands = new List<InputCommand>();
     List<Unit> _selectedUnits = new List<Unit>();
+    List<Building> _selectedBuildings = new List<Building>();
 
     // nodes
     Spatial _elevation;
@@ -170,6 +171,12 @@ public class RtsCameraController : Spatial
         }
         _selectedUnits.Clear();
 
+        foreach(Building u in _selectedBuildings)
+        {
+            u.Deselect();
+        }
+        _selectedBuildings.Clear();
+
         // test to figure out if building or something else
         if (mPos.DistanceSquaredTo(_startSelPos) < 16)
         {
@@ -179,22 +186,22 @@ public class RtsCameraController : Spatial
             {
                 if (res["collider"] is Unit u)
                 {
-                    //if (u.Team == this.Player.Team)
-                    //{
+                    if (u.Team == Game.Player.TeamID)
+                    {
                         _selectedUnits.Add(u);
-                    //}
+                    }
                 }
-                /*else if (res["collider"] is Building b)
+                else if (res["collider"] is Building b)
                 {
-                    if (b.Team == this.Player.Team)
+                    if (b.TeamID == Game.Player.TeamID)
                     {
                         _selectedBuildings.Add(b);
                     }
                 }
                 else
                 {
-                    _ui.ShowMenu(MenuType.None);
-                }*/
+                    //_ui.ShowMenu(MenuType.None);
+                }
             }
         }
         else
@@ -207,10 +214,10 @@ public class RtsCameraController : Spatial
             u.Select();
         }
 
-        /*foreach(Building u in _selectedBuildings)
+        foreach(Building u in _selectedBuildings)
         {
             u.Select();
-        }*/
+        }
     }
 
     private void SelectObjectsInSelectBox(Vector2 topLeft, Vector2 botRight)

@@ -6,9 +6,8 @@ public class Building : StaticBody
     MeshInstance _selector;
     Area _area;
     MeshInstance _body;
-    //UI _ui;
 
-    public int Team = 1;
+    public int TeamID = 1;
 
     public bool CanPlace = true;
     Material _colour;
@@ -20,22 +19,25 @@ public class Building : StaticBody
         this.Deselect();
 
         _body = (MeshInstance)this.GetNode("MeshInstance");
-        if (Utilities.TeamColours.ContainsKey(this.Team))
+        if (Utilities.TeamColours.ContainsKey(this.TeamID))
         {
-            _colour = (Material)ResourceLoader.Load(Utilities.TeamColours[this.Team]);
+            _colour = (Material)ResourceLoader.Load(Utilities.TeamColours[this.TeamID]);
             _body.MaterialOverride = _colour;
         }
 
         _area = _body.GetNode("Area") as Area;
         _area.Connect("body_entered", this, "AreaBodyEntered");
         _area.Connect("body_exited", this, "AreaBodyExited");
-
-        //_ui = GetNode("/root/World/CamBase/UI") as UI;
     }
 
-    public void Init(BuildingType bt)
+    public void Init(BuildingType bt, Vector3 origin, int teamID)
     {
         _buildingType = bt;
+        Transform t = this.GlobalTransform;
+        t.origin = origin;
+        this.GlobalTransform = t;
+
+        TeamID = teamID;
     }
 
     public void AreaBodyEntered(KinematicBody b)
@@ -77,6 +79,9 @@ public class Building : StaticBody
 
                 break;
         }
+
+        // update UI with building stats
+
     }
 
     public void Deselect()

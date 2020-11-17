@@ -4,6 +4,7 @@ using System;
 public class Player : Node
 {
     public int TeamID = 1;
+    public int PlayerID;
     public int Gold = 0;
     public int Wood = 30;
     public int Bread;
@@ -38,7 +39,7 @@ public class Player : Node
                 if (p.PropType == PropType.StartLocation && !p.InUse)
                 {
                     p.InUse = true;
-                    BuildingManager.Spawn(BuildingType.Keep, p.GlobalTransform.origin);
+                    BuildingManager.Spawn(BuildingType.Keep, p.GlobalTransform.origin, TeamID);
                 }
             }
         }

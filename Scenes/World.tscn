@@ -68,4 +68,4 @@ shape = SubResource( 3 )
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 5.02256, 1.05605, -8.82415 )
 
 [node name="Prop" parent="." instance=ExtResource( 3 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 23.6592, 1.21639, 38.4521 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 23.6592, 6.75798, 38.4521 )
