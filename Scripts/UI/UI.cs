@@ -45,6 +45,14 @@ public class UI : CanvasLayer
 
     RtsCameraController _player;
     Building _activeBuilding;
+    Label Gold;
+    Label Wood;
+    Label Ale;
+    Label Food;
+    Label Candles;
+    Label Stone;
+    Label Iron;
+    Label Pitch;
 
     Tooltip _tooltip;
 
@@ -53,6 +61,15 @@ public class UI : CanvasLayer
     int menuLine2 = 0;
     public override void _Ready()
     {
+        Gold = GetNode("Resources/Gold") as Label;
+        Wood = GetNode("Resources/Wood") as Label;
+        Ale = GetNode("Resources/Ale") as Label;
+        Food = GetNode("Resources/Food") as Label;
+        Candles = GetNode("Resources/Candles") as Label;
+        Stone = GetNode("Resources/Stone") as Label;
+        Iron = GetNode("Resources/Iron") as Label;
+        Pitch = GetNode("Resources/Pitch") as Label;
+
         _tooltip = GetNode("Tooltip") as Tooltip;
         _player = this.GetParent() as RtsCameraController;
         menuLine2 = menuLine1 - buttonSpacer;
@@ -347,6 +364,20 @@ public class UI : CanvasLayer
         allButtons.Add(siegeButtons);
 
         ShowMenu(MenuType.Main);
+    }
+
+    public override void _Process(float delta)
+    {
+        // FIXME - adjust all UI elements based on current screen size
+        Gold.Text = Game.Player.Gold.ToString();
+        Wood.Text = Game.Player.Wood.ToString();
+        Ale.Text = Game.Player.Ale.ToString();
+        int food = Game.Player.Bread + Game.Player.Cheese + Game.Player.Meat + Game.Player.Apples;
+        Food.Text = food.ToString();
+        Candles.Text = Game.Player.Candles.ToString();
+        Stone.Text = Game.Player.Stone.ToString();
+        Iron.Text = Game.Player.Iron.ToString();
+        Pitch.Text = Game.Player.Pitch.ToString();
     }
 
     private Button MakeButton(UIButton b)

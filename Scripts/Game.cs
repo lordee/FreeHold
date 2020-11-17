@@ -40,7 +40,6 @@ public class Game : Spatial
         Player = playerScene.Instance() as Player;
         this.AddChild(Player);
 
-
         Player.Init();
     }
 

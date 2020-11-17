@@ -1,0 +1,171 @@
+[gd_scene format=2]
+
+[node name="Resources" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = -2.0
+margin_right = -867.0
+margin_bottom = -459.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Gold" type="Label" parent="."]
+margin_left = 117.0
+margin_top = 17.0
+margin_right = 142.0
+margin_bottom = 31.0
+text = "test"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ColorRect" type="ColorRect" parent="."]
+margin_left = 81.0
+margin_top = 10.0
+margin_right = 106.0
+margin_bottom = 35.0
+color = Color( 0.898039, 0.886275, 0.0745098, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Wood" type="Label" parent="."]
+margin_left = 45.0
+margin_top = 17.0
+margin_right = 70.0
+margin_bottom = 31.0
+text = "test"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ColorRect2" type="ColorRect" parent="."]
+margin_left = 9.0
+margin_top = 10.0
+margin_right = 34.0
+margin_bottom = 35.0
+color = Color( 0.317647, 0.25098, 0.0313726, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Ale" type="Label" parent="."]
+margin_left = 117.0
+margin_top = 47.0
+margin_right = 142.0
+margin_bottom = 61.0
+text = "test"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ColorRect3" type="ColorRect" parent="."]
+margin_left = 81.0
+margin_top = 40.0
+margin_right = 106.0
+margin_bottom = 65.0
+color = Color( 0.254902, 0.662745, 0.0666667, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Food" type="Label" parent="."]
+margin_left = 45.0
+margin_top = 47.0
+margin_right = 70.0
+margin_bottom = 61.0
+text = "test"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ColorRect4" type="ColorRect" parent="."]
+margin_left = 9.0
+margin_top = 40.0
+margin_right = 34.0
+margin_bottom = 65.0
+color = Color( 0.898039, 0.403922, 0.0745098, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Candles" type="Label" parent="."]
+margin_left = 117.0
+margin_top = 79.0
+margin_right = 142.0
+margin_bottom = 93.0
+text = "test"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ColorRect5" type="ColorRect" parent="."]
+margin_left = 81.0
+margin_top = 72.0
+margin_right = 106.0
+margin_bottom = 97.0
+color = Color( 0.945098, 0.945098, 0.858824, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Stone" type="Label" parent="."]
+margin_left = 45.0
+margin_top = 79.0
+margin_right = 70.0
+margin_bottom = 93.0
+text = "test"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ColorRect6" type="ColorRect" parent="."]
+margin_left = 9.0
+margin_top = 72.0
+margin_right = 34.0
+margin_bottom = 97.0
+color = Color( 0.490196, 0.486275, 0.443137, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Iron" type="Label" parent="."]
+margin_left = 117.0
+margin_top = 112.0
+margin_right = 142.0
+margin_bottom = 126.0
+text = "test"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ColorRect7" type="ColorRect" parent="."]
+margin_left = 81.0
+margin_top = 105.0
+margin_right = 106.0
+margin_bottom = 130.0
+color = Color( 0.898039, 0.615686, 0.0745098, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Pitch" type="Label" parent="."]
+margin_left = 46.0
+margin_top = 112.0
+margin_right = 71.0
+margin_bottom = 126.0
+text = "test"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ColorRect8" type="ColorRect" parent="."]
+margin_left = 10.0
+margin_top = 105.0
+margin_right = 35.0
+margin_bottom = 130.0
+color = Color( 0.054902, 0.054902, 0.0392157, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
