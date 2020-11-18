@@ -5,7 +5,7 @@ using System.Collections.Generic;
 public class Game : Spatial
 {
     static Game that;
-
+ 
     // Settings
     static public float Gravity = 10f;
 
