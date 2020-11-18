@@ -18,7 +18,8 @@ public class Unit : KinematicBody
     private float _lastAttack = 0f;
     private float _attackCooldown = 1f;
 
-    public int Team = 1;
+    [Export]
+    public int TeamID = 0;
 
     public UnitType UnitType;
     public float Health = 300;
@@ -31,9 +32,9 @@ public class Unit : KinematicBody
         _selector = (MeshInstance)GetNode("Selector");
 
         MeshInstance body = (MeshInstance)this.GetNode("MeshInstance");
-        if (Utilities.TeamColours.ContainsKey(this.Team))
+        if (Utilities.TeamColours.ContainsKey(this.TeamID))
         {
-            body.MaterialOverride = (Material)ResourceLoader.Load(Utilities.TeamColours[this.Team]);
+            body.MaterialOverride = (Material)ResourceLoader.Load(Utilities.TeamColours[this.TeamID]);
         }
         //_world = GetNode("/root/World") as World;
         //_missileManager = GetNode("/root/World/MissileManager") as Node;
@@ -42,7 +43,7 @@ public class Unit : KinematicBody
     public void Init(UnitType u, int team, Vector3 pos)
     {
         UnitType = u;
-        Team = team;
+        TeamID = team;
         this.Translation = pos;
     }
 

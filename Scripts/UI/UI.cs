@@ -415,9 +415,9 @@ public class UI : CanvasLayer
         _tooltip.Hide();
     }
 
-    public void ShowMenu(MenuType type)
+    static public void ShowMenu(MenuType type)
     {
-        ShowMenu(type, null);
+        that.ShowMenu(type, null);
     }
 
     public void ShowMenu(MenuType type, Building building)
