@@ -8,10 +8,12 @@ public class Building : StaticBody
     MeshInstance _body;
 
     public int TeamID = 1;
+    public float Health = 500;
+    public float MaxHealth = 500;
 
     public bool CanPlace = true;
     Material _colour;
-    private BuildingType _buildingType;
+    public BuildingType BuildingType;
 
     public override void _Ready()
     {
@@ -32,12 +34,20 @@ public class Building : StaticBody
 
     public void Init(BuildingType bt, Vector3 origin, int teamID)
     {
-        _buildingType = bt;
+        BuildingType = bt;
         Transform t = this.GlobalTransform;
         t.origin = origin;
         this.GlobalTransform = t;
 
         TeamID = teamID;
+
+        switch (bt)
+        {
+            case BuildingType.Keep:
+                Health = 5000;
+                MaxHealth = 5000;
+                break;
+        }
     }
 
     public void AreaBodyEntered(KinematicBody b)
@@ -58,7 +68,7 @@ public class Building : StaticBody
     public void Select()
     {
         _selector.Show();
-        switch(_buildingType)
+        switch(BuildingType)
         {
             case BuildingType.Barracks:
                 //_ui.ShowMenu(MenuType.Barracks, this);

@@ -20,7 +20,9 @@ public class Unit : KinematicBody
 
     public int Team = 1;
 
-    //private UnitType _unitType;
+    public UnitType UnitType;
+    public float Health = 300;
+    public float MaxHealth = 300;
 
     public override void _Ready()
     {
@@ -37,9 +39,9 @@ public class Unit : KinematicBody
         //_missileManager = GetNode("/root/World/MissileManager") as Node;
     }
 
-    public void Init(/*UnitType u,*/ int team, Vector3 pos)
+    public void Init(UnitType u, int team, Vector3 pos)
     {
-        //_unitType = u;
+        UnitType = u;
         Team = team;
         this.Translation = pos;
     }

@@ -182,6 +182,7 @@ public class RtsCameraController : Spatial
         {
             // single select
             Godot.Collections.Dictionary res = RaycastFromMouse(CollisionMask.Unit);
+            
             if (res.Count > 0)
             {
                 if (res["collider"] is Unit u)
@@ -209,15 +210,29 @@ public class RtsCameraController : Spatial
             SelectObjectsInSelectBox(_selectionBox.StartPos, _selectionBox.MPos);            
         }
 
+        string status = "";
+        float health = 0;
         foreach(Unit u in _selectedUnits)
         {
             u.Select();
+            status += u.UnitType.ToString();
+            health += u.Health;
         }
 
         foreach(Building u in _selectedBuildings)
         {
             u.Select();
+            status += u.BuildingType.ToString();
+            health += u.Health;
         }
+
+        if (status.Length > 0)
+        {
+            health = Mathf.Round(health);
+            status += ":" + System.Environment.NewLine + "Health: " + health.ToString();
+            
+        }
+        UI.SetStatus(status);
     }
 
     private void SelectObjectsInSelectBox(Vector2 topLeft, Vector2 botRight)

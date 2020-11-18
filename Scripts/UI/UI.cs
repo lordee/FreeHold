@@ -5,6 +5,7 @@ using System.Collections.Generic;
 
 public class UI : CanvasLayer
 {
+    static public UI that;
     List<UIButton> mainButtonDefs = new List<UIButton>();
     List<Button> mainButtons = new List<Button>();
 
@@ -54,6 +55,8 @@ public class UI : CanvasLayer
     Label Iron;
     Label Pitch;
 
+    RichTextLabel Status;
+
     Tooltip _tooltip;
 
     int buttonSpacer = 35;
@@ -61,6 +64,7 @@ public class UI : CanvasLayer
     int menuLine2 = 0;
     public override void _Ready()
     {
+        that = this;
         Gold = GetNode("Resources/Gold") as Label;
         Wood = GetNode("Resources/Wood") as Label;
         Ale = GetNode("Resources/Ale") as Label;
@@ -69,6 +73,7 @@ public class UI : CanvasLayer
         Stone = GetNode("Resources/Stone") as Label;
         Iron = GetNode("Resources/Iron") as Label;
         Pitch = GetNode("Resources/Pitch") as Label;
+        Status = GetNode("Status/StatusLabel") as RichTextLabel;
 
         _tooltip = GetNode("Tooltip") as Tooltip;
         _player = this.GetParent() as RtsCameraController;
@@ -488,6 +493,11 @@ public class UI : CanvasLayer
         Vector3 pos = _activeBuilding.Transform.origin;
         pos.x += _activeBuilding.Scale.x*2;
         //_player.CreateUnit(u, pos);
+    }
+
+    static public void SetStatus(string text)
+    {
+        that.Status.Text = text;
     }
 }
                                         
