@@ -16,7 +16,7 @@ public class Game : Spatial
     string playerResource = "res://Scenes/Player.tscn";
     PackedScene playerScene;
     static public Player Player;
-
+ 
     static public List<BindingObject> Binds = new List<BindingObject>();
     
     public override void _Ready()
