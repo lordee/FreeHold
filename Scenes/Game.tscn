@@ -12,7 +12,7 @@ script = ExtResource( 2 )
 [node name="UIManager" type="Node" parent="."]
 script = ExtResource( 4 )
 
-[node name="Menu" parent="UIManager" instance=ExtResource( 1 )]
+[node name="MainMenu" parent="UIManager" instance=ExtResource( 1 )]
 
 [node name="InputManager" type="Node" parent="."]
 script = ExtResource( 3 )

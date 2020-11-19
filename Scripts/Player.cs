@@ -21,6 +21,8 @@ public class Player : Node
     public int PopulationMax;
     public int Population;
 
+    public Vector3 StartingSpot;
+
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()
     {
@@ -36,16 +38,18 @@ public class Player : Node
         {
             if (n is Prop p)
             {
+                // spawn keep there
                 if (p.PropType == PropType.StartLocation && !p.InUse)
                 {
                     p.InUse = true;
                     BuildingManager.Spawn(BuildingType.Keep, p.GlobalTransform.origin, TeamID);
+                    StartingSpot = p.GlobalTransform.origin;
+
+                    // spawn starting units
+                    
+                    break;
                 }
             }
         }
-
-        // spawn keep there
-
-        
     }
 }

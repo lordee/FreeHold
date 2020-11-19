@@ -64,8 +64,10 @@
     <Compile Include="Scripts\UI\MainMenu.cs" />
     <Compile Include="Scripts\UI\Tooltip.cs" />
     <Compile Include="Scripts\UI\UI.cs" />
+    <Compile Include="Scripts\UI\UIBtn.cs" />
     <Compile Include="Scripts\UI\UIManager.cs" />
     <Compile Include="Scripts\Unit.cs" />
+    <Compile Include="Scripts\UnitManager.cs" />
     <Compile Include="Scripts\Utilities.cs" />
     <Compile Include="Scripts\Enums.cs" />
     <Compile Include="Scripts\BindingObject.cs" />

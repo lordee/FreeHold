@@ -19,6 +19,7 @@ public enum CollisionMask
 
 public enum UnitType
 {
+    None,
     Conscript,
     Spearman,
     Archer,
@@ -53,6 +54,14 @@ public enum UnitType
     HaybaleLauncher
 }
 
+public enum BtnPosition
+{
+    Above,
+    Below,
+    Left,
+    Right,
+}
+
 public enum PropType
 {
     StartLocation
@@ -72,11 +81,14 @@ public enum MenuType
     CastleDefenses,
     Barracks,
     Mercenaries,
-    Siege
+    Siege,
+    CreateBuilding,
+    CreateUnit,
 }
 
 public enum BuildingType
 {
+    None,
     // food
     Granary,
     Orchard,

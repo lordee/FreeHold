@@ -1,9 +1,22 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=18 format=2]
 
 [ext_resource path="res://Scripts/UI/UI.cs" type="Script" id=1]
 [ext_resource path="res://Scenes/UI/Tooltip.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Scenes/UI/Resources.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Scenes/UI/Status.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Scenes/UI/UIBtnMain.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Scenes/UI/UIBtnSiege.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Scenes/UI/UIBtnBarracks.tscn" type="PackedScene" id=7]
+[ext_resource path="res://Scenes/UI/UIBtnCastle.tscn" type="PackedScene" id=8]
+[ext_resource path="res://Scenes/UI/UIBtnMilitary.tscn" type="PackedScene" id=9]
+[ext_resource path="res://Scenes/UI/UIBtnCastleDefenses.tscn" type="PackedScene" id=10]
+[ext_resource path="res://Scenes/UI/UIBtnMercenaries.tscn" type="PackedScene" id=11]
+[ext_resource path="res://Scenes/UI/UIBtnCastleTowers.tscn" type="PackedScene" id=12]
+[ext_resource path="res://Scenes/UI/UIBtnFood.tscn" type="PackedScene" id=13]
+[ext_resource path="res://Scenes/UI/UIBtnTown.tscn" type="PackedScene" id=14]
+[ext_resource path="res://Scenes/UI/UIBtnFortifications.tscn" type="PackedScene" id=15]
+[ext_resource path="res://Scenes/UI/UIBtnCastleFortifications.tscn" type="PackedScene" id=16]
+[ext_resource path="res://Scenes/UI/UIBtnIndustry.tscn" type="PackedScene" id=17]
 
 [node name="UI" type="CanvasLayer"]
 script = ExtResource( 1 )
@@ -22,3 +35,33 @@ margin_left = 758.0
 margin_top = 506.2
 margin_right = 757.784
 margin_bottom = 501.0
+
+[node name="UIBtnMain" parent="." instance=ExtResource( 5 )]
+margin_left = 451.0
+margin_top = 520.0
+margin_right = -455.0
+margin_bottom = -11.0
+
+[node name="UIBtnBarracks" parent="." instance=ExtResource( 7 )]
+
+[node name="UIBtnCastle" parent="." instance=ExtResource( 8 )]
+
+[node name="UIBtnCastleDefenses" parent="." instance=ExtResource( 10 )]
+
+[node name="UIBtnCastleFortifications" parent="." instance=ExtResource( 16 )]
+
+[node name="UIBtnCastleTowers" parent="." instance=ExtResource( 12 )]
+
+[node name="UIBtnFood" parent="." instance=ExtResource( 13 )]
+
+[node name="UIBtnFortifications" parent="." instance=ExtResource( 15 )]
+
+[node name="UIBtnMercenaries" parent="." instance=ExtResource( 11 )]
+
+[node name="UIBtnMilitary" parent="." instance=ExtResource( 9 )]
+
+[node name="UIBtnSiege" parent="." instance=ExtResource( 6 )]
+
+[node name="UIBtnTown" parent="." instance=ExtResource( 14 )]
+
+[node name="UIBtnIndustry" parent="." instance=ExtResource( 17 )]
