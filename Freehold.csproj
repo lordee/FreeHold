@@ -73,7 +73,6 @@
     <Compile Include="Scripts\BindingObject.cs" />
     <Compile Include="Scripts\KeyType.cs" />
     <Compile Include="Scripts\InputCommand.cs" />
-    <Compile Include="Scripts\UIButton.cs" />
     <Compile Include="Scripts\WorldProps\Prop.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
