@@ -24,7 +24,7 @@ script = ExtResource( 1 )
 [node name="Tooltip" parent="." instance=ExtResource( 2 )]
 visible = false
 
-[node name="Resources" parent="." instance=ExtResource( 3 )]
+[node name="ResourcesContainer" parent="." instance=ExtResource( 3 )]
 margin_left = 867.0
 margin_top = 2.0
 margin_right = 0.0
@@ -36,32 +36,74 @@ margin_top = 506.2
 margin_right = 757.784
 margin_bottom = 501.0
 
-[node name="UIBtnMain" parent="." instance=ExtResource( 5 )]
-margin_left = 451.0
-margin_top = 520.0
-margin_right = -455.0
-margin_bottom = -11.0
+[node name="UIBtnContainer" type="Control" parent="."]
+margin_right = 145.0
+margin_bottom = 54.0
+rect_min_size = Vector2( 145, 55 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
-[node name="UIBtnBarracks" parent="." instance=ExtResource( 7 )]
+[node name="UIBtnMain" parent="UIBtnContainer" instance=ExtResource( 5 )]
+margin_right = -40.0
+margin_bottom = -40.0
 
-[node name="UIBtnCastle" parent="." instance=ExtResource( 8 )]
+[node name="UIBtnBarracks" parent="UIBtnContainer" instance=ExtResource( 7 )]
+visible = false
+margin_right = -40.0
+margin_bottom = -40.0
 
-[node name="UIBtnCastleDefenses" parent="." instance=ExtResource( 10 )]
+[node name="UIBtnCastle" parent="UIBtnContainer" instance=ExtResource( 8 )]
+visible = false
+margin_right = -40.0
+margin_bottom = -40.0
 
-[node name="UIBtnCastleFortifications" parent="." instance=ExtResource( 16 )]
+[node name="UIBtnCastleDefenses" parent="UIBtnContainer" instance=ExtResource( 10 )]
+visible = false
+margin_right = -40.0
+margin_bottom = -40.0
 
-[node name="UIBtnCastleTowers" parent="." instance=ExtResource( 12 )]
+[node name="UIBtnCastleFortifications" parent="UIBtnContainer" instance=ExtResource( 16 )]
+visible = false
+margin_right = -40.0
+margin_bottom = -40.0
 
-[node name="UIBtnFood" parent="." instance=ExtResource( 13 )]
+[node name="UIBtnCastleTowers" parent="UIBtnContainer" instance=ExtResource( 12 )]
+visible = false
+margin_right = -40.0
+margin_bottom = -40.0
 
-[node name="UIBtnFortifications" parent="." instance=ExtResource( 15 )]
+[node name="UIBtnFood" parent="UIBtnContainer" instance=ExtResource( 13 )]
+visible = false
+margin_right = -40.0
+margin_bottom = -40.0
 
-[node name="UIBtnMercenaries" parent="." instance=ExtResource( 11 )]
+[node name="UIBtnFortifications" parent="UIBtnContainer" instance=ExtResource( 15 )]
+visible = false
+margin_right = -40.0
+margin_bottom = -40.0
 
-[node name="UIBtnMilitary" parent="." instance=ExtResource( 9 )]
+[node name="UIBtnMercenaries" parent="UIBtnContainer" instance=ExtResource( 11 )]
+visible = false
+margin_right = -40.0
+margin_bottom = -40.0
 
-[node name="UIBtnSiege" parent="." instance=ExtResource( 6 )]
+[node name="UIBtnMilitary" parent="UIBtnContainer" instance=ExtResource( 9 )]
+visible = false
+margin_right = -40.0
+margin_bottom = -40.0
 
-[node name="UIBtnTown" parent="." instance=ExtResource( 14 )]
+[node name="UIBtnSiege" parent="UIBtnContainer" instance=ExtResource( 6 )]
+visible = false
+margin_right = -40.0
+margin_bottom = -40.0
 
-[node name="UIBtnIndustry" parent="." instance=ExtResource( 17 )]
+[node name="UIBtnTown" parent="UIBtnContainer" instance=ExtResource( 14 )]
+visible = false
+margin_right = -40.0
+margin_bottom = -40.0
+
+[node name="UIBtnIndustry" parent="UIBtnContainer" instance=ExtResource( 17 )]
+visible = false
+margin_right = -40.0
+margin_bottom = -40.0

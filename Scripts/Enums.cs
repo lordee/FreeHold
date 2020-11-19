@@ -8,6 +8,7 @@ public enum ClickState
 {
 	NoSelection,
 	PlacingBuilding,
+    ButtonClick,
 }
 
 public enum CollisionMask

@@ -6,6 +6,7 @@ using System.Collections.Generic;
 public class UI : CanvasLayer
 {
     static public UI that;
+    Control UIBtnContainer;
     Control UIBtnMain;
     Control UIBtnIndustry;
     Control UIBtnFood;
@@ -19,9 +20,8 @@ public class UI : CanvasLayer
     Control UIBtnMercenaries;
     Control UIBtnSiege;
 
-    List<Control> allMenus = new List<Control>();
+    Control ResourcesContainer;
 
-    RtsCameraController _player;
     Building _activeBuilding;
     Label Gold;
     Label Wood;
@@ -42,48 +42,39 @@ public class UI : CanvasLayer
     public override void _Ready()
     {
         that = this;
-        UIBtnMain = GetNode("UIBtnMain") as Control;
-        allMenus.Add(UIBtnMain);
-        UIBtnIndustry = GetNode("UIBtnIndustry") as Control;
-        allMenus.Add(UIBtnIndustry);
-        UIBtnFood = GetNode("UIBtnFood") as Control;
-        allMenus.Add(UIBtnFood);
-        UIBtnTown = GetNode("UIBtnTown") as Control;
-        allMenus.Add(UIBtnTown);
-        UIBtnMilitary = GetNode("UIBtnMilitary") as Control;
-        allMenus.Add(UIBtnMilitary);
-        UIBtnCastle = GetNode("UIBtnCastle") as Control;
-        allMenus.Add(UIBtnCastle);
-        UIBtnCastleFortifications = GetNode("UIBtnCastleFortifications") as Control;
-        allMenus.Add(UIBtnCastleFortifications);
-        UIBtnCastleTowers = GetNode("UIBtnCastleTowers") as Control;
-        allMenus.Add(UIBtnCastleTowers);
-        UIBtnCastleDefenses = GetNode("UIBtnCastleDefenses") as Control;
-        allMenus.Add(UIBtnCastleDefenses);
-        UIBtnBarracks = GetNode("UIBtnBarracks") as Control;
-        allMenus.Add(UIBtnBarracks);
-        UIBtnMercenaries = GetNode("UIBtnMercenaries") as Control;
-        allMenus.Add(UIBtnMercenaries);
-        UIBtnSiege = GetNode("UIBtnSiege") as Control;
-        allMenus.Add(UIBtnSiege);
+        UIBtnContainer = GetNode("UIBtnContainer") as Control;
+        UIBtnMain = UIBtnContainer.GetNode("UIBtnMain") as Control;
+        UIBtnIndustry = UIBtnContainer.GetNode("UIBtnIndustry") as Control;
+        UIBtnFood = UIBtnContainer.GetNode("UIBtnFood") as Control;
+        UIBtnTown = UIBtnContainer.GetNode("UIBtnTown") as Control;
+        UIBtnMilitary = UIBtnContainer.GetNode("UIBtnMilitary") as Control;
+        UIBtnCastle = UIBtnContainer.GetNode("UIBtnCastle") as Control;
+        UIBtnCastleFortifications = UIBtnContainer.GetNode("UIBtnCastleFortifications") as Control;
+        UIBtnCastleTowers = UIBtnContainer.GetNode("UIBtnCastleTowers") as Control;
+        UIBtnCastleDefenses = UIBtnContainer.GetNode("UIBtnCastleDefenses") as Control;
+        UIBtnBarracks = UIBtnContainer.GetNode("UIBtnBarracks") as Control;
+        UIBtnMercenaries = UIBtnContainer.GetNode("UIBtnMercenaries") as Control;
+        UIBtnSiege = UIBtnContainer.GetNode("UIBtnSiege") as Control;
 
-        foreach(Control c in allMenus)
+        foreach(Control c in UIBtnContainer.GetChildren())
         {
             ConnectButtons(c);
         }
 
-        Gold = GetNode("Resources/Gold") as Label;
-        Wood = GetNode("Resources/Wood") as Label;
-        Ale = GetNode("Resources/Ale") as Label;
-        Food = GetNode("Resources/Food") as Label;
-        Candles = GetNode("Resources/Candles") as Label;
-        Stone = GetNode("Resources/Stone") as Label;
-        Iron = GetNode("Resources/Iron") as Label;
-        Pitch = GetNode("Resources/Pitch") as Label;
+        ResourcesContainer = GetNode("ResourcesContainer") as Control;
+        ResourcesContainer.AddConstantOverride("hseparation", 5); // container margin
+
+        Gold = ResourcesContainer.GetNode("GridContainer/Gold") as Label;
+        Wood = ResourcesContainer.GetNode("GridContainer/Wood") as Label;
+        Ale = ResourcesContainer.GetNode("GridContainer/Ale") as Label;
+        Food = ResourcesContainer.GetNode("GridContainer/Food") as Label;
+        Candles = ResourcesContainer.GetNode("GridContainer/Candles") as Label;
+        Stone = ResourcesContainer.GetNode("GridContainer/Stone") as Label;
+        Iron = ResourcesContainer.GetNode("GridContainer/Iron") as Label;
+        Pitch = ResourcesContainer.GetNode("GridContainer/Pitch") as Label;
         Status = GetNode("Status/StatusLabel") as RichTextLabel;
 
         _tooltip = GetNode("Tooltip") as Tooltip;
-        _player = this.GetParent() as RtsCameraController;
 
         ShowMenu(MenuType.Main);
     }
@@ -114,6 +105,19 @@ public class UI : CanvasLayer
         Stone.Text = Game.Player.Stone.ToString();
         Iron.Text = Game.Player.Iron.ToString();
         Pitch.Text = Game.Player.Pitch.ToString();
+
+        // reposition elements
+        Vector2 scrSize = GetViewport().Size;
+        Vector2 pos = new Vector2(
+            (scrSize.x / 2) - (UIBtnContainer.RectMinSize.x / 2),
+            scrSize.y - UIBtnContainer.RectMinSize.y - 30
+        );
+        
+        UIBtnContainer.RectGlobalPosition = pos;
+
+        pos.x = scrSize.x - ResourcesContainer.RectMinSize.x - 30;
+        pos.y = 30;
+        ResourcesContainer.RectGlobalPosition = pos;
     }
 
     private void UIButton_Click(UIBtn btn)
@@ -140,10 +144,17 @@ public class UI : CanvasLayer
 
         _tooltip.Init(position, text);
         _tooltip.Show();
+
+        if (Game.CameraController.ClickState != ClickState.ButtonClick)
+        {
+            Game.CameraController.LastClickState = Game.CameraController.ClickState;
+        }
+        Game.CameraController.ClickState = ClickState.ButtonClick;
     }
 
     private void HideToolTip()
     {
+        Game.CameraController.ClickState = Game.CameraController.LastClickState != ClickState.ButtonClick ? Game.CameraController.LastClickState : ClickState.NoSelection;
         _tooltip.Hide();
     }
 
@@ -155,7 +166,7 @@ public class UI : CanvasLayer
     public void ShowMenu(MenuType type, Building building)
     {
         _activeBuilding = building;
-        foreach(Control c in allMenus)
+        foreach(Control c in UIBtnContainer.GetChildren())
         {
             c.Hide();
         }
@@ -218,7 +229,10 @@ public class UI : CanvasLayer
 
     static public void SetStatus(string text)
     {
-        that.Status.Text = text;
+        if (that != null && that.Status != null)
+        {
+            that.Status.Text = text;
+        }
     }
 }
                                         

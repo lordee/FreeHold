@@ -30,7 +30,8 @@ public class RtsCameraController : Spatial
     bool _isHoldingClickLeft = false;
     float _clickRight = 0;
     bool _isHoldingClickRight = false;
-    ClickState _clickState = ClickState.NoSelection;
+    public ClickState ClickState = ClickState.NoSelection;
+    public ClickState LastClickState = ClickState.NoSelection;
     Vector2 _startSelPos = new Vector2();
 
     static public List<InputCommand> InputCommands = new List<InputCommand>();
@@ -112,7 +113,7 @@ public class RtsCameraController : Spatial
         Zoom(delta);
         Pan(delta);
         
-        switch (_clickState)
+        switch (ClickState)
         {
             case ClickState.NoSelection:
                 InputNoSelection(mPos);
@@ -165,6 +166,7 @@ public class RtsCameraController : Spatial
 
     private void SelectObjects(Vector2 mPos)
     {
+        bool deselected = _selectedUnits.Count > 0 || _selectedBuildings.Count > 0 ? true : false;
         foreach (Unit u in _selectedUnits)
         {
             u.Deselect();
@@ -199,7 +201,7 @@ public class RtsCameraController : Spatial
                         _selectedBuildings.Add(b);
                     }
                 }
-                else
+                else if (!deselected)
                 {
                     UI.ShowMenu(MenuType.None);
                 }

@@ -16,6 +16,7 @@ public class Game : Spatial
     string playerResource = "res://Scenes/Player.tscn";
     PackedScene playerScene;
     static public Player Player;
+    static public RtsCameraController CameraController;
  
     static public List<BindingObject> Binds = new List<BindingObject>();
     
@@ -25,6 +26,7 @@ public class Game : Spatial
         that = this;
         UIManager = GetNode("UIManager") as UIManager;
         playerScene = ResourceLoader.Load(playerResource) as PackedScene;
+        CameraController = GetNode("InputManager/RtsCameraController") as RtsCameraController;
     }
 
     private void LoadWorld()
