@@ -113,15 +113,48 @@ public class RtsCameraController : Spatial
         Zoom(delta);
         Pan(delta);
         
+        if (Game.BuildingManager.PlacingBuilding != null)
+        {
+            ClickState = ClickState.PlacingBuilding;
+        }
         switch (ClickState)
         {
             case ClickState.NoSelection:
                 InputNoSelection(mPos);
                 break;
+            case ClickState.PlacingBuilding:
+                InputPlacingBuilding(mPos);
+                break;
         }
 
         _clickLeft = _clickLeft == -1 ? 0 : _clickLeft;
         InputCommands.Clear();
+    }
+
+    private void InputPlacingBuilding(Vector2 mPos)
+    {
+        Godot.Collections.Dictionary res = RaycastFromMouse(CollisionMask.All);
+
+        if (res.Count > 0)
+        {
+            Vector3 pos = (Vector3)res["position"];
+            pos.y = Game.Floor.GlobalTransform.origin.y + Game.Floor.Scale.y;
+            pos.y += Game.BuildingManager.PlacingBuilding.Scale.y;
+            //pos.y += 5f;
+            Utilities.SetGlobalPosition(Game.BuildingManager.PlacingBuilding, pos);
+        }
+
+        if (_clickRight == 1)
+        {
+            // cancel placement
+            ClickState = ClickState.NoSelection;
+            Game.BuildingManager.CancelBuildingPlacement();
+        }
+        else if (_clickLeft == 1)
+        {
+            ClickState = ClickState.NoSelection;
+            Game.BuildingManager.Build();
+        }
     }
 
     private void InputNoSelection(Vector2 mPos)

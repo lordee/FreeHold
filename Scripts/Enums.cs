@@ -151,3 +151,9 @@ public enum BuildingType
     // starting building
     Keep
 }
+
+public enum REASON
+{
+    RESOURCES,
+    PLACEMENT,
+}

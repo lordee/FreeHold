@@ -7,13 +7,21 @@ public class Building : StaticBody
     Area _area;
     MeshInstance _body;
 
+    static public string Resource = "res://Scenes/Building/Building.tscn";
+
     public int TeamID = 1;
     public float Health = 500;
     public float MaxHealth = 500;
+    static public int GoldCost = 0;
+    static public int WoodCost = 0;
+    static public int PitchCost = 0;
+    static public int StoneCost = 0;
 
     public bool CanPlace = true;
+    public bool IsBuilt = false;
     Material _colour;
     public BuildingType BuildingType;
+    public Player PlayerOwner;
 
     public override void _Ready()
     {
@@ -21,25 +29,27 @@ public class Building : StaticBody
         this.Deselect();
 
         _body = (MeshInstance)this.GetNode("MeshInstance");
-        if (Utilities.TeamColours.ContainsKey(this.TeamID))
-        {
-            _colour = (Material)ResourceLoader.Load(Utilities.TeamColours[this.TeamID]);
-            _body.MaterialOverride = _colour;
-        }
 
         _area = _body.GetNode("Area") as Area;
         _area.Connect("body_entered", this, "AreaBodyEntered");
         _area.Connect("body_exited", this, "AreaBodyExited");
     }
 
-    public void Init(BuildingType bt, Vector3 origin, int teamID)
+    public void Init(BuildingType bt, Vector3 origin, Player owner)
     {
+        PlayerOwner = owner;
         BuildingType = bt;
         Transform t = this.GlobalTransform;
         t.origin = origin;
         this.GlobalTransform = t;
 
-        TeamID = teamID;
+        TeamID = owner.TeamID;
+
+        if (Utilities.TeamColours.ContainsKey(this.TeamID))
+        {
+            _colour = (Material)ResourceLoader.Load(Utilities.TeamColours[this.TeamID]);
+            _body.MaterialOverride = _colour;
+        }
 
         switch (bt)
         {
@@ -50,18 +60,25 @@ public class Building : StaticBody
         }
     }
 
-    public void AreaBodyEntered(KinematicBody b)
+    public void AreaBodyEntered(KinematicBody kb)
     {
-        CanPlace = false;
-        _body.MaterialOverride = Utilities.RedMaterial;
+        if (this.Name != kb.Name && !IsBuilt)
+        {
+            CanPlace = false;
+            _body.MaterialOverride = Utilities.RedMaterial;
+        }
+        
     }
 
-    public void AreaBodyExited(KinematicBody b)
+    public void AreaBodyExited(KinematicBody kb)
     {
-        CanPlace = true;
-        if (_colour != null)
+        if (this.Name != kb.Name && !IsBuilt)
         {
-            _body.MaterialOverride = _colour;
+            CanPlace = true;
+            if (_colour != null)
+            {
+                _body.MaterialOverride = _colour;
+            }
         }
     }
     

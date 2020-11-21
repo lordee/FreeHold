@@ -54,8 +54,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Scripts\Building.cs" />
     <Compile Include="Scripts\BuildingManager.cs" />
+    <Compile Include="Scripts\Building\Building.cs" />
+    <Compile Include="Scripts\Building\Granary.cs" />
     <Compile Include="Scripts\Game.cs" />
     <Compile Include="Scripts\InputManager.cs" />
     <Compile Include="Scripts\Player.cs" />

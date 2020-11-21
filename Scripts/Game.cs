@@ -17,8 +17,11 @@ public class Game : Spatial
     PackedScene playerScene;
     static public Player Player;
     static public RtsCameraController CameraController;
- 
+    static public BuildingManager BuildingManager;
+    static public MeshInstance Floor;
+
     static public List<BindingObject> Binds = new List<BindingObject>();
+
     
     public override void _Ready()
     {
@@ -27,13 +30,15 @@ public class Game : Spatial
         UIManager = GetNode("UIManager") as UIManager;
         playerScene = ResourceLoader.Load(playerResource) as PackedScene;
         CameraController = GetNode("InputManager/RtsCameraController") as RtsCameraController;
+        BuildingManager = GetNode("BuildingManager") as BuildingManager;
     }
 
     private void LoadWorld()
     {
         WorldScene = ResourceLoader.Load("res://Scenes/World.tscn") as PackedScene;
         World = WorldScene.Instance() as Spatial;
-        this.AddChild(World);       
+        this.AddChild(World);
+        Floor = Utilities.GetRecursiveChildByName(World, "Floor") as MeshInstance;
     }
 
     private void AddPlayer()

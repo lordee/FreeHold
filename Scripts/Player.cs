@@ -42,7 +42,7 @@ public class Player : Node
                 if (p.PropType == PropType.StartLocation && !p.InUse)
                 {
                     p.InUse = true;
-                    BuildingManager.Spawn(BuildingType.Keep, p.GlobalTransform.origin, TeamID);
+                    BuildingManager.Spawn(BuildingType.Keep, p.GlobalTransform.origin, this);
                     StartingSpot = p.GlobalTransform.origin;
 
                     // spawn starting units
@@ -50,6 +50,19 @@ public class Player : Node
                     break;
                 }
             }
+        }
+    }
+
+    public void DeductBuildCost(BuildingType buildingType)
+    {
+        switch (buildingType)
+        {
+            case BuildingType.Granary:
+                Wood -= Granary.WoodCost;
+                Gold -= Granary.GoldCost;
+                Stone -= Granary.StoneCost;
+                Pitch -= Granary.PitchCost;
+                break;
         }
     }
 }

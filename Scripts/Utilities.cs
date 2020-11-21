@@ -17,4 +17,21 @@ public static class Utilities
     {
         node.GlobalTransform = (new Transform(node.GlobalTransform.basis, pos));
     }
+
+    public static Node GetRecursiveChildByName(Node n, string name)
+    {
+        foreach (Node n2 in n.GetChildren())
+        {
+            if (n2.Name == name)
+            {
+                return n2;
+            }
+            Node n3 = GetRecursiveChildByName(n2, name);
+            if (n3 != null)
+            {
+                return n3;
+            }
+        }
+        return null;
+    }
 }
