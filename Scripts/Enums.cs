@@ -94,7 +94,7 @@ public enum BuildingType
     Granary,
     Orchard,
     PigFarm,
-    Grain,
+    GrainFarm,
     HopsFarm,
     DairyFarm,
     Brewery,
