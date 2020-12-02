@@ -6,6 +6,7 @@ public class Building : StaticBody
     MeshInstance _selector;
     Area _area;
     MeshInstance _body;
+    public MeshInstance Body { get { return _body; }}
 
     static public string Resource = "res://Scenes/Building/Building.tscn";
 

@@ -4,7 +4,9 @@ using System;
 public class Unit : KinematicBody
 {
     MeshInstance _selector;
+    MeshInstance _body;
     //private Node _missileManager;
+    static public string Resource = "res://Scenes/Unit.tscn";
 
     // nav stuff
     Navigation _nav;
@@ -21,6 +23,8 @@ public class Unit : KinematicBody
     [Export]
     public int TeamID = 0;
 
+    private Player _playerOwner;
+
     public UNITTYPE UnitType;
     public float Health = 300;
     public float MaxHealth = 300;
@@ -31,20 +35,20 @@ public class Unit : KinematicBody
         AddToGroup("Units", true);
         _selector = (MeshInstance)GetNode("Selector");
 
-        MeshInstance body = (MeshInstance)this.GetNode("MeshInstance");
-        if (Utilities.TeamColours.ContainsKey(this.TeamID))
-        {
-            body.MaterialOverride = (Material)ResourceLoader.Load(Utilities.TeamColours[this.TeamID]);
-        }
-        //_world = GetNode("/root/World") as World;
-        //_missileManager = GetNode("/root/World/MissileManager") as Node;
+        _body = (MeshInstance)this.GetNode("MeshInstance");
     }
 
-    public void Init(UNITTYPE u, int team, Vector3 pos)
+    public void Init(UNITTYPE u, Player owner, Vector3 pos)
     {
         UnitType = u;
-        TeamID = team;
+        _playerOwner = owner;
+        TeamID = owner.TeamID;
+        owner.Units.Add(this);
         this.Translation = pos;
+        if (Utilities.TeamColours.ContainsKey(this.TeamID))
+        {
+            _body.MaterialOverride = (Material)ResourceLoader.Load(Utilities.TeamColours[this.TeamID]);
+        }
     }
 
     public override void _PhysicsProcess(float delta)

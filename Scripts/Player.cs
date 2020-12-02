@@ -24,6 +24,8 @@ public class Player : Node
     public int Reputation = 100;
     public int ReputationMax = 100;
 
+    public float PeasantLastSpawn = 0f;
+
     public Vector3 StartingSpot;
 
     public List<Building> Buildings = new List<Building>();
@@ -81,6 +83,7 @@ public class Player : Node
                 pop += 1;
             }
         }
+        Population = pop;
     }
 
     public void DeductBuildCost(BuildingType buildingType)

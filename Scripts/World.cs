@@ -1,11 +1,10 @@
 using Godot;
 using System;
+using System.Collections.Generic;
 
 public class World : Spatial
 {
-    // Declare member variables here. Examples:
-    // private int a = 2;
-    // private string b = "text";
+    public List<Player> Players = new List<Player>();
 
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()

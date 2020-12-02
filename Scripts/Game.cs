@@ -8,16 +8,18 @@ public class Game : Spatial
  
     // Settings
     static public float Gravity = 10f;
+    static public float PeasantSpawnTime = 1f;
 
     // Scenes/Nodes
     PackedScene WorldScene;
-    static public Spatial World;
+    static public World World;
     static public UIManager UIManager;
     string playerResource = "res://Scenes/Player.tscn";
     PackedScene playerScene;
     static public Player Player;
     static public RtsCameraController CameraController;
     static public BuildingManager BuildingManager;
+    static public UnitManager UnitManager;
     static public MeshInstance Floor;
 
     static public List<BindingObject> Binds = new List<BindingObject>();
@@ -30,12 +32,13 @@ public class Game : Spatial
         playerScene = ResourceLoader.Load(playerResource) as PackedScene;
         CameraController = GetNode("InputManager/RtsCameraController") as RtsCameraController;
         BuildingManager = GetNode("BuildingManager") as BuildingManager;
+        UnitManager = GetNode("UnitManager") as UnitManager;
     }
 
     private void LoadWorld()
     {
         WorldScene = ResourceLoader.Load("res://Scenes/World.tscn") as PackedScene;
-        World = WorldScene.Instance() as Spatial;
+        World = WorldScene.Instance() as World;
         this.AddChild(World);
         Floor = Utilities.GetRecursiveChildByName(World, "Floor") as MeshInstance;
     }
@@ -47,6 +50,8 @@ public class Game : Spatial
         this.AddChild(Player);
 
         Player.Init();
+
+        World.Players.Add(Player);
     }
 
     static public void Start()

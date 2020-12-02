@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://Scenes/UI/MainMenu.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Scripts/Game.cs" type="Script" id=2]
@@ -6,6 +6,7 @@
 [ext_resource path="res://Scripts/UI/UIManager.cs" type="Script" id=4]
 [ext_resource path="res://Scripts/BuildingManager.cs" type="Script" id=5]
 [ext_resource path="res://Scenes/RtsCameraController.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Scripts/UnitManager.cs" type="Script" id=7]
 
 [node name="Game" type="Spatial"]
 script = ExtResource( 2 )
@@ -22,3 +23,6 @@ script = ExtResource( 3 )
 
 [node name="BuildingManager" type="Node" parent="."]
 script = ExtResource( 5 )
+
+[node name="UnitManager" type="Node" parent="."]
+script = ExtResource( 7 )
