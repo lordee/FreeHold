@@ -18,9 +18,10 @@ public enum CollisionMask
 	Unit = 3,
 }
 
-public enum UnitType
+public enum UNITTYPE
 {
     None,
+    Peasant,
     Conscript,
     Spearman,
     Archer,

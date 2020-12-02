@@ -10,7 +10,7 @@ public class UIBtn : Button
     [Export]
     public BuildingType BuildingType;
     [Export]
-    public UnitType UnitType;
+    public UNITTYPE UnitType;
 
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()

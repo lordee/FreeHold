@@ -21,8 +21,7 @@ public class Game : Spatial
     static public MeshInstance Floor;
 
     static public List<BindingObject> Binds = new List<BindingObject>();
-
-    
+   
     public override void _Ready()
     {
         Setup();

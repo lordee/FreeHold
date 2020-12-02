@@ -31,6 +31,8 @@ public class UI : CanvasLayer
     Label Stone;
     Label Iron;
     Label Pitch;
+    Label Population;
+    Label Reputation;
 
     RichTextLabel Status;
 
@@ -72,6 +74,8 @@ public class UI : CanvasLayer
         Stone = ResourcesContainer.GetNode("GridContainer/Stone") as Label;
         Iron = ResourcesContainer.GetNode("GridContainer/Iron") as Label;
         Pitch = ResourcesContainer.GetNode("GridContainer/Pitch") as Label;
+        Population = ResourcesContainer.GetNode("GridContainer/Population") as Label;
+        Reputation = ResourcesContainer.GetNode("GridContainer/Reputation") as Label;
         Status = GetNode("Status/StatusLabel") as RichTextLabel;
 
         _tooltip = GetNode("Tooltip") as Tooltip;
@@ -105,6 +109,8 @@ public class UI : CanvasLayer
         Stone.Text = Game.Player.Stone.ToString();
         Iron.Text = Game.Player.Iron.ToString();
         Pitch.Text = Game.Player.Pitch.ToString();
+        Population.Text = Game.Player.Population.ToString() + "/" + Game.Player.PopulationMax.ToString();
+        Reputation.Text = Game.Player.Reputation.ToString();
 
         // reposition elements
         Vector2 scrSize = GetViewport().Size;
@@ -220,7 +226,7 @@ public class UI : CanvasLayer
         Game.BuildingManager.BuildingPlacement(Game.Player, b);
     }
 
-    public void CreateUnit_Click(UnitType u)
+    public void CreateUnit_Click(UNITTYPE u)
     {
         Vector3 pos = _activeBuilding.Transform.origin;
         pos.x += _activeBuilding.Scale.x*2;

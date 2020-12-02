@@ -16,6 +16,7 @@ public class Building : StaticBody
     static public int WoodCost = 0;
     static public int PitchCost = 0;
     static public int StoneCost = 0;
+    public int Population = 0;
 
     public bool CanPlace = true;
     public bool IsBuilt = false;
@@ -56,8 +57,10 @@ public class Building : StaticBody
             case BuildingType.Keep:
                 Health = 5000;
                 MaxHealth = 5000;
+                Population = 10;
                 break;
         }
+        owner.Buildings.Add(this);
     }
 
     public void AreaBodyEntered(KinematicBody kb)

@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using System.Collections.Generic;
 
 public class Player : Node
 {
@@ -20,8 +21,13 @@ public class Player : Node
 
     public int PopulationMax;
     public int Population;
+    public int Reputation = 100;
+    public int ReputationMax = 100;
 
     public Vector3 StartingSpot;
+
+    public List<Building> Buildings = new List<Building>();
+    public List<Unit> Units = new List<Unit>();
 
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()
@@ -49,6 +55,30 @@ public class Player : Node
                     
                     break;
                 }
+            }
+        }
+    }
+
+    public override void _PhysicsProcess(float delta)
+    {
+        UpdatePopulation(delta);
+    }
+
+    private void UpdatePopulation(float delta)
+    {
+        int pop = 0;
+        foreach(Building b in Buildings)
+        {
+            pop += b.Population;
+        }
+        PopulationMax = pop;
+
+        pop = 0;
+        foreach(Unit u in Units)
+        {
+            if (u.UnitType == UNITTYPE.Peasant)
+            {
+                pop += 1;
             }
         }
     }

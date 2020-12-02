@@ -7,7 +7,7 @@ public class Orchard : Building
     static public new int WoodCost = 5;
     static public new int PitchCost = 0;
     static public new int StoneCost = 0;
-    static public new string Resource = "res://Scenes/Building/Orchard.tscn";
+    static public new string Resource = "res://Scenes/Building/Food/Orchard.tscn";
 
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()

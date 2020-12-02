@@ -21,7 +21,7 @@ public class Unit : KinematicBody
     [Export]
     public int TeamID = 0;
 
-    public UnitType UnitType;
+    public UNITTYPE UnitType;
     public float Health = 300;
     public float MaxHealth = 300;
 
@@ -40,7 +40,7 @@ public class Unit : KinematicBody
         //_missileManager = GetNode("/root/World/MissileManager") as Node;
     }
 
-    public void Init(UnitType u, int team, Vector3 pos)
+    public void Init(UNITTYPE u, int team, Vector3 pos)
     {
         UnitType = u;
         TeamID = team;
