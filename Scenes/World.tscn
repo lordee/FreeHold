@@ -13,7 +13,7 @@ polygons = [ PoolIntArray( 2, 1, 0 ), PoolIntArray( 5, 4, 3 ), PoolIntArray( 9, 
 [sub_resource type="BoxShape" id=3]
 
 [sub_resource type="SpatialMaterial" id=4]
-albedo_color = Color( 0.0352941, 0.356863, 0.0392157, 1 )
+albedo_color = Color( 0.356863, 0.239216, 0.0352941, 1 )
 
 [node name="World" type="Spatial"]
 script = ExtResource( 1 )
