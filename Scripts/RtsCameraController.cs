@@ -138,7 +138,7 @@ public class RtsCameraController : Spatial
         if (res.Count > 0)
         {
             Vector3 pos = (Vector3)res["position"];
-            pos.y = Game.Floor.GlobalTransform.origin.y + Game.Floor.Scale.y;
+            pos.y = Game.World.Floor.GlobalTransform.origin.y + Game.World.Floor.Scale.y;
             pos.y += Game.BuildingManager.PlacingBuilding.Scale.y;
             //pos.y += 5f;
             Utilities.SetGlobalPosition(Game.BuildingManager.PlacingBuilding, pos);

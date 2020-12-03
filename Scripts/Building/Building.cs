@@ -18,6 +18,7 @@ public class Building : StaticBody
     static public int PitchCost = 0;
     static public int StoneCost = 0;
     public int Population = 0;
+    public Vector3 UnitSpawnPoint = new Vector3();
 
     public bool CanPlace = true;
     public bool IsBuilt = false;
@@ -33,11 +34,11 @@ public class Building : StaticBody
         _body = (MeshInstance)this.GetNode("MeshInstance");
 
         _area = _body.GetNode("Area") as Area;
-        _area.Connect("body_entered", this, "AreaBodyEntered");
-        _area.Connect("body_exited", this, "AreaBodyExited");
+        _area.Connect("body_entered", this, nameof(AreaBodyEntered));
+        _area.Connect("body_exited", this, nameof(AreaBodyExited));
     }
 
-    public void Init(BuildingType bt, Vector3 origin, Player owner)
+    virtual public void Init(BuildingType bt, Vector3 origin, Player owner)
     {
         PlayerOwner = owner;
         BuildingType = bt;
@@ -53,23 +54,23 @@ public class Building : StaticBody
             _body.MaterialOverride = _colour;
         }
 
-        switch (bt)
-        {
-            case BuildingType.Keep:
-                Health = 5000;
-                MaxHealth = 5000;
-                Population = 10;
-                break;
-        }
         owner.Buildings.Add(this);
     }
 
     public void AreaBodyEntered(KinematicBody kb)
     {
-        if (this.Name != kb.Name && !IsBuilt)
+        if (this.Name != kb.Name)
         {
-            CanPlace = false;
-            _body.MaterialOverride = Utilities.RedMaterial;
+            if (!IsBuilt)
+            {
+                CanPlace = false;
+                _body.MaterialOverride = Utilities.RedMaterial;
+            }
+            else if (kb is Unit u)
+            {
+                // TODO enter/exit building
+            }
+            
         }
         
     }

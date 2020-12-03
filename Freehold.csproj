@@ -80,6 +80,7 @@
     <Compile Include="Scripts\Building\Industry\Quarry.cs" />
     <Compile Include="Scripts\Building\Industry\Stockpile.cs" />
     <Compile Include="Scripts\Building\Industry\WoodcutterHut.cs" />
+    <Compile Include="Scripts\Building\Keep.cs" />
     <Compile Include="Scripts\Building\Military\Armourer.cs" />
     <Compile Include="Scripts\Building\Military\Armoury.cs" />
     <Compile Include="Scripts\Building\Military\Artillator.cs" />

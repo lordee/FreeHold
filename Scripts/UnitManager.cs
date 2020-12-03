@@ -37,17 +37,16 @@ public class UnitManager : Node
 
     private void SpawnUnit(UNITTYPE unitType, Player owner, Vector3 pos, Building building)
     {
-        Unit u = _unitScene.Instance() as Unit;
-        AddChild(u);
-        // test pos
-        u.Init(unitType, owner, pos);
-
         if (building != null)
         {
-            AABB bounds = building.Body.GetAabb();
-            Vector3 val = bounds.Size;
-            u.MoveTo(pos + val);
+            pos = building.UnitSpawnPoint;
         }
-        
+
+        Unit u = _unitScene.Instance() as Unit;
+        AddChild(u);
+        u.Init(unitType, owner, pos);
+        Utilities.MoveToFloor(u);
+        pos += new Vector3(3, 0, 0);
+        u.MoveTo(pos);
     }
 }

@@ -20,7 +20,6 @@ public class Game : Spatial
     static public RtsCameraController CameraController;
     static public BuildingManager BuildingManager;
     static public UnitManager UnitManager;
-    static public MeshInstance Floor;
 
     static public List<BindingObject> Binds = new List<BindingObject>();
    
@@ -40,7 +39,6 @@ public class Game : Spatial
         WorldScene = ResourceLoader.Load("res://Scenes/World.tscn") as PackedScene;
         World = WorldScene.Instance() as World;
         this.AddChild(World);
-        Floor = Utilities.GetRecursiveChildByName(World, "Floor") as MeshInstance;
     }
 
     private void AddPlayer()

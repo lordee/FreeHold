@@ -13,6 +13,8 @@ public class Unit : KinematicBody
     Vector3[] _path = new Vector3[0];
     private int _pathInd = 0;
     private int _moveSpeed = 12;
+    private int _moveTry = 0;
+    private float _firstMoveLength = 0;
 
     // shoot stuff
     Unit _target = null;
@@ -44,7 +46,7 @@ public class Unit : KinematicBody
         _playerOwner = owner;
         TeamID = owner.TeamID;
         owner.Units.Add(this);
-        this.Translation = pos;
+        Utilities.SetGlobalPosition(this, pos);
         if (Utilities.TeamColours.ContainsKey(this.TeamID))
         {
             _body.MaterialOverride = (Material)ResourceLoader.Load(Utilities.TeamColours[this.TeamID]);
@@ -55,15 +57,37 @@ public class Unit : KinematicBody
     {
         _lastAttack += delta;
 
+        
+
         if (_pathInd < _path.Length)
         {
             Vector3 move = (_path[_pathInd] - GlobalTransform.origin);
-            if (move.Length() < 0.1)
+
+            // fix jiggle/fighting over single dest vector
+            bool incrementMove = false;
+            if (_moveTry == 0)
+            {
+                _firstMoveLength = move.Length();
+            }
+            else if (_moveTry == 10)
+            {
+                _moveTry = -1;
+                if (_firstMoveLength - move.Length() <= 0.1)
+                {
+                    // next point
+                    incrementMove = true;
+                }
+            }
+
+            // FIXME - use flow/flocking movement
+            if (move.Length() < 0.1 || incrementMove)
             {
                 _pathInd++;
+                _moveTry = 0;
             }
             else
             {
+                _moveTry++;
                 MoveAndSlide(move.Normalized() * _moveSpeed, new Vector3(0,1,0));
             }
         }

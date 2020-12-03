@@ -4,7 +4,7 @@ using System;
 public class BuildingManager : Node
 {
     static BuildingManager that;
-    PackedScene _buildingScene;
+    PackedScene _keepScene;
     PackedScene _granaryScene;
 
     public Building PlacingBuilding = null;
@@ -13,28 +13,19 @@ public class BuildingManager : Node
     public override void _Ready()
     {
         that = this;
-        _buildingScene = ResourceLoader.Load(Building.Resource) as PackedScene;
+        _keepScene = ResourceLoader.Load(Keep.Resource) as PackedScene;
         _granaryScene = ResourceLoader.Load(Granary.Resource) as PackedScene;
     }
 
-//  // Called every frame. 'delta' is the elapsed time since the previous frame.
-//  public override void _Process(float delta)
-//  {
-//      
-//  }
-
-    private void Spawn2(BuildingType buildingType, Vector3 origin, Player owner)
+    static public Building Spawn(BuildingType buildingType, Vector3 origin, Player owner)
     {
-        // FIXME - align origin to Floor node
-        Building b = GetBuilding(buildingType);
-        this.AddChild(b);
+        Building b = that.GetBuilding(buildingType);
+        that.AddChild(b);
         b.Init(buildingType, origin, owner);
         b.IsBuilt = true;
-    }
+        Utilities.MoveToFloor(b);
 
-    static public void Spawn(BuildingType buildingType, Vector3 origin, Player owner)
-    {
-        that.Spawn2(buildingType, origin, owner);
+        return b;
     }
 
     public void BuildingPlacement(Player player, BuildingType buildingType)
@@ -109,7 +100,7 @@ public class BuildingManager : Node
                 b = _granaryScene.Instance() as Building;
                 break;
             case BuildingType.Keep:
-                b = _buildingScene.Instance() as Building;
+                b = _keepScene.Instance() as Building;
                 break;
         }
 

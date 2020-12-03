@@ -51,10 +51,7 @@ public class Player : Node
                 {
                     p.InUse = true;
                     BuildingManager.Spawn(BuildingType.Keep, p.GlobalTransform.origin, this);
-                    StartingSpot = p.GlobalTransform.origin;
-
-                    // spawn starting units
-                    
+                    StartingSpot = p.GlobalTransform.origin;                   
                     break;
                 }
             }
