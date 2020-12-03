@@ -222,7 +222,7 @@ public class RtsCameraController : Spatial
             {
                 if (res["collider"] is Unit u)
                 {
-                    if (u.TeamID == Game.Player.TeamID)
+                    if (u.TeamID == Game.Player.TeamID && u.UnitType != UNITTYPE.Peasant)
                     {
                         _selectedUnits.Add(u);
                     }
@@ -289,8 +289,8 @@ public class RtsCameraController : Spatial
         Rect2 box = new Rect2(topLeft, botRight - topLeft);
         foreach (Unit u in GetTree().GetNodesInGroup("Units"))
         {
-            if (u.TeamID == Game.Player.TeamID && 
-            box.HasPoint(_camera.UnprojectPosition(u.GlobalTransform.origin)))
+            if (u.UnitType != UNITTYPE.Peasant && u.TeamID == Game.Player.TeamID 
+            && box.HasPoint(_camera.UnprojectPosition(u.GlobalTransform.origin)))
             {
                 units.Add(u);
             }

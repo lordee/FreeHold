@@ -8,7 +8,7 @@ public class UIBtn : Button
     [Export]
     public MenuType MenuType;
     [Export]
-    public BuildingType BuildingType;
+    public BUILDINGTYPE BuildingType;
     [Export]
     public UNITTYPE UnitType;
 

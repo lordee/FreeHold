@@ -221,7 +221,7 @@ public class UI : CanvasLayer
         }
     }
 
-    public void Build_Click(BuildingType b)
+    public void Build_Click(BUILDINGTYPE b)
     {
         Game.BuildingManager.BuildingPlacement(Game.Player, b);
     }

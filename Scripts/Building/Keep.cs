@@ -17,7 +17,7 @@ public class Keep : Building
         _doorArea.Connect("body_entered", this, nameof(DoorAreaBodyEntered));
     }
 
-    public override void Init(BuildingType bt, Vector3 origin, Player owner)
+    public override void Init(BUILDINGTYPE bt, Vector3 origin, Player owner)
     {
         base.Init(bt, origin, owner);
         UnitSpawnPoint = _doorArea.GlobalTransform.origin;

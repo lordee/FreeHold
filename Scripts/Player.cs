@@ -50,7 +50,7 @@ public class Player : Node
                 if (p.PropType == PropType.StartLocation && !p.InUse)
                 {
                     p.InUse = true;
-                    BuildingManager.Spawn(BuildingType.Keep, p.GlobalTransform.origin, this);
+                    BuildingManager.Spawn(BUILDINGTYPE.Keep, p.GlobalTransform.origin, this);
                     StartingSpot = p.GlobalTransform.origin;                   
                     break;
                 }
@@ -83,16 +83,15 @@ public class Player : Node
         Population = pop;
     }
 
-    public void DeductBuildCost(BuildingType buildingType)
+    public void DeductBuildCost(BUILDINGTYPE buildingType)
     {
-        switch (buildingType)
-        {
-            case BuildingType.Granary:
-                Wood -= Granary.WoodCost;
-                Gold -= Granary.GoldCost;
-                Stone -= Granary.StoneCost;
-                Pitch -= Granary.PitchCost;
-                break;
-        }
+        int goldCost = Game.BuildingManager.GetGoldReq(buildingType);
+        int woodCost = Game.BuildingManager.GetWoodReq(buildingType);
+        int pitchCost = Game.BuildingManager.GetPitchReq(buildingType);
+        int stoneCost = Game.BuildingManager.GetStoneReq(buildingType);
+        Wood -= woodCost;
+        Gold -= goldCost;
+        Pitch -= pitchCost;
+        Stone -= stoneCost;
     }
 }

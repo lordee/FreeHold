@@ -4,7 +4,7 @@ using System;
 public class Stockpile : Building
 {
     static public new int GoldCost = 0;
-    static public new int WoodCost = 15;
+    static public new int WoodCost = 1;
     static public new int PitchCost = 0;
     static public new int StoneCost = 0;
     static public new string Resource = "res://Scenes/Building/Industry/Stockpile.tscn";

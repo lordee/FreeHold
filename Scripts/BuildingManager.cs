@@ -6,6 +6,7 @@ public class BuildingManager : Node
     static BuildingManager that;
     PackedScene _keepScene;
     PackedScene _granaryScene;
+    PackedScene _stockpileScene;
 
     public Building PlacingBuilding = null;
 
@@ -15,9 +16,10 @@ public class BuildingManager : Node
         that = this;
         _keepScene = ResourceLoader.Load(Keep.Resource) as PackedScene;
         _granaryScene = ResourceLoader.Load(Granary.Resource) as PackedScene;
+        _stockpileScene = ResourceLoader.Load(Stockpile.Resource) as PackedScene;
     }
 
-    static public Building Spawn(BuildingType buildingType, Vector3 origin, Player owner)
+    static public Building Spawn(BUILDINGTYPE buildingType, Vector3 origin, Player owner)
     {
         Building b = that.GetBuilding(buildingType);
         that.AddChild(b);
@@ -28,7 +30,7 @@ public class BuildingManager : Node
         return b;
     }
 
-    public void BuildingPlacement(Player player, BuildingType buildingType)
+    public void BuildingPlacement(Player player, BUILDINGTYPE buildingType)
     {
         // check requirements
         if (CanBuild(player, buildingType))
@@ -91,15 +93,18 @@ public class BuildingManager : Node
         PlacingBuilding = null;
     }
 
-    private Building GetBuilding(BuildingType buildingType)
+    private Building GetBuilding(BUILDINGTYPE buildingType)
     {
         Building b = null;
         switch (buildingType)
         {
-            case BuildingType.Granary:
+            case BUILDINGTYPE.Stockpile:
+                b = _stockpileScene.Instance() as Building;
+                break;
+            case BUILDINGTYPE.Granary:
                 b = _granaryScene.Instance() as Building;
                 break;
-            case BuildingType.Keep:
+            case BUILDINGTYPE.Keep:
                 b = _keepScene.Instance() as Building;
                 break;
         }
@@ -107,7 +112,7 @@ public class BuildingManager : Node
         return b;
     }
 
-    private bool CanBuild(Player player, BuildingType buildingType)
+    private bool CanBuild(Player player, BUILDINGTYPE buildingType)
     {
         bool canBuild = false;
         int goldCost = GetGoldReq(buildingType);
@@ -124,44 +129,52 @@ public class BuildingManager : Node
         return canBuild;
     }
 
-    private int GetStoneReq(BuildingType buildingType)
+    public int GetStoneReq(BUILDINGTYPE buildingType)
     {
         switch (buildingType)
         {
-            case BuildingType.Granary:
+            case BUILDINGTYPE.Stockpile:
+                return Stockpile.StoneCost;
+            case BUILDINGTYPE.Granary:
                 return Granary.StoneCost;
             default:
                 return 99999;
         }
     }
 
-    private int GetPitchReq(BuildingType buildingType)
+    public int GetPitchReq(BUILDINGTYPE buildingType)
     {
         switch (buildingType)
         {
-            case BuildingType.Granary:
+            case BUILDINGTYPE.Stockpile:
+                return Stockpile.PitchCost;
+            case BUILDINGTYPE.Granary:
                 return Granary.PitchCost;
             default:
                 return 99999;
         }
     }
 
-    private int GetWoodReq(BuildingType buildingType)
+    public int GetWoodReq(BUILDINGTYPE buildingType)
     {
         switch (buildingType)
         {
-            case BuildingType.Granary:
+            case BUILDINGTYPE.Stockpile:
+                return Stockpile.WoodCost;
+            case BUILDINGTYPE.Granary:
                 return Granary.WoodCost;
             default:
                 return 99999;
         }
     }
 
-    private int GetGoldReq(BuildingType buildingType)
+    public int GetGoldReq(BUILDINGTYPE buildingType)
     {
         switch (buildingType)
         {
-            case BuildingType.Granary:
+            case BUILDINGTYPE.Stockpile:
+                return Stockpile.GoldCost;
+            case BUILDINGTYPE.Granary:
                 return Granary.GoldCost;
             default:
                 return 99999;

@@ -23,7 +23,7 @@ public class Building : StaticBody
     public bool CanPlace = true;
     public bool IsBuilt = false;
     Material _colour;
-    public BuildingType BuildingType;
+    public BUILDINGTYPE BuildingType;
     public Player PlayerOwner;
 
     public override void _Ready()
@@ -38,7 +38,7 @@ public class Building : StaticBody
         _area.Connect("body_exited", this, nameof(AreaBodyExited));
     }
 
-    virtual public void Init(BuildingType bt, Vector3 origin, Player owner)
+    virtual public void Init(BUILDINGTYPE bt, Vector3 origin, Player owner)
     {
         PlayerOwner = owner;
         BuildingType = bt;
@@ -92,22 +92,22 @@ public class Building : StaticBody
         _selector.Show();
         switch(BuildingType)
         {
-            case BuildingType.Barracks:
+            case BUILDINGTYPE.Barracks:
                 //_ui.ShowMenu(MenuType.Barracks, this);
                 break;
-            case BuildingType.MercenaryPost:
+            case BUILDINGTYPE.MercenaryPost:
                 //_ui.ShowMenu(MenuType.Mercenaries, this);
                 break;
-            case BuildingType.SiegeCamp:
+            case BUILDINGTYPE.SiegeCamp:
                 //_ui.ShowMenu(MenuType.Siege, this);
                 break;
-            case BuildingType.Granary:
+            case BUILDINGTYPE.Granary:
 
                 break;
-            case BuildingType.Market:
+            case BUILDINGTYPE.Market:
 
                 break;
-            case BuildingType.Stockpile:
+            case BUILDINGTYPE.Stockpile:
 
                 break;
         }

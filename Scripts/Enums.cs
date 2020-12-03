@@ -88,7 +88,7 @@ public enum MenuType
     CreateUnit,
 }
 
-public enum BuildingType
+public enum BUILDINGTYPE
 {
     None,
     // food

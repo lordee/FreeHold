@@ -57,8 +57,6 @@ public class Unit : KinematicBody
     {
         _lastAttack += delta;
 
-        
-
         if (_pathInd < _path.Length)
         {
             Vector3 move = (_path[_pathInd] - GlobalTransform.origin);
