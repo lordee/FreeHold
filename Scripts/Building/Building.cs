@@ -19,6 +19,9 @@ public class Building : StaticBody
     static public int StoneCost = 0;
     public int Population = 0;
     public Vector3 UnitSpawnPoint = new Vector3();
+    public bool HasWorker = false;
+    public bool NeedsWorker = false;
+    private Unit Worker = null;
 
     public bool CanPlace = true;
     public bool IsBuilt = false;
@@ -119,5 +122,12 @@ public class Building : StaticBody
     public void Deselect()
     {
         _selector.Hide();
+    }
+
+    public void AssignWorker(Unit u)
+    {
+        Worker = u;
+        HasWorker = true;
+        u.Employ(this);
     }
 }

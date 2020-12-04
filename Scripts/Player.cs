@@ -25,6 +25,7 @@ public class Player : Node
     public int ReputationMax = 100;
 
     public float PeasantLastSpawn = 0f;
+    public int UnemployedPeasants = 0;
 
     public Vector3 StartingSpot;
 

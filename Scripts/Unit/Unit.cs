@@ -6,15 +6,19 @@ public class Unit : KinematicBody
     MeshInstance _selector;
     MeshInstance _body;
     //private Node _missileManager;
-    static public string Resource = "res://Scenes/Unit.tscn";
+    static public string Resource = "res://Scenes/Unit/Unit.tscn";
+
+    // state
+    private IUnitState _currentState;
 
     // nav stuff
-    Navigation _nav;
+    /*Navigation _nav;
     Vector3[] _path = new Vector3[0];
     private int _pathInd = 0;
-    private int _moveSpeed = 12;
     private int _moveTry = 0;
-    private float _firstMoveLength = 0;
+    private float _firstMoveLength = 0;*/
+    private int _moveSpeed = 12;
+    public int MoveSpeed { get { return _moveSpeed; }}
 
     // shoot stuff
     Unit _target = null;
@@ -31,13 +35,17 @@ public class Unit : KinematicBody
     public float Health = 300;
     public float MaxHealth = 300;
 
+    public bool Unemployed = false;
+    public Building Workplace = null;
+
     public override void _Ready()
     {
-        _nav = Game.World.GetNode("Navigation") as Navigation;
+        //_nav = Game.World.GetNode("Navigation") as Navigation;
         AddToGroup("Units", true);
         _selector = (MeshInstance)GetNode("Selector");
 
         _body = (MeshInstance)this.GetNode("MeshInstance");
+        _currentState = new IdleState(this);
     }
 
     public void Init(UNITTYPE u, Player owner, Vector3 pos)
@@ -51,44 +59,25 @@ public class Unit : KinematicBody
         {
             _body.MaterialOverride = (Material)ResourceLoader.Load(Utilities.TeamColours[this.TeamID]);
         }
+
+        switch (UnitType)
+        {
+            case UNITTYPE.Peasant:
+                Unemployed = true;
+                break;
+        }
     }
 
     public override void _PhysicsProcess(float delta)
     {
         _lastAttack += delta;
 
-        if (_pathInd < _path.Length)
+        IUnitState newState = _currentState.Update();
+        if (newState != null)
         {
-            Vector3 move = (_path[_pathInd] - GlobalTransform.origin);
-
-            // fix jiggle/fighting over single dest vector
-            bool incrementMove = false;
-            if (_moveTry == 0)
-            {
-                _firstMoveLength = move.Length();
-            }
-            else if (_moveTry == 10)
-            {
-                _moveTry = -1;
-                if (_firstMoveLength - move.Length() <= 0.1)
-                {
-                    // next point
-                    incrementMove = true;
-                }
-            }
-
-            // FIXME - use flow/flocking movement
-            if (move.Length() < 0.1 || incrementMove)
-            {
-                _pathInd++;
-                _moveTry = 0;
-            }
-            else
-            {
-                _moveTry++;
-                MoveAndSlide(move.Normalized() * _moveSpeed, new Vector3(0,1,0));
-            }
+            _currentState = newState;
         }
+        
 /*
         // check for targets, units for now
         if (_target == null)
@@ -103,6 +92,8 @@ public class Unit : KinematicBody
         }
         */
     }
+
+  
 /*
     private Unit GetClosestEnemy(Godot.Collections.Array result)
     {
@@ -168,10 +159,9 @@ public class Unit : KinematicBody
         }
     }
 */
-    public void MoveTo(Vector3 targ)
+    public void MoveTo(Vector3 dest)
     {
-        _path = _nav.GetSimplePath(GlobalTransform.origin, targ);
-        _pathInd = 0;
+        _currentState = new MoveState(this, dest);
     }
 
     public void Select()
@@ -182,5 +172,12 @@ public class Unit : KinematicBody
     public void Deselect()
     {
         _selector.Hide();
+    }
+
+    public void Employ(Building workplace)
+    {
+        this.Unemployed = false;
+        this.Workplace = workplace;
+        this._playerOwner.UnemployedPeasants -= 1;
     }
 }

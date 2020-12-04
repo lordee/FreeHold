@@ -13,7 +13,7 @@
 albedo_color = Color( 0.0352941, 0.584314, 0.0705882, 1 )
 
 [node name="WoodcutterHut" type="StaticBody"]
-transform = Transform( 5, 0, 0, 0, 5, 0, 0, 0, 5, 0, 5, 0 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 0 )
 collision_layer = 2
 collision_mask = 2
 script = ExtResource( 1 )

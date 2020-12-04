@@ -19,23 +19,44 @@ public class UnitManager : Node
         {
             return;
         }
-        SpawnPeasants(delta);
+
+        foreach(Player p in Game.World.Players)
+        {
+            SpawnPeasants(p, delta);
+            AssignJobs(p);
+        }
     }
 
-    public void SpawnPeasants(float delta)
+    private void AssignJobs(Player p)
     {
-        foreach (Player p in Game.World.Players)
+        foreach (Building b in p.Buildings)
         {
-            p.PeasantLastSpawn += delta;
-            if (p.Population < p.PopulationMax && p.PeasantLastSpawn >= Game.PeasantSpawnTime)
+            if (b.NeedsWorker && !b.HasWorker && p.UnemployedPeasants > 0)
             {
-                p.PeasantLastSpawn = 0f;
-                SpawnUnit(UNITTYPE.Peasant, p, p.StartingSpot, p.Buildings[0]);
+                // assign a worker
+                foreach (Unit u in p.Units)
+                {
+                    if (u.UnitType == UNITTYPE.Peasant && u.Unemployed)
+                    {
+                        b.AssignWorker(u);
+                    }
+                }
             }
         }
     }
 
-    private void SpawnUnit(UNITTYPE unitType, Player owner, Vector3 pos, Building building)
+    private void SpawnPeasants(Player p, float delta)
+    {
+        p.PeasantLastSpawn += delta;
+        if (p.Population < p.PopulationMax && p.PeasantLastSpawn >= Game.PeasantSpawnTime)
+        {
+            p.PeasantLastSpawn = 0f;
+            Unit u = SpawnUnit(UNITTYPE.Peasant, p, p.StartingSpot, p.Buildings[0]);
+            p.UnemployedPeasants += 1;
+        }
+    }
+
+    private Unit SpawnUnit(UNITTYPE unitType, Player owner, Vector3 pos, Building building)
     {
         if (building != null)
         {
@@ -48,5 +69,7 @@ public class UnitManager : Node
         Utilities.MoveToFloor(u);
         pos += new Vector3(3, 0, 0);
         u.MoveTo(pos);
+
+        return u;
     }
 }

@@ -7,6 +7,7 @@ public class BuildingManager : Node
     PackedScene _keepScene;
     PackedScene _granaryScene;
     PackedScene _stockpileScene;
+    PackedScene _woodcutterHutScene;
 
     public Building PlacingBuilding = null;
 
@@ -17,6 +18,7 @@ public class BuildingManager : Node
         _keepScene = ResourceLoader.Load(Keep.Resource) as PackedScene;
         _granaryScene = ResourceLoader.Load(Granary.Resource) as PackedScene;
         _stockpileScene = ResourceLoader.Load(Stockpile.Resource) as PackedScene;
+        _woodcutterHutScene = ResourceLoader.Load(WoodcutterHut.Resource) as PackedScene;
     }
 
     static public Building Spawn(BUILDINGTYPE buildingType, Vector3 origin, Player owner)
@@ -84,7 +86,6 @@ public class BuildingManager : Node
     {
         // TODO - message, sound about cancel
         ClearBuildingPlacement();
-        
     }
 
     private void ClearBuildingPlacement()
@@ -98,6 +99,9 @@ public class BuildingManager : Node
         Building b = null;
         switch (buildingType)
         {
+            case BUILDINGTYPE.WoodcutterHut:
+                b = _woodcutterHutScene.Instance() as Building;
+                break;
             case BUILDINGTYPE.Stockpile:
                 b = _stockpileScene.Instance() as Building;
                 break;
@@ -135,6 +139,8 @@ public class BuildingManager : Node
         {
             case BUILDINGTYPE.Stockpile:
                 return Stockpile.StoneCost;
+            case BUILDINGTYPE.WoodcutterHut:
+                return WoodcutterHut.StoneCost;
             case BUILDINGTYPE.Granary:
                 return Granary.StoneCost;
             default:
@@ -146,6 +152,8 @@ public class BuildingManager : Node
     {
         switch (buildingType)
         {
+            case BUILDINGTYPE.WoodcutterHut:
+                return WoodcutterHut.PitchCost;
             case BUILDINGTYPE.Stockpile:
                 return Stockpile.PitchCost;
             case BUILDINGTYPE.Granary:
@@ -159,6 +167,8 @@ public class BuildingManager : Node
     {
         switch (buildingType)
         {
+            case BUILDINGTYPE.WoodcutterHut:
+                return WoodcutterHut.WoodCost;
             case BUILDINGTYPE.Stockpile:
                 return Stockpile.WoodCost;
             case BUILDINGTYPE.Granary:
@@ -172,6 +182,8 @@ public class BuildingManager : Node
     {
         switch (buildingType)
         {
+            case BUILDINGTYPE.WoodcutterHut:
+                return WoodcutterHut.GoldCost;
             case BUILDINGTYPE.Stockpile:
                 return Stockpile.GoldCost;
             case BUILDINGTYPE.Granary:
