@@ -33,7 +33,7 @@ public class MoveState : IUnitState
 
     public IUnitState Update()
     {
-        GD.Print(_owner.Name + " in MoveState");
+        //GD.Print(_owner.Name + " in MoveState");
         IUnitState newState = null;
         
         if (_pathInd < _path.Length)

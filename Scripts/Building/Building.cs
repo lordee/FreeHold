@@ -29,6 +29,8 @@ public class Building : StaticBody
     public BUILDINGTYPE BuildingType;
     public Player PlayerOwner;
 
+    public Area EntranceArea;
+
     public override void _Ready()
     {
         _selector = (MeshInstance)GetNode("Selector");
@@ -39,6 +41,14 @@ public class Building : StaticBody
         _area = _body.GetNode("Area") as Area;
         _area.Connect("body_entered", this, nameof(AreaBodyEntered));
         _area.Connect("body_exited", this, nameof(AreaBodyExited));
+
+        EntranceArea = GetNodeOrNull("Entrance/EntranceArea") as Area;
+        if (EntranceArea != null)
+        {
+            EntranceArea.Connect("body_entered", this, nameof(EntranceAreaBodyEntered));
+            EntranceArea.Connect("body_exited", this, nameof(EntranceAreaBodyExited));
+        }
+        
     }
 
     virtual public void Init(BUILDINGTYPE bt, Vector3 origin, Player owner)
@@ -129,5 +139,27 @@ public class Building : StaticBody
         Worker = u;
         HasWorker = true;
         u.Employ(this);
+    }
+
+    public void EntranceAreaBodyEntered(KinematicBody kb)
+    {
+        if (kb is Unit u)
+        {
+            if (u.WorkPlace == this)
+            {
+                u.AtWorkPlace = true;
+            }
+        }
+    }
+
+    public void EntranceAreaBodyExited(KinematicBody kb)
+    {
+        if (kb is Unit u)
+        {
+            if (u.WorkPlace == this)
+            {
+                u.AtWorkPlace = false;
+            }
+        }
     }
 }

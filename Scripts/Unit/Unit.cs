@@ -10,13 +10,9 @@ public class Unit : KinematicBody
 
     // state
     private IUnitState _currentState;
+    public bool AtCampfire = false;
+    public bool AtWorkPlace = false;
 
-    // nav stuff
-    /*Navigation _nav;
-    Vector3[] _path = new Vector3[0];
-    private int _pathInd = 0;
-    private int _moveTry = 0;
-    private float _firstMoveLength = 0;*/
     private int _moveSpeed = 12;
     public int MoveSpeed { get { return _moveSpeed; }}
 
@@ -30,17 +26,16 @@ public class Unit : KinematicBody
     public int TeamID = 0;
 
     private Player _playerOwner;
+    public Player PlayerOwner { get { return _playerOwner; }}
 
     public UNITTYPE UnitType;
     public float Health = 300;
     public float MaxHealth = 300;
 
-    public bool Unemployed = false;
-    public Building Workplace = null;
+    public Building WorkPlace = null;
 
     public override void _Ready()
     {
-        //_nav = Game.World.GetNode("Navigation") as Navigation;
         AddToGroup("Units", true);
         _selector = (MeshInstance)GetNode("Selector");
 
@@ -58,13 +53,6 @@ public class Unit : KinematicBody
         if (Utilities.TeamColours.ContainsKey(this.TeamID))
         {
             _body.MaterialOverride = (Material)ResourceLoader.Load(Utilities.TeamColours[this.TeamID]);
-        }
-
-        switch (UnitType)
-        {
-            case UNITTYPE.Peasant:
-                Unemployed = true;
-                break;
         }
     }
 
@@ -176,8 +164,7 @@ public class Unit : KinematicBody
 
     public void Employ(Building workplace)
     {
-        this.Unemployed = false;
-        this.Workplace = workplace;
+        this.WorkPlace = workplace;
         this._playerOwner.UnemployedPeasants -= 1;
     }
 }

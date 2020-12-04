@@ -34,17 +34,32 @@ collision_mask = 2
 shape = SubResource( 2 )
 
 [node name="DoorMesh" type="MeshInstance" parent="."]
-transform = Transform( 0.25, 0, 0, 0, 0.25, 0, 0, 0, 0.1, 0, -0.747799, 1 )
+transform = Transform( 0.25, 0, 0, 0, 0.25, 0, 0, 0, 0.1, 0, -0.75, 1 )
 layers = 3
 mesh = SubResource( 1 )
 material/0 = SubResource( 3 )
 
 [node name="DoorArea" type="Area" parent="DoorMesh"]
-transform = Transform( 1, 0, 3.41061e-13, 0, 1, 0, -1.7053e-13, 0, 2, 0, 0, 3 )
+transform = Transform( 1, 0, 3.41061e-13, 0, 1, 0, -2.27374e-13, 0, 2, 1.13687e-13, 0, 3 )
 collision_layer = 2
 collision_mask = 2
 
 [node name="CollisionShape2" type="CollisionShape" parent="DoorMesh/DoorArea"]
+shape = SubResource( 2 )
+
+[node name="Campfire" type="MeshInstance" parent="."]
+transform = Transform( 0.75, 0, 5.68434e-14, 0, 0.01, 0, -5.68434e-14, 0, 0.75, 0.00240974, -0.996594, 2.49925 )
+layers = 3
+mesh = SubResource( 1 )
+material/0 = SubResource( 3 )
+
+[node name="CampfireArea" type="Area" parent="Campfire"]
+transform = Transform( 1, 0, 2.55795e-13, 0, 1, 0, -2.55795e-13, 0, 1, 0, 0, 0 )
+collision_layer = 2
+collision_mask = 2
+
+[node name="CollisionShape2" type="CollisionShape" parent="Campfire/CampfireArea"]
+transform = Transform( 1, 0, 2.84217e-14, 0, 1, 0, -2.84217e-14, 0, 1, 0, 0, 0 )
 shape = SubResource( 2 )
 
 [node name="CollisionShape" type="CollisionShape" parent="."]

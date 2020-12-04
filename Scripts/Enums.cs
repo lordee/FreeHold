@@ -66,7 +66,8 @@ public enum BtnPosition
 
 public enum PropType
 {
-    StartLocation
+    StartLocation,
+    Tree,
 }
 
 public enum MenuType

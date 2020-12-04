@@ -21,12 +21,27 @@ public class IdleState : IUnitState
 
     public IUnitState Update()
     {
+        //GD.Print(owner.Name + " in IdleState");
         IUnitState newState = null;
-        GD.Print(owner.Name + " in IdleState");
-        if (owner.Workplace != null)
+        if (owner.WorkPlace != null)
         {
-            // go to work place
-            newState = new MoveState(owner, owner.Workplace.GlobalTransform.origin);
+            // if in starting area, go to work place
+            if (owner.AtCampfire)
+            {
+                newState = new MoveState(owner, owner.WorkPlace.EntranceArea.GlobalTransform.origin);
+            }
+            else if (owner.AtWorkPlace)
+            {
+                // if at work place, look for task
+            }
+            //else if (owner.AtTaskPlace)
+            //{
+                // if at task place, perform task
+            //}
+
+            
+
+            
         }
 
         return newState;

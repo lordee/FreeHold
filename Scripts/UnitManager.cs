@@ -31,14 +31,16 @@ public class UnitManager : Node
     {
         foreach (Building b in p.Buildings)
         {
-            if (b.NeedsWorker && !b.HasWorker && p.UnemployedPeasants > 0)
+            if (b.IsBuilt && b.NeedsWorker && !b.HasWorker 
+            && p.UnemployedPeasants > 0)
             {
                 // assign a worker
                 foreach (Unit u in p.Units)
                 {
-                    if (u.UnitType == UNITTYPE.Peasant && u.Unemployed)
+                    if (u.UnitType == UNITTYPE.Peasant && u.WorkPlace == null)
                     {
                         b.AssignWorker(u);
+                        return;
                     }
                 }
             }
@@ -58,17 +60,22 @@ public class UnitManager : Node
 
     private Unit SpawnUnit(UNITTYPE unitType, Player owner, Vector3 pos, Building building)
     {
+        Vector3 movePos = pos;
         if (building != null)
         {
             pos = building.UnitSpawnPoint;
+            if (building is Keep k)
+            {
+                movePos = k.Campfire.GlobalTransform.origin;
+            }
         }
 
         Unit u = _unitScene.Instance() as Unit;
         AddChild(u);
         u.Init(unitType, owner, pos);
         Utilities.MoveToFloor(u);
-        pos += new Vector3(3, 0, 0);
-        u.MoveTo(pos);
+        
+        u.MoveTo(movePos);
 
         return u;
     }

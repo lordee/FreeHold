@@ -18,7 +18,7 @@ public static class Utilities
         node.GlobalTransform = (new Transform(node.GlobalTransform.basis, pos));
     }
 
-    // FIXME - not perfect....
+    // FIXME - not perfect.... ugly hack job and really bad, rewrite it
     public static void MoveToFloor(Spatial node)
     {
         Vector3 down = new Vector3(0, -1f, 0);
@@ -45,9 +45,9 @@ public static class Utilities
         rc.CastTo = dir;
         rc.ForceRaycastUpdate();
 
-        if (rc.IsColliding())
+        if (rc.IsColliding() || node.GlobalTransform.origin.y < 1)
         {
-            Godot.Object obj = rc.GetCollider();
+            //Godot.Object obj = rc.GetCollider();
             node.RemoveChild(rc);
         }
         else

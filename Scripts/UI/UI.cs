@@ -38,9 +38,6 @@ public class UI : CanvasLayer
 
     Tooltip _tooltip;
 
-    int buttonSpacer = 35;
-    int menuLine1 = 60;
-    int menuLine2 = 0;
     public override void _Ready()
     {
         that = this;
