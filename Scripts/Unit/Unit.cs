@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using System.Collections.Generic;
 
 public class Unit : KinematicBody
 {
@@ -33,6 +34,8 @@ public class Unit : KinematicBody
     public float MaxHealth = 300;
 
     public Building WorkPlace = null;
+    public List<Prop> PropAreas = new List<Prop>();
+    public Prop PropTarg = null; // trees to cut down for worker etc
 
     public override void _Ready()
     {

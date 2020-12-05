@@ -7,16 +7,49 @@ public class Prop : Spatial
     public PropType PropType;
 
     public bool InUse = false;
+    public Area PropArea;
 
-    // Called when the node enters the scene tree for the first time.
+    private float _lifeTime = 0f;
+
     public override void _Ready()
     {
-        this.Hide();
+        if (PropType == PropType.StartLocation)
+        {
+            this.Hide();
+        }
+        PropArea = GetNodeOrNull("PropArea") as Area;
+        PropArea.Connect("body_entered", this, nameof(PropAreaBodyEntered));
+        PropArea.Connect("body_exited", this, nameof(PropAreaBodyExited));
     }
 
-//  // Called every frame. 'delta' is the elapsed time since the previous frame.
-//  public override void _Process(float delta)
-//  {
-//      
-//  }
+    public override void _PhysicsProcess(float delta)
+    {
+        _lifeTime += delta;
+        switch(PropType)
+        {
+            case PropType.Tree:
+                if (_lifeTime >= Game.World.TreePropagationTime)
+                {
+                    _lifeTime = 0;
+                    // TODO - get this going, put in a tree prop class
+                }
+                break;
+        }
+    }
+
+    public void PropAreaBodyEntered(KinematicBody kb)
+    {
+        if (kb is Unit u)
+        {
+            u.PropAreas.Add(this);
+        }
+    }
+
+    public void PropAreaBodyExited(KinematicBody kb)
+    {
+        if (kb is Unit u)
+        {
+            u.PropAreas.Remove(this);
+        }
+    }
 }

@@ -64,6 +64,8 @@ public class UnitManager : Node
         if (building != null)
         {
             pos = building.UnitSpawnPoint;
+            pos.y += 100;
+            
             if (building is Keep k)
             {
                 movePos = k.Campfire.GlobalTransform.origin;

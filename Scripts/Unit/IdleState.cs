@@ -33,11 +33,41 @@ public class IdleState : IUnitState
             else if (owner.AtWorkPlace)
             {
                 // if at work place, look for task
+                switch (owner.WorkPlace)
+                {
+                    case WoodcutterHut w:
+                        // at wp, find closest tree
+                        float dist = 0;
+                        Prop targ = null;
+                        foreach (Prop p in Game.World.Trees)
+                        {
+                            if (!p.InUse)
+                            {
+                                float currdist = (p.GlobalTransform.origin - owner.GlobalTransform.origin).Length();
+                                if (dist == 0 || currdist < dist)
+                                {
+                                    dist = currdist;
+                                    targ = p;
+                                }
+                            }
+                        }
+                        if (targ != null)
+                        {
+                            owner.PropTarg = targ;
+                            newState = new MoveState(owner, targ.GlobalTransform.origin);
+                        }
+                        break;
+                }
             }
-            //else if (owner.AtTaskPlace)
-            //{
+            else if (owner.PropAreas.Contains(owner.PropTarg))
+            {
                 // if at task place, perform task
-            //}
+                GD.Print("cutting down tree");
+            }
+            else
+            {
+                GD.Print("end of idle state if");
+            }
 
             
 

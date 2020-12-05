@@ -69,3 +69,15 @@ TeamID = 2
 
 [node name="Prop" parent="." instance=ExtResource( 3 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 23.6592, 6.75798, 38.4521 )
+
+[node name="Tree" parent="." instance=ExtResource( 3 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 3.96971, 6.75798, 38.4521 )
+PropType = 1
+
+[node name="Tree2" parent="." instance=ExtResource( 3 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 3.96971, 6.75798, 30.3161 )
+PropType = 1
+
+[node name="Tree3" parent="." instance=ExtResource( 3 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 3.96971, 6.75798, 24.0729 )
+PropType = 1
