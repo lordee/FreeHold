@@ -4,7 +4,7 @@ using System;
 public interface IUnitState
 {
     void Enter();
-    IUnitState Update();
+    IUnitState Update(float delta);
     void Exit();
 }
 

@@ -3,11 +3,11 @@ using System;
 
 public class IdleState : IUnitState
 {
-    Unit owner;
+    Unit _owner;
 
     public IdleState(Unit u)
     {
-        owner = u;
+        _owner = u;
     }
     public void Enter()
     {
@@ -19,59 +19,53 @@ public class IdleState : IUnitState
 
     }
 
-    public IUnitState Update()
+    public IUnitState Update(float delta)
     {
         //GD.Print(owner.Name + " in IdleState");
         IUnitState newState = null;
-        if (owner.WorkPlace != null)
+        if (_owner.WorkPlace != null)
         {
-            // if in starting area, go to work place
-            if (owner.AtCampfire)
+            Building b = _owner.BuildingTarg;
+            if (b != null)
             {
-                newState = new MoveState(owner, owner.WorkPlace.EntranceArea.GlobalTransform.origin);
-            }
-            else if (owner.AtWorkPlace)
-            {
-                // if at work place, look for task
-                switch (owner.WorkPlace)
+                if (b == _owner.PlayerOwner.Campfire && _owner.AtCampfire)
                 {
-                    case WoodcutterHut w:
-                        // at wp, find closest tree
-                        float dist = 0;
-                        Prop targ = null;
-                        foreach (Prop p in Game.World.Trees)
-                        {
-                            if (!p.InUse)
-                            {
-                                float currdist = (p.GlobalTransform.origin - owner.GlobalTransform.origin).Length();
-                                if (dist == 0 || currdist < dist)
-                                {
-                                    dist = currdist;
-                                    targ = p;
-                                }
-                            }
-                        }
-                        if (targ != null)
-                        {
-                            owner.PropTarg = targ;
-                            newState = new MoveState(owner, targ.GlobalTransform.origin);
-                        }
-                        break;
+                    _owner.BuildingTarg = _owner.WorkPlace;
+                    newState = new MoveState(_owner, _owner.WorkPlace.EntranceLoc);
+                }
+                else if (b == _owner.WorkPlace && _owner.AtWorkPlace)
+                {
+                    b = null;
+                    newState = new WorkState(_owner);
+                }
+                else if ((
+                            (b is Stockpile && _owner.PlayerOwner.Buildings.Contains(b)) 
+                            || b is StockpileResource) 
+                        && _owner.AtStockpile)
+                {
+                    newState = new DropOffStockpileState(_owner);
+                }
+                else
+                {
+                    newState = new MoveState(_owner, _owner.BuildingTarg.EntranceLoc);
                 }
             }
-            else if (owner.PropAreas.Contains(owner.PropTarg))
+            else if (_owner.PropTarg != null && _owner.PropAreas.Contains(_owner.PropTarg))
             {
                 // if at task place, perform task
-                GD.Print("cutting down tree");
+                newState = new TaskState(_owner);
             }
             else
             {
                 GD.Print("end of idle state if");
             }
-
-            
-
-            
+        }
+        else
+        {
+            if (_owner.BuildingTarg != null)
+            {
+                newState = new MoveState(_owner, _owner.BuildingTarg.EntranceLoc);
+            }
         }
 
         return newState;

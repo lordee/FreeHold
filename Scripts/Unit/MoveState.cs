@@ -31,7 +31,7 @@ public class MoveState : IUnitState
 
     }
 
-    public IUnitState Update()
+    public IUnitState Update(float delta)
     {
         //GD.Print(_owner.Name + " in MoveState");
         IUnitState newState = null;

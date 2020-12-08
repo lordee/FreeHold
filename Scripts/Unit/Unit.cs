@@ -13,6 +13,7 @@ public class Unit : KinematicBody
     private IUnitState _currentState;
     public bool AtCampfire = false;
     public bool AtWorkPlace = false;
+    public bool AtStockpile = false;
 
     private int _moveSpeed = 12;
     public int MoveSpeed { get { return _moveSpeed; }}
@@ -34,8 +35,14 @@ public class Unit : KinematicBody
     public float MaxHealth = 300;
 
     public Building WorkPlace = null;
+    
+    public Building BuildingTarg = null;
+    
     public List<Prop> PropAreas = new List<Prop>();
     public Prop PropTarg = null; // trees to cut down for worker etc
+
+
+    public RESOURCE CarriedResource = RESOURCE.NONE;
 
     public override void _Ready()
     {
@@ -63,7 +70,7 @@ public class Unit : KinematicBody
     {
         _lastAttack += delta;
 
-        IUnitState newState = _currentState.Update();
+        IUnitState newState = _currentState.Update(delta);
         if (newState != null)
         {
             _currentState = newState;

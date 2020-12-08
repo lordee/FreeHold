@@ -47,13 +47,14 @@ public class UnitManager : Node
         }
     }
 
+// FIXME - once barracks etc in, rewrite this and spawnunit functions
     private void SpawnPeasants(Player p, float delta)
     {
         p.PeasantLastSpawn += delta;
         if (p.Population < p.PopulationMax && p.PeasantLastSpawn >= Game.PeasantSpawnTime)
         {
             p.PeasantLastSpawn = 0f;
-            Unit u = SpawnUnit(UNITTYPE.Peasant, p, p.StartingSpot, p.Buildings[0]);
+            Unit u = SpawnUnit(UNITTYPE.Peasant, p, p.StartingSpot, p.Buildings.Find(e => e.BuildingType == BUILDINGTYPE.Keep));
             p.UnemployedPeasants += 1;
         }
     }
@@ -61,6 +62,9 @@ public class UnitManager : Node
     private Unit SpawnUnit(UNITTYPE unitType, Player owner, Vector3 pos, Building building)
     {
         Vector3 movePos = pos;
+        
+        Unit u = _unitScene.Instance() as Unit;
+        AddChild(u);
         if (building != null)
         {
             pos = building.UnitSpawnPoint;
@@ -68,16 +72,11 @@ public class UnitManager : Node
             
             if (building is Keep k)
             {
-                movePos = k.Campfire.GlobalTransform.origin;
+                u.BuildingTarg = owner.Campfire;
             }
         }
-
-        Unit u = _unitScene.Instance() as Unit;
-        AddChild(u);
         u.Init(unitType, owner, pos);
         Utilities.MoveToFloor(u);
-        
-        u.MoveTo(movePos);
 
         return u;
     }

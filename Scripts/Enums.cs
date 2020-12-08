@@ -151,11 +151,24 @@ public enum BUILDINGTYPE
     OilSmelter,
     PitchDitch,
     // starting building
-    Keep
+    Keep,
+    CAMPFIRE
 }
 
 public enum REASON
 {
     RESOURCES,
     PLACEMENT,
+}
+
+public enum RESOURCE
+{
+    NONE,
+    WOOD,
+    STONE,
+    GOLD,
+    PITCH,
+    PLANKS,
+    IRON
+    // TODO - all food types, intermediary resources
 }

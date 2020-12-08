@@ -9,6 +9,8 @@ public class Game : Spatial
     // Settings
     static public float Gravity = 10f;
     static public float PeasantSpawnTime = 1f;
+    static public float MinimumInteractDistance = 0.5f;
+    static public int MaxStockpileStackValue = 100;
 
     // Scenes/Nodes
     PackedScene WorldScene;

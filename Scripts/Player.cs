@@ -4,6 +4,19 @@ using System.Collections.Generic;
 
 public class Player : Node
 {
+    static public int DefaultGold = 0;
+    static public int DefaultWood = 30;
+    static public int DefaultStone = 0;
+    static public int DefaultIron = 0; 
+    static public int DefaultPitch = 0; 
+    static public int DefaultBread = 0; 
+    static public int DefaultMeat = 0; 
+    static public int DefaultApples = 0; 
+    static public int DefaultCheese = 0; 
+    static public int DefaultHops = 0; 
+    static public int DefaultAle = 0; 
+    static public int DefaultCandles = 0;
+
     public int TeamID = 1;
     public int PlayerID;
     public int Gold = 0;
@@ -28,6 +41,8 @@ public class Player : Node
     public int UnemployedPeasants = 0;
 
     public Vector3 StartingSpot;
+
+    public Campfire Campfire;
 
     public List<Building> Buildings = new List<Building>();
     public List<Unit> Units = new List<Unit>();
@@ -57,11 +72,34 @@ public class Player : Node
                 }
             }
         }
+
+        SetStartingResources(Player.DefaultGold, Player.DefaultWood, Player.DefaultStone, 
+        Player.DefaultIron, Player.DefaultPitch, Player.DefaultBread, Player.DefaultMeat, 
+        Player.DefaultApples, Player.DefaultCheese, Player.DefaultHops, Player.DefaultAle, 
+        Player.DefaultCandles);
     }
 
     public override void _PhysicsProcess(float delta)
     {
         UpdatePopulation(delta);
+    }
+
+    public void SetStartingResources(int gold, int wood, int stone,
+    int iron, int pitch, int bread, int meat, int apples, int cheese,
+    int hops, int ale, int candles)
+    {
+        Gold = gold;
+        Wood = wood;
+        Stone = stone;
+        Iron = iron;
+        Pitch = pitch;
+        Bread = bread;
+        Meat = meat;
+        Apples = apples;
+        Cheese = cheese;
+        Hops = hops;
+        Ale = ale;
+        Candles = candles;
     }
 
     private void UpdatePopulation(float delta)
@@ -94,5 +132,22 @@ public class Player : Node
         Gold -= goldCost;
         Pitch -= pitchCost;
         Stone -= stoneCost;
+    }
+
+    public void AddResource(RESOURCE res, int val)
+    {
+        // TODO - all resources
+        switch (res)
+        {
+            case RESOURCE.PLANKS:
+                Wood += val;
+                break;
+            case RESOURCE.STONE:
+                Stone += val;
+                break;
+            case RESOURCE.IRON:
+                Iron += val;
+                break;
+        }
     }
 }

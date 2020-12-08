@@ -30,17 +30,21 @@ public class Building : StaticBody
     public Player PlayerOwner;
 
     public Area EntranceArea;
+    public Vector3 EntranceLoc { get { return EntranceArea.GlobalTransform.origin; }}
 
     public override void _Ready()
     {
-        _selector = (MeshInstance)GetNode("Selector");
+        _selector = (MeshInstance)GetNodeOrNull("Selector");
         this.Deselect();
 
-        _body = (MeshInstance)this.GetNode("MeshInstance");
+        _body = (MeshInstance)this.GetNodeOrNull("MeshInstance");
 
-        _area = _body.GetNode("Area") as Area;
-        _area.Connect("body_entered", this, nameof(AreaBodyEntered));
-        _area.Connect("body_exited", this, nameof(AreaBodyExited));
+        _area = _body.GetNodeOrNull("Area") as Area;
+        if (_area != null)
+        {
+            _area.Connect("body_entered", this, nameof(AreaBodyEntered));
+            _area.Connect("body_exited", this, nameof(AreaBodyExited));
+        }
 
         EntranceArea = GetNodeOrNull("Entrance/EntranceArea") as Area;
         if (EntranceArea != null)
@@ -48,7 +52,6 @@ public class Building : StaticBody
             EntranceArea.Connect("body_entered", this, nameof(EntranceAreaBodyEntered));
             EntranceArea.Connect("body_exited", this, nameof(EntranceAreaBodyExited));
         }
-        
     }
 
     virtual public void Init(BUILDINGTYPE bt, Vector3 origin, Player owner)
@@ -68,6 +71,17 @@ public class Building : StaticBody
         }
 
         owner.Buildings.Add(this);
+
+        // FIXME - seperate out campfire as another scene, spawn it on keep build instead
+        if (this is Keep k)
+        {
+            Campfire c = k.GetNode("Campfire") as Campfire;
+            c.TeamID = TeamID;
+            c.PlayerOwner = owner;
+            c.BuildingType = BUILDINGTYPE.CAMPFIRE;
+            owner.Buildings.Add(c);
+            owner.Campfire = c;
+        }
     }
 
     public void AreaBodyEntered(KinematicBody kb)
@@ -83,9 +97,7 @@ public class Building : StaticBody
             {
                 // TODO enter/exit building
             }
-            
         }
-        
     }
 
     public void AreaBodyExited(KinematicBody kb)
@@ -102,36 +114,41 @@ public class Building : StaticBody
     
     public void Select()
     {
-        _selector.Show();
-        switch(BuildingType)
+        if (_selector != null)
         {
-            case BUILDINGTYPE.Barracks:
-                //_ui.ShowMenu(MenuType.Barracks, this);
-                break;
-            case BUILDINGTYPE.MercenaryPost:
-                //_ui.ShowMenu(MenuType.Mercenaries, this);
-                break;
-            case BUILDINGTYPE.SiegeCamp:
-                //_ui.ShowMenu(MenuType.Siege, this);
-                break;
-            case BUILDINGTYPE.Granary:
+            _selector.Show();
+            switch(BuildingType)
+            {
+                case BUILDINGTYPE.Barracks:
+                    //_ui.ShowMenu(MenuType.Barracks, this);
+                    break;
+                case BUILDINGTYPE.MercenaryPost:
+                    //_ui.ShowMenu(MenuType.Mercenaries, this);
+                    break;
+                case BUILDINGTYPE.SiegeCamp:
+                    //_ui.ShowMenu(MenuType.Siege, this);
+                    break;
+                case BUILDINGTYPE.Granary:
 
-                break;
-            case BUILDINGTYPE.Market:
+                    break;
+                case BUILDINGTYPE.Market:
 
-                break;
-            case BUILDINGTYPE.Stockpile:
+                    break;
+                case BUILDINGTYPE.Stockpile:
 
-                break;
+                    break;
+            }
+
+            // update UI with building stats
         }
-
-        // update UI with building stats
-
     }
 
     public void Deselect()
     {
-        _selector.Hide();
+        if (_selector != null)
+        {
+            _selector.Hide();
+        }
     }
 
     public void AssignWorker(Unit u)
@@ -149,6 +166,14 @@ public class Building : StaticBody
             {
                 u.AtWorkPlace = true;
             }
+            else if (this is Campfire c)
+            {
+                u.AtCampfire = true;
+            }
+            else if (this is Stockpile s)
+            {
+                u.AtStockpile = true;
+            }
         }
     }
 
@@ -159,6 +184,14 @@ public class Building : StaticBody
             if (u.WorkPlace == this)
             {
                 u.AtWorkPlace = false;
+            }
+            else if (this is Campfire c)
+            {
+                u.AtCampfire = false;
+            }
+            else if (this is Stockpile s)
+            {
+                u.AtStockpile = false;
             }
         }
     }
