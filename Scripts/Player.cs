@@ -63,10 +63,10 @@ public class Player : Node
             if (n is Prop p)
             {
                 // spawn keep there
-                if (p.PropType == PropType.StartLocation && !p.InUse)
+                if (p.PropType == PROP.STARTLOCATION && !p.InUse)
                 {
                     p.InUse = true;
-                    BuildingManager.Spawn(BUILDINGTYPE.Keep, p.GlobalTransform.origin, this);
+                    BuildingManager.Spawn(BUILDINGTYPE.KEEP, p.GlobalTransform.origin, this);
                     StartingSpot = p.GlobalTransform.origin;                   
                     break;
                 }

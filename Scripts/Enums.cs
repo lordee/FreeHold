@@ -64,10 +64,11 @@ public enum BtnPosition
     Right,
 }
 
-public enum PropType
+public enum PROP
 {
-    StartLocation,
-    Tree,
+    STARTLOCATION,
+    TREE,
+    STONE,
 }
 
 public enum MenuType
@@ -91,67 +92,67 @@ public enum MenuType
 
 public enum BUILDINGTYPE
 {
-    None,
-    // food
-    Granary,
-    Orchard,
-    PigFarm,
-    GrainFarm,
-    HopsFarm,
-    DairyFarm,
-    Brewery,
-    Mill,
-    Bakery,
-    // industry
-    Stockpile,
-    WoodcutterHut,
-    Quarry,
-    OxTether,
-    IronMine,
-    PitchRig,
-    // town
-    Hovel,
-    Church,
-    Apothecary,
-    Well,
-    WaterPot,
-    Inn,
-    Market,
-    Chandler,
-    // military
-    Armoury,
-    Barracks,
-    MercenaryPost,
-    SiegeCamp,
-    Stable,
-    Fletcher,
-    Artillator,
-    Poleturner,
-    Weaponsmith,
-    Blacksmith,
-    Forge,
-    Armourer,
-    // castle fortifications
-    Wall,
-    Gatehouse,
-    Stairs,
-    Mangonel,
-    Ballista,
-    HaybaleLauncher, //??
-    // castle towers
-    SmallTower,
-    MediumTower,
-    LargeTower,
-    // castle defenses
-    Brazier,
-    Hoarding,
-    ManTrap,
-    Barricades,
-    Wardog,
-    OilSmelter,
-    PitchDitch,
-    // starting building
-    Keep,
+    NONE,
+    // FOOD
+    GRANARY,
+    ORCHARD,
+    PIGFARM,
+    GRAINFARM,
+    HOPSFARM,
+    DAIRYFARM,
+    BREWERY,
+    MILL,
+    BAKERY,
+    // INDUSTRY
+    STOCKPILE,
+    WOODCUTTERHUT,
+    QUARRY,
+    OXTETHER,
+    IRONMINE,
+    PITCHRIG,
+    // TOWN
+    HOVEL,
+    CHURCH,
+    APOTHECARY,
+    WELL,
+    WATERPOT,
+    INN,
+    MARKET,
+    CHANDLER,
+    // MILITARY
+    ARMOURY,
+    BARRACKS,
+    MERCENARYPOST,
+    SIEGECAMP,
+    STABLE,
+    FLETCHER,
+    ARTILLATOR,
+    POLETURNER,
+    WEAPONSMITH,
+    BLACKSMITH,
+    FORGE,
+    ARMOURER,
+    // CASTLE FORTIFICATIONS
+    WALL,
+    GATEHOUSE,
+    STAIRS,
+    MANGONEL,
+    BALLISTA,
+    HAYBALELAUNCHER, //??
+    // CASTLE TOWERS
+    SMALLTOWER,
+    MEDIUMTOWER,
+    LARGETOWER,
+    // CASTLE DEFENSES
+    BRAZIER,
+    HOARDING,
+    MANTRAP,
+    BARRICADES,
+    WARDOG,
+    OILSMELTER,
+    PITCHDITCH,
+    // STARTING BUILDING
+    KEEP,
     CAMPFIRE
 }
 

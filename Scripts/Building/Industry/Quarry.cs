@@ -15,9 +15,9 @@ public class Quarry : Building
         base._Ready();
     }
 
-//  // Called every frame. 'delta' is the elapsed time since the previous frame.
-//  public override void _Process(float delta)
-//  {
-//      
-//  }
+    public override void Init(BUILDINGTYPE bt, Vector3 origin, Player owner)
+    {
+        base.Init(bt, origin, owner);
+        CanPlace = false;
+    }
 }

@@ -8,6 +8,7 @@ public class BuildingManager : Node
     PackedScene _granaryScene;
     PackedScene _stockpileScene;
     PackedScene _woodcutterHutScene;
+    PackedScene _quarryScene;
 
     public Building PlacingBuilding = null;
 
@@ -19,6 +20,7 @@ public class BuildingManager : Node
         _granaryScene = ResourceLoader.Load(Granary.Resource) as PackedScene;
         _stockpileScene = ResourceLoader.Load(Stockpile.Resource) as PackedScene;
         _woodcutterHutScene = ResourceLoader.Load(WoodcutterHut.Resource) as PackedScene;
+        _quarryScene = ResourceLoader.Load(Quarry.Resource) as PackedScene;
     }
 
     static public Building Spawn(BUILDINGTYPE buildingType, Vector3 origin, Player owner)
@@ -99,17 +101,20 @@ public class BuildingManager : Node
         Building b = null;
         switch (buildingType)
         {
-            case BUILDINGTYPE.WoodcutterHut:
+            case BUILDINGTYPE.WOODCUTTERHUT:
                 b = _woodcutterHutScene.Instance() as Building;
                 break;
-            case BUILDINGTYPE.Stockpile:
+            case BUILDINGTYPE.STOCKPILE:
                 b = _stockpileScene.Instance() as Building;
                 break;
-            case BUILDINGTYPE.Granary:
+            case BUILDINGTYPE.GRANARY:
                 b = _granaryScene.Instance() as Building;
                 break;
-            case BUILDINGTYPE.Keep:
+            case BUILDINGTYPE.KEEP:
                 b = _keepScene.Instance() as Building;
+                break;
+            case BUILDINGTYPE.QUARRY:
+                b = _quarryScene.Instance() as Building;
                 break;
         }
 
@@ -137,12 +142,14 @@ public class BuildingManager : Node
     {
         switch (buildingType)
         {
-            case BUILDINGTYPE.Stockpile:
+            case BUILDINGTYPE.STOCKPILE:
                 return Stockpile.StoneCost;
-            case BUILDINGTYPE.WoodcutterHut:
+            case BUILDINGTYPE.WOODCUTTERHUT:
                 return WoodcutterHut.StoneCost;
-            case BUILDINGTYPE.Granary:
+            case BUILDINGTYPE.GRANARY:
                 return Granary.StoneCost;
+            case BUILDINGTYPE.QUARRY:
+                return Quarry.StoneCost;
             default:
                 return 99999;
         }
@@ -152,12 +159,14 @@ public class BuildingManager : Node
     {
         switch (buildingType)
         {
-            case BUILDINGTYPE.WoodcutterHut:
+            case BUILDINGTYPE.WOODCUTTERHUT:
                 return WoodcutterHut.PitchCost;
-            case BUILDINGTYPE.Stockpile:
+            case BUILDINGTYPE.STOCKPILE:
                 return Stockpile.PitchCost;
-            case BUILDINGTYPE.Granary:
+            case BUILDINGTYPE.GRANARY:
                 return Granary.PitchCost;
+            case BUILDINGTYPE.QUARRY:
+                return Quarry.PitchCost;
             default:
                 return 99999;
         }
@@ -167,12 +176,14 @@ public class BuildingManager : Node
     {
         switch (buildingType)
         {
-            case BUILDINGTYPE.WoodcutterHut:
+            case BUILDINGTYPE.WOODCUTTERHUT:
                 return WoodcutterHut.WoodCost;
-            case BUILDINGTYPE.Stockpile:
+            case BUILDINGTYPE.STOCKPILE:
                 return Stockpile.WoodCost;
-            case BUILDINGTYPE.Granary:
+            case BUILDINGTYPE.GRANARY:
                 return Granary.WoodCost;
+            case BUILDINGTYPE.QUARRY:
+                return Quarry.WoodCost;
             default:
                 return 99999;
         }
@@ -182,12 +193,14 @@ public class BuildingManager : Node
     {
         switch (buildingType)
         {
-            case BUILDINGTYPE.WoodcutterHut:
+            case BUILDINGTYPE.WOODCUTTERHUT:
                 return WoodcutterHut.GoldCost;
-            case BUILDINGTYPE.Stockpile:
+            case BUILDINGTYPE.STOCKPILE:
                 return Stockpile.GoldCost;
-            case BUILDINGTYPE.Granary:
+            case BUILDINGTYPE.GRANARY:
                 return Granary.GoldCost;
+            case BUILDINGTYPE.QUARRY:
+                return Quarry.GoldCost;
             default:
                 return 99999;
         }

@@ -19,7 +19,7 @@ public class World : Spatial
             if (n is Prop p)
             {
                 Utilities.MoveToFloor(p);
-                if (p.PropType == PropType.Tree)
+                if (p.PropType == PROP.TREE)
                 {
                     Trees.Add(p);
                 }

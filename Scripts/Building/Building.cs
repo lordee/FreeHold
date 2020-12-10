@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using System.Collections.Generic;
 
 public class Building : StaticBody
 {
@@ -23,7 +24,24 @@ public class Building : StaticBody
     public bool NeedsWorker = false;
     private Unit Worker = null;
 
-    public bool CanPlace = true;
+    private bool _canPlace = true;
+    public bool CanPlace {
+        get { return _canPlace; }
+        set { 
+            _canPlace = value;
+            if (value)
+            {
+                if (_colour != null)
+                {
+                    _body.MaterialOverride = _colour;
+                }
+            }
+            else
+            {
+                _body.MaterialOverride = Utilities.RedMaterial;
+            }
+        }
+    }
     public bool IsBuilt = false;
     Material _colour;
     public BUILDINGTYPE BuildingType;
@@ -31,6 +49,10 @@ public class Building : StaticBody
 
     public Area EntranceArea;
     public Vector3 EntranceLoc { get { return EntranceArea.GlobalTransform.origin; }}
+
+    public List<Prop> OverlappingProps = new List<Prop>();
+    public List<Building> OverlappingBuildings = new List<Building>();
+    public List<Unit> OverlappingUnits = new List<Unit>();
 
     public override void _Ready()
     {
@@ -44,6 +66,8 @@ public class Building : StaticBody
         {
             _area.Connect("body_entered", this, nameof(AreaBodyEntered));
             _area.Connect("body_exited", this, nameof(AreaBodyExited));
+            _area.Connect("area_entered", this, nameof(AreaEntered));
+            _area.Connect("area_exited", this, nameof(AreaExited));
         }
 
         EntranceArea = GetNodeOrNull("Entrance/EntranceArea") as Area;
@@ -84,62 +108,13 @@ public class Building : StaticBody
         }
     }
 
-    public void AreaBodyEntered(KinematicBody kb)
-    {
-        if (this.Name != kb.Name)
-        {
-            if (!IsBuilt)
-            {
-                CanPlace = false;
-                _body.MaterialOverride = Utilities.RedMaterial;
-            }
-            else if (kb is Unit u)
-            {
-                // TODO enter/exit building
-            }
-        }
-    }
-
-    public void AreaBodyExited(KinematicBody kb)
-    {
-        if (this.Name != kb.Name && !IsBuilt)
-        {
-            CanPlace = true;
-            if (_colour != null)
-            {
-                _body.MaterialOverride = _colour;
-            }
-        }
-    }
-    
     public void Select()
     {
         if (_selector != null)
         {
             _selector.Show();
-            switch(BuildingType)
-            {
-                case BUILDINGTYPE.Barracks:
-                    //_ui.ShowMenu(MenuType.Barracks, this);
-                    break;
-                case BUILDINGTYPE.MercenaryPost:
-                    //_ui.ShowMenu(MenuType.Mercenaries, this);
-                    break;
-                case BUILDINGTYPE.SiegeCamp:
-                    //_ui.ShowMenu(MenuType.Siege, this);
-                    break;
-                case BUILDINGTYPE.Granary:
 
-                    break;
-                case BUILDINGTYPE.Market:
-
-                    break;
-                case BUILDINGTYPE.Stockpile:
-
-                    break;
-            }
-
-            // update UI with building stats
+            // TODO update UI with building stats
         }
     }
 
@@ -175,6 +150,121 @@ public class Building : StaticBody
                 u.AtStockpile = true;
             }
         }
+    }
+
+    public void CheckIfPlacable()
+    {
+        if (OverlappingUnits.Count > 0)
+        {
+            CanPlace = false;
+        }
+        else if (OverlappingBuildings.Count > 0)
+        {
+            CanPlace = false;
+        }
+        else if (OverlappingProps.Count > 0)
+        {
+            foreach(Prop p in OverlappingProps)
+            {
+                if (p.PropType == PROP.STONE && this is Quarry)
+                {
+                    CanPlace = true;
+                    break;
+                }
+                else
+                {
+                    CanPlace = false;
+                }
+            }
+        }
+        else
+        {
+            if (this is Quarry)
+            {
+                CanPlace = false;
+            }
+            else
+            {
+                CanPlace = true;
+            }
+        }
+    }
+
+    public void AreaEntered(Node n)
+    {
+        if (n.Name == "PropArea")
+        {
+            Prop p = n.GetParent() as Prop;
+            if (p.PropType != PROP.STARTLOCATION)
+            {
+                OverlappingProps.Add(p);
+                if (!IsBuilt)
+                {
+                    CheckIfPlacable();
+                }
+            }
+        }
+    }
+
+    public void AreaExited(Node n)
+    {
+        if (n.Name == "PropArea")
+        {
+            Prop p = n.GetParent() as Prop;
+            OverlappingProps.Remove(p);
+            if (!IsBuilt)
+            {
+                CheckIfPlacable();
+            }
+        }
+    }
+
+    public void AreaBodyEntered(Node n)
+    {
+        if (n is Unit u)
+        {
+            OverlappingUnits.Add(u);
+            
+            if (!IsBuilt)
+            {
+                CheckIfPlacable();
+            }
+        }
+        else if (n is Building b)
+        {
+            if (this.Name != b.Name)
+            {
+                OverlappingBuildings.Add(b);
+                if (!IsBuilt)
+                {
+                    CheckIfPlacable();
+                }
+            }
+        }        
+    }
+
+    public void AreaBodyExited(Node n)
+    {
+        if (n is Unit u)
+        {
+            OverlappingUnits.Remove(u);
+            if (!IsBuilt)
+            {
+                CheckIfPlacable();
+            }
+
+        }
+        else if (n is Building b)
+        {
+            if (this.Name != b.Name)
+            {
+                OverlappingBuildings.Remove(b);
+                if (!IsBuilt)
+                {
+                    CheckIfPlacable();
+                }
+            }
+        }        
     }
 
     public void EntranceAreaBodyExited(KinematicBody kb)

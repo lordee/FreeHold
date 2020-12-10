@@ -54,7 +54,7 @@ public class UnitManager : Node
         if (p.Population < p.PopulationMax && p.PeasantLastSpawn >= Game.PeasantSpawnTime)
         {
             p.PeasantLastSpawn = 0f;
-            Unit u = SpawnUnit(UNITTYPE.Peasant, p, p.StartingSpot, p.Buildings.Find(e => e.BuildingType == BUILDINGTYPE.Keep));
+            Unit u = SpawnUnit(UNITTYPE.Peasant, p, p.StartingSpot, p.Buildings.Find(e => e.BuildingType == BUILDINGTYPE.KEEP));
             p.UnemployedPeasants += 1;
         }
     }

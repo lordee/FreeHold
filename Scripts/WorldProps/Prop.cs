@@ -4,7 +4,7 @@ using System;
 public class Prop : Spatial
 {
     [Export]
-    public PropType PropType;
+    public PROP PropType;
 
     public bool InUse = false;
     public Area PropArea;
@@ -13,7 +13,7 @@ public class Prop : Spatial
 
     public override void _Ready()
     {
-        if (PropType == PropType.StartLocation)
+        if (PropType == PROP.STARTLOCATION)
         {
             this.Hide();
         }
@@ -27,7 +27,7 @@ public class Prop : Spatial
         _lifeTime += delta;
         switch(PropType)
         {
-            case PropType.Tree:
+            case PROP.TREE:
                 if (_lifeTime >= Game.World.TreePropagationTime)
                 {
                     _lifeTime = 0;
@@ -37,17 +37,17 @@ public class Prop : Spatial
         }
     }
 
-    public void PropAreaBodyEntered(KinematicBody kb)
+    public void PropAreaBodyEntered(Node n)
     {
-        if (kb is Unit u)
+        if (n is Unit u)
         {
             u.PropAreas.Add(this);
         }
     }
 
-    public void PropAreaBodyExited(KinematicBody kb)
+    public void PropAreaBodyExited(Node n)
     {
-        if (kb is Unit u)
+        if (n is Unit u)
         {
             u.PropAreas.Remove(this);
         }

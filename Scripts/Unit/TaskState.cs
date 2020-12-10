@@ -39,7 +39,7 @@ public class TaskState : IUnitState
                     if (_taskTime >= _sawWoodTimeReq)
                     {
                         _owner.CarriedResource = RESOURCE.PLANKS;
-                        Building stockPile = _owner.PlayerOwner.Buildings.Find(e => e.BuildingType == BUILDINGTYPE.Stockpile);
+                        Building stockPile = _owner.PlayerOwner.Buildings.Find(e => e.BuildingType == BUILDINGTYPE.STOCKPILE);
                         if (stockPile != null)
                         {
                             _owner.BuildingTarg = stockPile;
