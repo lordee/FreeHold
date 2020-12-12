@@ -14,18 +14,13 @@ public class Keep : Building
         MaxHealth = 5000;
         Population = 10;
         _doorArea = GetNode("DoorMesh/DoorArea") as Area;
-        _doorArea.Connect("body_entered", this, nameof(DoorAreaBodyEntered));
+        //_doorArea.Connect("body_entered", this, nameof(DoorAreaBodyEntered));
     }
 
     public override void Init(BUILDINGTYPE bt, Vector3 origin, Player owner)
     {
         base.Init(bt, origin, owner);
         UnitSpawnPoint = _doorArea.GlobalTransform.origin;
-    }
-
-    private void DoorAreaBodyEntered(KinematicBody kb)
-    {
-        
     }
 
     

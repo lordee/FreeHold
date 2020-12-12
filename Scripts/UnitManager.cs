@@ -31,7 +31,7 @@ public class UnitManager : Node
     {
         foreach (Building b in p.Buildings)
         {
-            if (b.IsBuilt && b.NeedsWorker && !b.HasWorker 
+            if (b.IsBuilt && b.WorkersNeeded > b.WorkersAssigned.Count
             && p.UnemployedPeasants > 0)
             {
                 // assign a worker

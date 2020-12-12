@@ -29,6 +29,9 @@ public class WorkState : IUnitState
         // if at work place, look for task
         switch (_owner.WorkPlace)
         {
+            case Quarry q:
+                newState = new TaskState(_owner);
+                break;
             case WoodcutterHut w:
                 if (_owner.CarriedResource == RESOURCE.WOOD)
                 {

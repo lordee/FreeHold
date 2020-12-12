@@ -10,4 +10,5 @@ public struct InputCommand
     public float MoveLeft;
     public float ClickLeft;
     public float ClickRight;
+    public float BuildingRotate;
 }

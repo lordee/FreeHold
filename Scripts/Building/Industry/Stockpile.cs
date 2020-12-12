@@ -78,10 +78,10 @@ public class Stockpile : Building
         switch (res)
         {
             case RESOURCE.PLANKS:
-                ret = 20;
+                ret = 10;
                 break;
             case RESOURCE.STONE:
-                ret = 20;
+                ret = 10;
                 break;
         }
         return ret;

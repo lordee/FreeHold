@@ -19,5 +19,6 @@ public class Quarry : Building
     {
         base.Init(bt, origin, owner);
         CanPlace = false;
+        WorkersNeeded = 3;
     }
 }

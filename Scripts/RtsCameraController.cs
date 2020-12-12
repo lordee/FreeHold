@@ -30,6 +30,7 @@ public class RtsCameraController : Spatial
     bool _isHoldingClickLeft = false;
     float _clickRight = 0;
     bool _isHoldingClickRight = false;
+    float _buildingRotate = 0;
     public ClickState ClickState = ClickState.NoSelection;
     public ClickState LastClickState = ClickState.NoSelection;
     Vector2 _startSelPos = new Vector2();
@@ -106,6 +107,8 @@ public class RtsCameraController : Spatial
                 _isHoldingClickRight = false;
             }
             _clickRight = cmd.ClickRight;
+
+            _buildingRotate = cmd.BuildingRotate;
         }
 
         Move(delta);
@@ -141,6 +144,11 @@ public class RtsCameraController : Spatial
             pos.y = Game.World.Floor.GlobalTransform.origin.y + Game.World.Floor.Scale.y;
             pos.y += Game.BuildingManager.PlacingBuilding.Scale.y;
             Utilities.SetGlobalPosition(Game.BuildingManager.PlacingBuilding, pos);
+        }
+
+        if (_buildingRotate == 1)
+        {
+            Game.BuildingManager.PlacingBuilding.RotateY(90);
         }
 
         if (_clickRight == 1)

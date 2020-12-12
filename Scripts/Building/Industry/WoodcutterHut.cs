@@ -15,8 +15,7 @@ public class WoodcutterHut : Building
     public override void _Ready()
     {
         base._Ready();
-        NeedsWorker = true;
-        
+        WorkersNeeded = 1;        
     }
 
     

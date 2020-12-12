@@ -35,8 +35,19 @@ public class IdleState : IUnitState
                 }
                 else if (b == _owner.WorkPlace && _owner.AtWorkPlace)
                 {
-                    b = null;
-                    newState = new WorkState(_owner);
+                    if (_owner.AtWorkPlaceDropOff && _owner.CarriedResource != RESOURCE.NONE)
+                    {
+                        newState = new TaskState(_owner);
+                    }
+                    else if (_owner.AtWorkPlace)
+                    {
+                        b = null;
+                        newState = new WorkState(_owner);
+                    }
+                    else
+                    {
+                        GD.Print("Idlestate branch should not occur");
+                    }
                 }
                 else if ((
                             (b is Stockpile && _owner.PlayerOwner.Buildings.Contains(b)) 

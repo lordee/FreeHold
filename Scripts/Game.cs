@@ -73,6 +73,7 @@ public class Game : Spatial
         InputManager.Bind("camera_left", "a", InputManager.CameraLeft);
         InputManager.Bind("click_left", "mouseone", InputManager.ClickLeft);
         InputManager.Bind("click_right", "mousetwo", InputManager.ClickRight);
+        InputManager.Bind("building_rotate", "r", InputManager.BuildingRotate);
     }
 
     

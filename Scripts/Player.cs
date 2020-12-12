@@ -66,7 +66,10 @@ public class Player : Node
                 if (p.PropType == PROP.STARTLOCATION && !p.InUse)
                 {
                     p.InUse = true;
-                    BuildingManager.Spawn(BUILDINGTYPE.KEEP, p.GlobalTransform.origin, this);
+                    Vector3 loc = p.GlobalTransform.origin;
+                    BuildingManager.Spawn(BUILDINGTYPE.KEEP, loc, this);
+                    loc += new Vector3(0, 0, -15);
+                    BuildingManager.Spawn(BUILDINGTYPE.CAMPFIRE, loc, this);
                     StartingSpot = p.GlobalTransform.origin;                   
                     break;
                 }

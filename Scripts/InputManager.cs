@@ -57,6 +57,7 @@ public class InputManager : Node
 		cmd.IsRotating = 0;
 		cmd.ClickLeft = cmd.ClickLeft == -1 ? 0 : cmd.ClickLeft;
 		cmd.ClickRight = cmd.ClickRight == -1 ? 0 : cmd.ClickRight;
+		cmd.BuildingRotate = 0;
     }
 
     static public void Bind(string a, string k, Action<float> method)
@@ -172,6 +173,11 @@ public class InputManager : Node
 		}
         Binds.Add(b);
     }
+
+	static public void BuildingRotate(float val)
+	{
+		that.cmd.BuildingRotate = 1;
+	}
 
 	static public void CameraZoomIn(float val)
 	{

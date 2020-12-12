@@ -30,7 +30,7 @@ material/0 = ExtResource( 2 )
 collision_layer = 2
 collision_mask = 2
 
-[node name="CollisionShape2" type="CollisionShape" parent="MeshInstance/Area"]
+[node name="CollisionShape" type="CollisionShape" parent="MeshInstance/Area"]
 shape = SubResource( 2 )
 
 [node name="CollisionShape" type="CollisionShape" parent="."]
@@ -55,10 +55,10 @@ transform = Transform( 0.2, 0, 0, 0, 2, 0, 0, 0, 0.2, 0.5, 3, -0.5 )
 
 [node name="Entrance" type="Spatial" parent="."]
 
-[node name="EntranceArea" type="Area" parent="Entrance"]
+[node name="Area" type="Area" parent="Entrance"]
 transform = Transform( 1, 0, 0, 0, 3, 0, 0, 0, 1, 0, 4, 0 )
 collision_layer = 2
 collision_mask = 2
 
-[node name="CollisionShape" type="CollisionShape" parent="Entrance/EntranceArea"]
+[node name="CollisionShape" type="CollisionShape" parent="Entrance/Area"]
 shape = SubResource( 5 )

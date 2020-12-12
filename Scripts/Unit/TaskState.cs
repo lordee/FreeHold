@@ -8,6 +8,8 @@ public class TaskState : IUnitState
 
     float _chopWoodTimeReq = 5f;
     float _sawWoodTimeReq = 5f;
+    float _stoneBlockCreateTimeReq = 5f;
+    float _stoneBlockDropTimeReq = 5f;
 
     public TaskState(Unit u)
     {
@@ -32,6 +34,25 @@ public class TaskState : IUnitState
         
         switch (_owner.WorkPlace)
         {
+            case Quarry q:
+                if (_owner.CarriedResource == RESOURCE.STONE)
+                {
+                    if (_taskTime >= _stoneBlockDropTimeReq)
+                    {
+                        _owner.WorkPlace.DroppedOffResources += Stockpile.GetDropVal(_owner.CarriedResource);
+                        _owner.CarriedResource = RESOURCE.NONE;
+
+                        newState = new MoveState(_owner, _owner.WorkPlace.EntranceLoc);                        
+                    }
+                }
+                else if (_taskTime >= _stoneBlockCreateTimeReq)
+                {
+                    _owner.CarriedResource = RESOURCE.STONE;
+
+                    // send unit to drop off with stone
+                    newState = new MoveState(_owner, _owner.WorkPlace.DropOffLoc);
+                }
+                break;
             case WoodcutterHut w:
                 if (_owner.CarriedResource == RESOURCE.WOOD)
                 {

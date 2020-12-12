@@ -20,9 +20,8 @@ public class Building : StaticBody
     static public int StoneCost = 0;
     public int Population = 0;
     public Vector3 UnitSpawnPoint = new Vector3();
-    public bool HasWorker = false;
-    public bool NeedsWorker = false;
-    private Unit Worker = null;
+    public int WorkersNeeded = 0;
+    public List<Unit> WorkersAssigned = new List<Unit>();
 
     private bool _canPlace = true;
     public bool CanPlace {
@@ -47,12 +46,17 @@ public class Building : StaticBody
     public BUILDINGTYPE BuildingType;
     public Player PlayerOwner;
 
-    public Area EntranceArea;
-    public Vector3 EntranceLoc { get { return EntranceArea.GlobalTransform.origin; }}
+    private Area _entranceArea;
+    public Vector3 EntranceLoc { get { return _entranceArea.GlobalTransform.origin; }}
+
+    public Area _dropOffArea;
+    public Vector3 DropOffLoc { get { return _dropOffArea.GlobalTransform.origin; }}
 
     public List<Prop> OverlappingProps = new List<Prop>();
     public List<Building> OverlappingBuildings = new List<Building>();
     public List<Unit> OverlappingUnits = new List<Unit>();
+
+    public int DroppedOffResources = 0;
 
     public override void _Ready()
     {
@@ -70,11 +74,18 @@ public class Building : StaticBody
             _area.Connect("area_exited", this, nameof(AreaExited));
         }
 
-        EntranceArea = GetNodeOrNull("Entrance/EntranceArea") as Area;
-        if (EntranceArea != null)
+        _entranceArea = GetNodeOrNull("Entrance/Area") as Area;
+        if (_entranceArea != null)
         {
-            EntranceArea.Connect("body_entered", this, nameof(EntranceAreaBodyEntered));
-            EntranceArea.Connect("body_exited", this, nameof(EntranceAreaBodyExited));
+            _entranceArea.Connect("body_entered", this, nameof(EntranceAreaBodyEntered));
+            _entranceArea.Connect("body_exited", this, nameof(EntranceAreaBodyExited));
+        }
+
+        _dropOffArea = GetNodeOrNull("DropOff/Area") as Area;
+        if (_dropOffArea != null)
+        {
+            _dropOffArea.Connect("body_entered", this, nameof(DropOffAreaBodyEntered));
+            _dropOffArea.Connect("body_exited", this, nameof(DropOffAreaBodyExited));
         }
     }
 
@@ -95,17 +106,6 @@ public class Building : StaticBody
         }
 
         owner.Buildings.Add(this);
-
-        // FIXME - seperate out campfire as another scene, spawn it on keep build instead
-        if (this is Keep k)
-        {
-            Campfire c = k.GetNode("Campfire") as Campfire;
-            c.TeamID = TeamID;
-            c.PlayerOwner = owner;
-            c.BuildingType = BUILDINGTYPE.CAMPFIRE;
-            owner.Buildings.Add(c);
-            owner.Campfire = c;
-        }
     }
 
     public void Select()
@@ -128,8 +128,7 @@ public class Building : StaticBody
 
     public void AssignWorker(Unit u)
     {
-        Worker = u;
-        HasWorker = true;
+        WorkersAssigned.Add(u);
         u.Employ(this);
     }
 
@@ -152,6 +151,47 @@ public class Building : StaticBody
         }
     }
 
+    public void EntranceAreaBodyExited(KinematicBody kb)
+    {
+        if (kb is Unit u)
+        {
+            if (u.WorkPlace == this)
+            {
+                u.AtWorkPlace = false;
+            }
+            else if (this is Campfire c)
+            {
+                u.AtCampfire = false;
+            }
+            else if (this is Stockpile s)
+            {
+                u.AtStockpile = false;
+            }
+        }
+    }
+
+    public void DropOffAreaBodyExited(KinematicBody kb)
+    {
+        if (kb is Unit u)
+        {
+            if (u.WorkPlace == this)
+            {
+                u.AtWorkPlaceDropOff = false;
+            }
+        }
+    }
+
+    public void DropOffAreaBodyEntered(KinematicBody kb)
+    {
+        if (kb is Unit u)
+        {
+            if (u.WorkPlace == this)
+            {
+                u.AtWorkPlaceDropOff = true;
+            }
+        }
+    }
+
     public void CheckIfPlacable()
     {
         if (OverlappingUnits.Count > 0)
@@ -169,11 +209,11 @@ public class Building : StaticBody
                 if (p.PropType == PROP.STONE && this is Quarry)
                 {
                     CanPlace = true;
-                    break;
                 }
                 else
                 {
                     CanPlace = false;
+                    break;
                 }
             }
         }
@@ -265,24 +305,5 @@ public class Building : StaticBody
                 }
             }
         }        
-    }
-
-    public void EntranceAreaBodyExited(KinematicBody kb)
-    {
-        if (kb is Unit u)
-        {
-            if (u.WorkPlace == this)
-            {
-                u.AtWorkPlace = false;
-            }
-            else if (this is Campfire c)
-            {
-                u.AtCampfire = false;
-            }
-            else if (this is Stockpile s)
-            {
-                u.AtStockpile = false;
-            }
-        }
     }
 }

@@ -9,6 +9,7 @@ public class BuildingManager : Node
     PackedScene _stockpileScene;
     PackedScene _woodcutterHutScene;
     PackedScene _quarryScene;
+    PackedScene _campFireScene;
 
     public Building PlacingBuilding = null;
 
@@ -21,6 +22,7 @@ public class BuildingManager : Node
         _stockpileScene = ResourceLoader.Load(Stockpile.Resource) as PackedScene;
         _woodcutterHutScene = ResourceLoader.Load(WoodcutterHut.Resource) as PackedScene;
         _quarryScene = ResourceLoader.Load(Quarry.Resource) as PackedScene;
+        _campFireScene = ResourceLoader.Load(Campfire.Resource) as PackedScene;
     }
 
     static public Building Spawn(BUILDINGTYPE buildingType, Vector3 origin, Player owner)
@@ -115,6 +117,9 @@ public class BuildingManager : Node
                 break;
             case BUILDINGTYPE.QUARRY:
                 b = _quarryScene.Instance() as Building;
+                break;
+            case BUILDINGTYPE.CAMPFIRE:
+                b = _campFireScene.Instance() as Building;
                 break;
         }
 

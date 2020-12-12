@@ -14,6 +14,7 @@ public class Unit : KinematicBody
     public bool AtCampfire = false;
     public bool AtWorkPlace = false;
     public bool AtStockpile = false;
+    public bool AtWorkPlaceDropOff = false;
 
     private int _moveSpeed = 12;
     public int MoveSpeed { get { return _moveSpeed; }}
