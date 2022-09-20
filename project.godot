@@ -1,0 +1,60 @@
+; Engine configuration file.
+; It's best edited using the editor UI and not directly,
+; since the parameters that go here are not all obvious.
+;
+; Format:
+;   [section] ; section goes between []
+;   param=value ; assign values to parameters
+
+config_version=5
+
+_global_script_classes=[{
+"base": "Node",
+"class": &"BoundAction",
+"language": &"GDScript",
+"path": "res://BoundAction.gd"
+}, {
+"base": "Node",
+"class": &"EntityManager",
+"language": &"GDScript",
+"path": "res://scenes/entity_manager.gd"
+}, {
+"base": "RefCounted",
+"class": &"Enums",
+"language": &"GDScript",
+"path": "res://scripts/Enums.gd"
+}, {
+"base": "Node",
+"class": &"InputCommand",
+"language": &"GDScript",
+"path": "res://scripts/InputCommand.gd"
+}, {
+"base": "Node",
+"class": &"KeyType",
+"language": &"GDScript",
+"path": "res://scripts/KeyType.gd"
+}, {
+"base": "CharacterBody3D",
+"class": &"Unit",
+"language": &"GDScript",
+"path": "res://scenes/unit.gd"
+}]
+_global_script_class_icons={
+"BoundAction": "",
+"EntityManager": "",
+"Enums": "",
+"InputCommand": "",
+"KeyType": "",
+"Unit": ""
+}
+
+[application]
+
+config/name="Freehold"
+run/main_scene="res://scenes/game.tscn"
+config/features=PackedStringArray("4.0", "Vulkan Clustered")
+config/icon="res://icon.svg"
+
+[dotnet]
+
+project/assembly_name="Freehold"

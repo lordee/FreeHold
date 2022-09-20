@@ -1,0 +1,22 @@
+[gd_scene load_steps=6 format=3 uid="uid://bfquvyi816ag1"]
+
+[ext_resource type="PackedScene" uid="uid://cbx0ds1n1f78g" path="res://scenes/main_menu.tscn" id="1_2240r"]
+[ext_resource type="Script" path="res://scenes/game.gd" id="1_efxwo"]
+[ext_resource type="PackedScene" uid="uid://d1e0rys7lx72q" path="res://scenes/camera_controller.tscn" id="3_vvlqa"]
+[ext_resource type="Script" path="res://scenes/input_manager.gd" id="3_ykkxb"]
+[ext_resource type="Script" path="res://scenes/entity_manager.gd" id="5_aadkg"]
+
+[node name="game" type="Node3D"]
+script = ExtResource("1_efxwo")
+
+[node name="ui_manager" type="Node" parent="."]
+
+[node name="main_menu" parent="ui_manager" instance=ExtResource("1_2240r")]
+
+[node name="input_manager" type="Node" parent="."]
+script = ExtResource("3_ykkxb")
+
+[node name="camera_controller" parent="input_manager" instance=ExtResource("3_vvlqa")]
+
+[node name="entity_manager" type="Node" parent="."]
+script = ExtResource("5_aadkg")

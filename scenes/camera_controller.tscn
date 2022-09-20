@@ -1,0 +1,20 @@
+[gd_scene load_steps=3 format=3 uid="uid://d1e0rys7lx72q"]
+
+[ext_resource type="Script" path="res://camera_controller.gd" id="1_ll3sc"]
+[ext_resource type="Script" path="res://scripts/selection_box.gd" id="2_thyic"]
+
+[node name="camera_controller" type="Node3D"]
+script = ExtResource("1_ll3sc")
+
+[node name="elevation" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.707107, 0.707107, 0, -0.707107, 0.707107, 0, 0, 0)
+
+[node name="Camera3d" type="Camera3D" parent="elevation"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 10)
+
+[node name="selection_box" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("2_thyic")

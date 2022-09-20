@@ -1,0 +1,57 @@
+[gd_scene load_steps=7 format=3 uid="uid://bbpd5oih21dgl"]
+
+[ext_resource type="PackedScene" uid="uid://ccbt0vwadij5g" path="res://scenes/unit.tscn" id="1_nggqv"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_kxkwf"]
+albedo_color = Color(0.109804, 0.27451, 0.133333, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_kluhc"]
+size = Vector3(20, 1, 20)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_cfeny"]
+size = Vector3(10, 1, 10)
+
+[sub_resource type="BoxMesh" id="BoxMesh_n401r"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_c7dqb"]
+
+[node name="map" type="Node3D"]
+
+[node name="Floor" type="MeshInstance3D" parent="."]
+material_override = SubResource("StandardMaterial3D_kxkwf")
+mesh = SubResource("BoxMesh_kluhc")
+
+[node name="StaticBody3d" type="StaticBody3D" parent="Floor"]
+
+[node name="CollisionShape3d" type="CollisionShape3D" parent="Floor/StaticBody3d"]
+shape = SubResource("BoxShape3D_cfeny")
+
+[node name="Cube" type="MeshInstance3D" parent="."]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, -2.42217, 1.5, 0)
+mesh = SubResource("BoxMesh_n401r")
+
+[node name="StaticBody3d" type="StaticBody3D" parent="Cube"]
+
+[node name="CollisionShape3d" type="CollisionShape3D" parent="Cube/StaticBody3d"]
+shape = SubResource("BoxShape3D_c7dqb")
+
+[node name="Cube2" type="MeshInstance3D" parent="."]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 3.59151, 1.5, 0)
+mesh = SubResource("BoxMesh_n401r")
+
+[node name="StaticBody3d" type="StaticBody3D" parent="Cube2"]
+
+[node name="CollisionShape3d" type="CollisionShape3D" parent="Cube2/StaticBody3d"]
+shape = SubResource("BoxShape3D_c7dqb")
+
+[node name="Cube3" type="MeshInstance3D" parent="."]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 1.035, 1.5, 4.3731)
+mesh = SubResource("BoxMesh_n401r")
+
+[node name="StaticBody3d" type="StaticBody3D" parent="Cube3"]
+
+[node name="CollisionShape3d" type="CollisionShape3D" parent="Cube3/StaticBody3d"]
+shape = SubResource("BoxShape3D_c7dqb")
+
+[node name="unit" parent="." instance=ExtResource("1_nggqv")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.27596, -2.9252)
