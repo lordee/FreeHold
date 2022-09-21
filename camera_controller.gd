@@ -122,7 +122,7 @@ func move(delta):
 	self.position += velocity
 
 func process_clicks(mouse_pos: Vector2):
-	if _click_right == 1:
+	if _click_right == -1: # set on release
 		move_selected_units()
 		
 	if _click_left == 1 && !_is_holding_click_left: # first click
