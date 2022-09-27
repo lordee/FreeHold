@@ -27,6 +27,7 @@ func _physics_process(delta: float) -> void:
 			var v = global_transform.origin.direction_to(next_location).normalized() * SPEED
 			#var v = (next_location - self.global_position).normalized()
 			agent.set_velocity(v)
+			look_at(next_location)
 		else:
 			agent.set_velocity(Vector3.ZERO)
 	else:
