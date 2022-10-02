@@ -8,6 +8,7 @@ var camera_controller = null
 var _bindings: Dictionary = {}
 var _key_types: Dictionary = {}
 var current_frame_cmd: InputCommand = InputCommand.new()
+var input_type: Enums.INPUT_TYPE = Enums.INPUT_TYPE.NO_SELECTION
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
