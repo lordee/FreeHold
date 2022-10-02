@@ -8,6 +8,8 @@ var camera: Camera3D
 var selection_box: Control
 var input_manager
 var entity_manager: EntityManager
+var game
+var ui_manager
 
 # settings
 var _movement_speed: float = 20
@@ -45,7 +47,9 @@ func _ready():
 	elevation = get_node("elevation")
 	selection_box = get_node("selection_box")
 	input_manager = get_parent()
-	entity_manager = get_node("/root/game/entity_manager")
+	game = get_node("/root/game")
+	entity_manager = game.get_node("entity_manager")
+	ui_manager = game.get_node("ui_manager")
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -96,21 +100,41 @@ func _process(delta):
 		zoom(delta)
 		pan(delta)
 		
-		process_clicks(mouse_pos)
-		# TODO
-#		if (Game.BuildingManager.PlacingBuilding != null)
-#        {
-#            ClickState = ClickState.PlacingBuilding;
-#        }
-#        switch (ClickState)
-#        {
-#            case ClickState.NoSelection:
-#                InputNoSelection(mPos);
-#                break;
-#            case ClickState.PlacingBuilding:
-#                InputPlacingBuilding(mPos);
-#                break;
-#        }
+		if _click_left == 1 && !_is_holding_click_left: # first click
+			selection_box.start_pos = mouse_pos
+			
+		if _is_holding_click_left:
+			selection_box.mouse_pos = mouse_pos
+			selection_box.draw_box = true
+		else:
+			selection_box.draw_box = false
+		
+		match input_manager.input_type:
+			Enums.INPUT_TYPE.UNIT:
+				pass
+			Enums.INPUT_TYPE.NO_SELECTION:
+				process_clicks(mouse_pos)
+			Enums.INPUT_TYPE.BUILDING:
+				process_building_input(mouse_pos)
+#					private void InputPlacingBuilding(Vector2 mPos)
+#	{
+#		if (_buildingRotate == 1)
+#		{
+#			Game.BuildingManager.PlacingBuilding.RotateY(90);
+#		}
+#
+#		if (_clickRight == 1)
+#		{
+#			// cancel placement
+#			ClickState = ClickState.NoSelection;
+#			Game.BuildingManager.CancelBuildingPlacement();
+#		}
+#		else if (_clickLeft == 1)
+#		{
+#			ClickState = ClickState.NoSelection;
+#			Game.BuildingManager.Build();
+#		}
+#	}
 		
 		if _click_left == -1:
 			_click_left = 0
@@ -121,26 +145,45 @@ func move(delta):
 	var velocity: Vector3 = get_desired_velocity() * delta * _movement_speed
 	self.position += velocity
 
+func process_building_input(mouse_pos):
+	var results: Dictionary = raycast_from_mouse()
+	
+	if !results.is_empty():
+		var position: Vector3 = results["position"]
+		position.y = game.floor.global_transform.origin.y * game.floor.scale.y
+#		position.y += game.entity_manager.building_being_placed.position.y * game.entity_manager.building_being_placed.scale
+		entity_manager.building_being_placed.global_transform.origin = position
+		
+	if _building_rotate == 1:
+		entity_manager.building_being_placed.rotate_y(90)
+		
+	if _click_right == 1:
+		# cancel placement
+		entity_manager.cancel_building_placement()
+		input_manager.input_type = Enums.INPUT_TYPE.NO_SELECTION
+	elif _click_left == 1:
+		var build_result = entity_manager.build()
+		if build_result:
+			input_manager.input_type = Enums.INPUT_TYPE.NO_SELECTION
+
 func process_clicks(mouse_pos: Vector2):
 	if _click_right == -1: # set on release
 		move_selected_units()
 		
-	if _click_left == 1 && !_is_holding_click_left: # first click
-		selection_box.start_pos = mouse_pos
-		
-	if _is_holding_click_left:
-		selection_box.mouse_pos = mouse_pos
-		selection_box.draw_box = true
-	else:
-		selection_box.draw_box = false
+
 		
 	if _click_left == -1: # just released
 		select_objects(mouse_pos)
 
 func move_selected_units():
 	var results: Dictionary = raycast_from_mouse()
+	print(results)
 	if !results.is_empty():
-		entity_manager.move_selected_units(results["position"])
+		if results["collider"].is_in_group("fh_tree"):
+			var tree = results["collider"].get_parent().get_parent()
+			entity_manager.set_work_target(tree)
+		else:
+			entity_manager.move_selected_units(results["position"])
 
 func select_objects(mouse_pos: Vector2):
 	entity_manager.deselect_all()
@@ -150,6 +193,7 @@ func select_objects(mouse_pos: Vector2):
 		if !results.is_empty():
 			if results["collider"] is Unit:
 				entity_manager.select_object(results["collider"])
+			
 	else:
 		select_objects_in_select_box(selection_box.start_pos, selection_box.mouse_pos)
 			
@@ -240,7 +284,7 @@ func zoom(delta: float):
 	if absf(_zoom_direction) < 0.0001:
 		_zoom_direction = 0
 
-func raycast_from_mouse():
+func raycast_from_mouse() -> Dictionary:
 	var mouse_pos: Vector2 = get_viewport().get_mouse_position()
 	var ray_from: Vector3 = camera.project_ray_origin(mouse_pos)
 	var ray_to: Vector3 = ray_from + camera.project_ray_normal(mouse_pos) * _ray_length
