@@ -11,14 +11,12 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="CenterContainer" type="CenterContainer" parent="."]
-layout_mode = 0
 offset_left = 4.0
 offset_top = 606.0
 offset_right = 1154.0
 offset_bottom = 646.0
 
 [node name="UIBaseContainer" type="GridContainer" parent="CenterContainer"]
-layout_mode = 2
 offset_left = 499.0
 offset_top = 4.0
 offset_right = 650.0
@@ -26,13 +24,11 @@ offset_bottom = 35.0
 columns = 2
 
 [node name="economy" type="Button" parent="CenterContainer/UIBaseContainer"]
-layout_mode = 2
 offset_right = 79.0
 offset_bottom = 31.0
 text = "Economy"
 
 [node name="military" type="Button" parent="CenterContainer/UIBaseContainer"]
-layout_mode = 2
 offset_left = 83.0
 offset_right = 151.0
 offset_bottom = 31.0
@@ -40,7 +36,6 @@ text = "Military"
 
 [node name="EconomyContainer" type="GridContainer" parent="CenterContainer"]
 visible = false
-layout_mode = 2
 offset_left = 484.0
 offset_top = 4.0
 offset_right = 665.0
@@ -48,13 +43,11 @@ offset_bottom = 35.0
 columns = 2
 
 [node name="woodchopper" type="Button" parent="CenterContainer/EconomyContainer"]
-layout_mode = 2
 offset_right = 117.0
 offset_bottom = 31.0
 text = "Woodchopper"
 
 [node name="cancel" type="Button" parent="CenterContainer/EconomyContainer"]
-layout_mode = 2
 offset_left = 121.0
 offset_right = 181.0
 offset_bottom = 31.0

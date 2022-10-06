@@ -13,16 +13,20 @@ var building_being_placed
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	game = get_node("/root/game")
-	scene_woodchopper = ResourceLoader.load("res://scenes/woodchopper.tscn")
+	scene_woodchopper = ResourceLoader.load("res://scenes/buildings/woodchopper.tscn")
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(delta):
 	pass
 
 func cancel_building_placement():
-	building_being_placed.queue_free()
+	if building_being_placed != null:
+		building_being_placed.queue_free()
+		building_being_placed = null
+	game.input_manager.input_type = Enums.INPUT_TYPE.NO_SELECTION
 	
 func start_building_placement(building_type):
+	cancel_building_placement()
 	var scene: PackedScene = null
 	match building_type:
 		Enums.BUILDING.WOODCHOPPER:
@@ -35,9 +39,43 @@ func start_building_placement(building_type):
 	# spawn scene
 	var node = scene.instantiate()
 	add_child(node)
+	var area: Area3D = node.get_node("Area3d")
+	
+	area.body_entered.connect(self.building_area_entered.bind(area))
+	area.body_exited.connect(self.building_area_exited.bind(area))
+	validate_building_placement(area)
 	building_being_placed = node
 	game.input_manager.input_type = Enums.INPUT_TYPE.BUILDING
-		
+
+func building_area_entered(body: Node3D, area: Area3D):
+	for node in area.get_parent().get_children():
+		if node is MeshInstance3D:
+			node.material_override = ResourceLoader.load("res://materials/red_transparent.tres")
+
+func validate_building_placement(area: Area3D):
+	var overlapping_bodies = area.get_overlapping_bodies()
+	for node in area.get_parent().get_children():
+		if node is MeshInstance3D:
+			if len(overlapping_bodies) == 0:
+				node.material_override = null
+			else:
+				node.material_override = ResourceLoader.load("res://materials/red_transparent.tres")
+	
+#	for node in area.get_parent().get_children():
+#		if node is MeshInstance3D:
+#			if len(overlapping_bodies) == 0:
+#				node.material_override = null
+#			else:
+#				var mat = node.mesh.surface_get_material(0)
+#				var array = node.mesh.surface_get_arrays(0)
+#				node.mesh = ArrayMesh.new()
+#				node.mesh.add_surface_from_arrays(Mesh.PRIMITIVE_LINES, array)
+#				node.mesh.surface_set_material(0, mat)
+
+# somehow we can get less exits than enters, so instead of counting them, we will scan for overlaps on exit
+func building_area_exited(body: Node3D, area: Area3D):
+	validate_building_placement(area)
+
 func build() -> bool:
 	entities.append(building_being_placed)
 	building_being_placed = null
@@ -89,5 +127,4 @@ func deselect_all():
 
 func move_selected_units(dest_position: Vector3):
 	for ent in selected_entities:
-		ent.work_target = null
 		ent.move_to(dest_position)

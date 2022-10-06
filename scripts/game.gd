@@ -4,7 +4,7 @@ var entity_manager: EntityManager
 var input_manager
 var ui_manager: fh_ui_manager
 var map
-var floor
+var map_floor: MeshInstance3D
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -26,7 +26,7 @@ func start_game():
 func load_map():
 	var map_scene: PackedScene = ResourceLoader.load("res://scenes/map_test.tscn")
 	map = map_scene.instantiate()
-	floor = map.find_child("Floor")
+	map_floor = map.find_child("Floor")
 	add_child(map)
 	
 	

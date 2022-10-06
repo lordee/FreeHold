@@ -1,18 +1,18 @@
-[gd_scene load_steps=19 format=3 uid="uid://sr5gb35ryno7"]
+[gd_scene load_steps=20 format=3 uid="uid://sr5gb35ryno7"]
 
-[ext_resource type="Texture2D" uid="uid://ckdvp41hrxicn" path="res://assets/woodchopper/Stone Wall2.jpg" id="1_rwf5g"]
-[ext_resource type="Texture2D" uid="uid://en5tfu280nhj" path="res://assets/woodchopper/Tree_rings.jpg" id="1_wrkld"]
-[ext_resource type="Texture2D" uid="uid://x1ijbqjys8sm" path="res://assets/woodchopper/Door.jpg" id="2_hssfp"]
-[ext_resource type="Texture2D" uid="uid://bxr3ijmwygqan" path="res://assets/woodchopper/Bark.jpg" id="2_jk5vp"]
-[ext_resource type="Texture2D" uid="uid://h873bhti3xso" path="res://assets/woodchopper/Wood.jpg" id="3_ol78i"]
-[ext_resource type="Texture2D" uid="uid://blbe078g6gu4w" path="res://assets/woodchopper/AxeHead.jpg" id="4_mdhre"]
+[ext_resource type="Texture2D" uid="uid://ckdvp41hrxicn" path="res://assets/woodchopper/Stone Wall2.jpg" id="1_c87pv"]
+[ext_resource type="Texture2D" uid="uid://x1ijbqjys8sm" path="res://assets/woodchopper/Door.jpg" id="2_rn33n"]
+[ext_resource type="Texture2D" uid="uid://en5tfu280nhj" path="res://assets/woodchopper/Tree_rings.jpg" id="3_fq08g"]
+[ext_resource type="Texture2D" uid="uid://bxr3ijmwygqan" path="res://assets/woodchopper/Bark.jpg" id="4_hu6i3"]
+[ext_resource type="Texture2D" uid="uid://h873bhti3xso" path="res://assets/woodchopper/Wood.jpg" id="5_okrec"]
+[ext_resource type="Texture2D" uid="uid://blbe078g6gu4w" path="res://assets/woodchopper/AxeHead.jpg" id="6_7nwhc"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_g5b4y"]
 resource_name = "Stone Wall2"
 cull_mode = 2
 vertex_color_use_as_albedo = true
 albedo_color = Color(0.906332, 0.906332, 0.906332, 1)
-albedo_texture = ExtResource("1_rwf5g")
+albedo_texture = ExtResource("1_c87pv")
 roughness = 0.5
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_gd0k4"]
@@ -20,7 +20,7 @@ resource_name = "Door"
 cull_mode = 2
 vertex_color_use_as_albedo = true
 albedo_color = Color(0.906332, 0.906332, 0.906332, 1)
-albedo_texture = ExtResource("2_hssfp")
+albedo_texture = ExtResource("2_rn33n")
 roughness = 0.5
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_j4tq1"]
@@ -80,7 +80,7 @@ resource_name = "WoodenRings"
 cull_mode = 2
 vertex_color_use_as_albedo = true
 albedo_color = Color(0.906332, 0.906332, 0.906332, 1)
-albedo_texture = ExtResource("1_wrkld")
+albedo_texture = ExtResource("3_fq08g")
 roughness = 0.5
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_geq6w"]
@@ -88,7 +88,7 @@ resource_name = "Bark"
 cull_mode = 2
 vertex_color_use_as_albedo = true
 albedo_color = Color(0.906332, 0.906332, 0.906332, 1)
-albedo_texture = ExtResource("2_jk5vp")
+albedo_texture = ExtResource("4_hu6i3")
 roughness = 0.5
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_m1vyr"]
@@ -150,7 +150,7 @@ resource_name = "Wood"
 cull_mode = 2
 vertex_color_use_as_albedo = true
 albedo_color = Color(0.906332, 0.906332, 0.906332, 1)
-albedo_texture = ExtResource("3_ol78i")
+albedo_texture = ExtResource("5_okrec")
 roughness = 0.5
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_4pb6v"]
@@ -158,7 +158,7 @@ resource_name = "AxeHead"
 cull_mode = 2
 vertex_color_use_as_albedo = true
 albedo_color = Color(0.906332, 0.906332, 0.906332, 1)
-albedo_texture = ExtResource("4_mdhre")
+albedo_texture = ExtResource("6_7nwhc")
 roughness = 0.5
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_cc8jo"]
@@ -255,19 +255,28 @@ _surfaces = [{
 blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_cc8jo")
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_halga"]
+size = Vector3(3.5, 1, 3.5)
+
 [node name="woodchopper" type="Node3D"]
 
 [node name="Celler" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1.78814e-07, -1, 0, 1, 1.78814e-07, 0, 0, -3.50134)
+transform = Transform3D(1, 0, 0, 0, 1.78814e-07, -1, 0, 1, 1.78814e-07, 0, 0, 0)
 mesh = SubResource("ArrayMesh_8dxyl")
 skeleton = NodePath("")
 
 [node name="PileOfLogs" type="MeshInstance3D" parent="."]
-transform = Transform3D(-4.37114e-08, 1, -4.37114e-08, 0, -4.37114e-08, -1, -1, -4.37114e-08, 1.91069e-15, -2.43892, -1.21203, 1.20961)
+transform = Transform3D(-4.37114e-08, 1, -4.37114e-08, 0, -4.37114e-08, -1, -1, -4.37114e-08, 1.91069e-15, -2.439, -1.212, 4.7)
 mesh = SubResource("ArrayMesh_mgjx5")
 skeleton = NodePath("")
 
 [node name="WoodChop" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1.78814e-07, -1, 0, 1, 1.78814e-07, -2.08235, -0.577191, -0.888072)
+transform = Transform3D(1, 0, 0, 0, 1.78814e-07, -1, 0, 1, 1.78814e-07, -2.082, -0.577, 2.7)
 mesh = SubResource("ArrayMesh_bbtqa")
 skeleton = NodePath("")
+
+[node name="Area3d" type="Area3D" parent="."]
+
+[node name="CollisionShape3d" type="CollisionShape3D" parent="Area3d"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.327395, 0.536241, 0.393969)
+shape = SubResource("BoxShape3D_halga")

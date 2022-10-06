@@ -29,6 +29,27 @@ func _ready():
 func _process(delta):
 	pass
 	
+func button_recursive(node: Node, mouse_pos: Vector2) -> bool:
+	for child in node.get_children():
+		if child.visible:
+			if button_hover_check(child, mouse_pos):
+				return true
+			if button_recursive(child, mouse_pos):
+				return true
+		
+	return false
+	
+func button_hover_check(node: Node, mouse_pos: Vector2) -> bool:
+	if node is Button:
+		var rect: Rect2 = node.get_global_rect()		
+		if mouse_pos.x >= rect.position.x and mouse_pos.x <= rect.position.x + rect.size.x:
+			if mouse_pos.y >= rect.position.y and mouse_pos.y <= rect.position.y + rect.size.y:
+				return true
+	return false
+
+func hovering_over_button(mouse_pos) -> bool:
+	return button_recursive(self, mouse_pos)
+	
 func reset_ui_menus():
 	ui_cancel_button_pressed()
 	
@@ -36,6 +57,7 @@ func reset_ui_menus():
 func ui_cancel_button_pressed():
 	base_container.visible = true
 	economy_container.visible = false
+	game.entity_manager.cancel_building_placement()
 
 func economy_button_pressed():
 	base_container.visible = false

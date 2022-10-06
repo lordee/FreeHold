@@ -150,8 +150,10 @@ func process_building_input(mouse_pos):
 	
 	if !results.is_empty():
 		var position: Vector3 = results["position"]
-		position.y = game.floor.global_transform.origin.y * game.floor.scale.y
-#		position.y += game.entity_manager.building_being_placed.position.y * game.entity_manager.building_being_placed.scale
+#		position.y = game.map_floor.global_transform.origin.y * game.map_floor.scale.y
+		position.y = game.map_floor.mesh.size.y * game.map_floor.scale.y
+		
+		#position.y += game.entity_manager.building_being_placed.position.y * game.entity_manager.building_being_placed.scale.y
 		entity_manager.building_being_placed.global_transform.origin = position
 		
 	if _building_rotate == 1:
@@ -160,8 +162,10 @@ func process_building_input(mouse_pos):
 	if _click_right == 1:
 		# cancel placement
 		entity_manager.cancel_building_placement()
-		input_manager.input_type = Enums.INPUT_TYPE.NO_SELECTION
+		
 	elif _click_left == 1:
+		if game.ui_manager.hovering_over_button(mouse_pos):
+			return
 		var build_result = entity_manager.build()
 		if build_result:
 			input_manager.input_type = Enums.INPUT_TYPE.NO_SELECTION
