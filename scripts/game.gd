@@ -3,8 +3,8 @@ extends Node3D
 var entity_manager: EntityManager
 var input_manager
 var ui_manager: fh_ui_manager
-var map
 var map_floor: MeshInstance3D
+var map_nav_region: NavigationRegion3D
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -25,7 +25,8 @@ func start_game():
 
 func load_map():
 	var map_scene: PackedScene = ResourceLoader.load("res://scenes/map_test.tscn")
-	map = map_scene.instantiate()
+	var map = map_scene.instantiate()
+	map_nav_region = map.get_node("NavigationRegion3d")
 	map_floor = map.find_child("Floor")
 	add_child(map)
 	

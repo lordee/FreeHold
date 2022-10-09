@@ -280,3 +280,9 @@ skeleton = NodePath("")
 [node name="CollisionShape3d" type="CollisionShape3D" parent="Area3d"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.327395, 0.536241, 0.393969)
 shape = SubResource("BoxShape3D_halga")
+
+[node name="StaticBody3d" type="StaticBody3D" parent="."]
+
+[node name="CollisionShape3d2" type="CollisionShape3D" parent="StaticBody3d"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.327395, 0.536241, 0.393969)
+shape = SubResource("BoxShape3D_halga")

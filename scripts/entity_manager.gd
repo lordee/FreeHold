@@ -8,7 +8,8 @@ var game
 
 var scene_woodchopper: PackedScene
 
-var building_being_placed
+var building_being_placed: Node3D
+var building_being_placed_valid: bool = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -43,23 +44,35 @@ func start_building_placement(building_type):
 	
 	area.body_entered.connect(self.building_area_entered.bind(area))
 	area.body_exited.connect(self.building_area_exited.bind(area))
+
 	validate_building_placement(area)
 	building_being_placed = node
 	game.input_manager.input_type = Enums.INPUT_TYPE.BUILDING
 
 func building_area_entered(body: Node3D, area: Area3D):
+	if body.get_parent() == area.get_parent():
+		return
+		
 	for node in area.get_parent().get_children():
 		if node is MeshInstance3D:
 			node.material_override = ResourceLoader.load("res://materials/red_transparent.tres")
+			building_being_placed_valid = false
 
 func validate_building_placement(area: Area3D):
 	var overlapping_bodies = area.get_overlapping_bodies()
+	var body_count: int = 0
+	for body in overlapping_bodies:
+		if body.get_parent() != area.get_parent():
+			body_count += 1
+		
 	for node in area.get_parent().get_children():
 		if node is MeshInstance3D:
-			if len(overlapping_bodies) == 0:
+			if body_count == 0:
 				node.material_override = null
+				building_being_placed_valid = true
 			else:
 				node.material_override = ResourceLoader.load("res://materials/red_transparent.tres")
+				building_being_placed_valid = false
 	
 #	for node in area.get_parent().get_children():
 #		if node is MeshInstance3D:
@@ -77,7 +90,18 @@ func building_area_exited(body: Node3D, area: Area3D):
 	validate_building_placement(area)
 
 func build() -> bool:
+	if building_being_placed_valid == false:
+		# TODO - sounds effects, message
+		return false
+		
 	entities.append(building_being_placed)
+	var area: Area3D = building_being_placed.get_node("Area3d")
+	
+	area.body_entered.disconnect(self.building_area_entered)
+	area.body_exited.disconnect(self.building_area_exited)
+	remove_child(building_being_placed)
+	game.map_nav_region.add_child(building_being_placed)
+	game.map_nav_region.bake_navigation_mesh()
 	building_being_placed = null
 	game.ui_manager.reset_ui_menus()
 	return true

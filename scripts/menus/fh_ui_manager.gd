@@ -29,6 +29,7 @@ func _ready():
 func _process(delta):
 	pass
 	
+# TODO - track button state/coords instead of constant node traversal
 func button_recursive(node: Node, mouse_pos: Vector2) -> bool:
 	for child in node.get_children():
 		if child.visible:
