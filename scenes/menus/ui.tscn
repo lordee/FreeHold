@@ -11,24 +11,27 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="CenterContainer" type="CenterContainer" parent="."]
-offset_left = 4.0
-offset_top = 606.0
-offset_right = 1154.0
-offset_bottom = 646.0
+layout_mode = 0
+offset_top = 608.0
+offset_right = 1152.0
+offset_bottom = 648.0
 
 [node name="UIBaseContainer" type="GridContainer" parent="CenterContainer"]
-offset_left = 499.0
+layout_mode = 2
+offset_left = 500.0
 offset_top = 4.0
-offset_right = 650.0
+offset_right = 651.0
 offset_bottom = 35.0
 columns = 2
 
 [node name="economy" type="Button" parent="CenterContainer/UIBaseContainer"]
+layout_mode = 2
 offset_right = 79.0
 offset_bottom = 31.0
 text = "Economy"
 
 [node name="military" type="Button" parent="CenterContainer/UIBaseContainer"]
+layout_mode = 2
 offset_left = 83.0
 offset_right = 151.0
 offset_bottom = 31.0
@@ -36,19 +39,166 @@ text = "Military"
 
 [node name="EconomyContainer" type="GridContainer" parent="CenterContainer"]
 visible = false
-offset_left = 484.0
+layout_mode = 2
+offset_left = 485.0
 offset_top = 4.0
-offset_right = 665.0
+offset_right = 666.0
 offset_bottom = 35.0
 columns = 2
 
 [node name="woodchopper" type="Button" parent="CenterContainer/EconomyContainer"]
+layout_mode = 2
 offset_right = 117.0
 offset_bottom = 31.0
 text = "Woodchopper"
 
 [node name="cancel" type="Button" parent="CenterContainer/EconomyContainer"]
+layout_mode = 2
 offset_left = 121.0
 offset_right = 181.0
 offset_bottom = 31.0
 text = "Cancel"
+
+[node name="TaxContainerCenter" type="CenterContainer" parent="."]
+layout_mode = 0
+offset_top = 568.0
+offset_right = 1152.0
+offset_bottom = 608.0
+
+[node name="TaxContainer" type="GridContainer" parent="TaxContainerCenter"]
+layout_mode = 2
+offset_left = 509.0
+offset_top = 4.0
+offset_right = 643.0
+offset_bottom = 35.0
+columns = 4
+
+[node name="tax_increase" type="Button" parent="TaxContainerCenter/TaxContainer"]
+custom_minimum_size = Vector2i(30, 0)
+layout_mode = 2
+offset_right = 30.0
+offset_bottom = 31.0
+text = "+"
+
+[node name="tax_image" type="ColorRect" parent="TaxContainerCenter/TaxContainer"]
+custom_minimum_size = Vector2i(30, 4)
+layout_mode = 2
+offset_left = 34.0
+offset_right = 64.0
+offset_bottom = 31.0
+size_flags_vertical = 3
+tooltip_text = "happiness"
+
+[node name="tax_label" type="Label" parent="TaxContainerCenter/TaxContainer"]
+custom_minimum_size = Vector2i(30, 0)
+layout_mode = 2
+offset_left = 68.0
+offset_top = 2.0
+offset_right = 100.0
+offset_bottom = 28.0
+tooltip_text = "tax rate"
+mouse_filter = 0
+text = "Low"
+
+[node name="tax_decrease" type="Button" parent="TaxContainerCenter/TaxContainer"]
+custom_minimum_size = Vector2i(30, 0)
+layout_mode = 2
+offset_left = 104.0
+offset_right = 134.0
+offset_bottom = 31.0
+text = "-"
+
+[node name="ResourcesContainer" type="GridContainer" parent="."]
+layout_mode = 0
+offset_right = 147.0
+offset_bottom = 122.0
+columns = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ResourcesContainer"]
+custom_minimum_size = Vector2i(25, 25)
+layout_mode = 2
+offset_right = 30.0
+offset_bottom = 116.0
+
+[node name="population_image" type="ColorRect" parent="ResourcesContainer/VBoxContainer"]
+custom_minimum_size = Vector2i(4, 4)
+layout_mode = 2
+offset_right = 30.0
+offset_bottom = 26.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+tooltip_text = "population"
+
+[node name="wood_image" type="ColorRect" parent="ResourcesContainer/VBoxContainer"]
+custom_minimum_size = Vector2i(4, 4)
+layout_mode = 2
+offset_top = 30.0
+offset_right = 30.0
+offset_bottom = 56.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+tooltip_text = "wood"
+color = Color(0.729412, 0.388235, 0.188235, 1)
+
+[node name="happiness_image" type="ColorRect" parent="ResourcesContainer/VBoxContainer"]
+custom_minimum_size = Vector2i(30, 4)
+layout_mode = 2
+offset_top = 60.0
+offset_right = 30.0
+offset_bottom = 86.0
+size_flags_vertical = 3
+tooltip_text = "happiness"
+
+[node name="gold_image" type="ColorRect" parent="ResourcesContainer/VBoxContainer"]
+custom_minimum_size = Vector2i(4, 4)
+layout_mode = 2
+offset_top = 90.0
+offset_right = 30.0
+offset_bottom = 116.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+tooltip_text = "gold"
+color = Color(1, 1, 0, 1)
+
+[node name="values_container" type="VBoxContainer" parent="ResourcesContainer"]
+custom_minimum_size = Vector2i(25, 25)
+layout_mode = 2
+offset_left = 34.0
+offset_right = 64.0
+offset_bottom = 116.0
+
+[node name="population_label" type="Label" parent="ResourcesContainer/values_container"]
+layout_mode = 2
+offset_right = 30.0
+offset_bottom = 26.0
+tooltip_text = "happiness"
+mouse_filter = 0
+text = "0/0"
+
+[node name="wood_label" type="Label" parent="ResourcesContainer/values_container"]
+layout_mode = 2
+offset_top = 30.0
+offset_right = 30.0
+offset_bottom = 56.0
+tooltip_text = "wood"
+mouse_filter = 0
+text = "100"
+
+[node name="happiness_label" type="Label" parent="ResourcesContainer/values_container"]
+custom_minimum_size = Vector2i(30, 0)
+layout_mode = 2
+offset_top = 60.0
+offset_right = 30.0
+offset_bottom = 86.0
+tooltip_text = "happiness"
+mouse_filter = 0
+text = "100"
+
+[node name="gold_label" type="Label" parent="ResourcesContainer/values_container"]
+layout_mode = 2
+offset_top = 90.0
+offset_right = 30.0
+offset_bottom = 116.0
+tooltip_text = "gold"
+mouse_filter = 0
+text = "100"

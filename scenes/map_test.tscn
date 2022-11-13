@@ -1,6 +1,6 @@
 [gd_scene load_steps=9 format=3 uid="uid://bbpd5oih21dgl"]
 
-[ext_resource type="PackedScene" path="res://scenes/unit.tscn" id="1_nggqv"]
+[ext_resource type="PackedScene" uid="uid://bbgtrymosy44i" path="res://scenes/buildings/castle.tscn" id="2_1tkut"]
 [ext_resource type="PackedScene" uid="uid://cobsmevom3mhp" path="res://scenes/tree.tscn" id="2_ngiq4"]
 
 [sub_resource type="NavigationMesh" id="NavigationMesh_elq6o"]
@@ -21,9 +21,6 @@ size = Vector3(40, 1, 40)
 [sub_resource type="BoxShape3D" id="BoxShape3D_c7dqb"]
 
 [node name="map" type="Node3D"]
-
-[node name="unit" parent="." instance=ExtResource("1_nggqv")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.27596, -2.9252)
 
 [node name="NavigationRegion3d" type="NavigationRegion3D" parent="."]
 navmesh = SubResource("NavigationMesh_elq6o")
@@ -67,6 +64,11 @@ skeleton = NodePath("../..")
 
 [node name="CollisionShape3d" type="CollisionShape3D" parent="NavigationRegion3d/Cube3/StaticBody3d"]
 shape = SubResource("BoxShape3D_c7dqb")
+
+[node name="castle" parent="NavigationRegion3d" instance=ExtResource("2_1tkut")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.68303, -9.34186)
+team_no = 1
+entity_type = 1
 
 [node name="tree" parent="." instance=ExtResource("2_ngiq4")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.12741, 0, 0.588624)

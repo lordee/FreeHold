@@ -2,32 +2,46 @@ extends Node
 class_name fh_ui_manager
 
 var main_menu
-var ui
+@onready var ui = $ui
 var base_container: GridContainer
 var economy_container: GridContainer
 var military_container: GridContainer
-var game
 
+@onready var game: fh_game = get_node("/root/game")
+
+# labels
+@onready var resources_container: GridContainer = ui.get_node("ResourcesContainer")
+@onready var wood_label: Label = resources_container.get_node("values_container").get_node("wood_label")
+@onready var population_label: Label = resources_container.get_node("values_container").get_node("population_label")
+@onready var gold_label: Label = resources_container.get_node("values_container").get_node("gold_label")
+@onready var happiness_label: Label = resources_container.get_node("values_container").get_node("happiness_label")
+
+@onready var tax_container: GridContainer = ui.get_node("TaxContainerCenter/TaxContainer")
+@onready var tax_label: Label = tax_container.get_node("tax_label")
 
 
 func _ready():
-	game = get_node("/root/game")
 	main_menu = $main_menu
-	ui = $ui
 	base_container = ui.get_node("CenterContainer/UIBaseContainer")
 	base_container.get_node("economy").pressed.connect(economy_button_pressed)
 	base_container.get_node("military").pressed.connect(military_button_pressed)
 	economy_container = ui.get_node("CenterContainer/EconomyContainer")
 	economy_container.get_node("woodchopper").pressed.connect(woodchopper_button_pressed)
 	economy_container.get_node("cancel").pressed.connect(ui_cancel_button_pressed)
+	tax_container.get_node("tax_increase").pressed.connect(ui_tax_button_increased_pressed)
+	tax_container.get_node("tax_decrease").pressed.connect(ui_tax_button_decreased_pressed)
 #	military_container = ui.get_node("CenterContainer/MilitaryContainer")
-
 	
-
+func setup_ui():
+	update_tax_label()
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	pass
+	if game.player_manager.current_player != null:
+		population_label.text = str(game.player_manager.current_player.population) + "/" + str(game.player_manager.current_player.population_max)
+		wood_label.text = str(game.player_manager.current_player.resources.wood)
+		gold_label.text = str(game.player_manager.current_player.resources.gold) + " (+" + str(game.player_manager.current_player.get_tax_income()) + ")"
+		happiness_label.text = str(game.player_manager.current_player.happiness)
 	
 # TODO - track button state/coords instead of constant node traversal
 func button_recursive(node: Node, mouse_pos: Vector2) -> bool:
@@ -67,8 +81,32 @@ func economy_button_pressed():
 func military_button_pressed():
 	print("military_button_pressed")
 
+func ui_tax_button_increased_pressed():
+	var success: bool = game.player_manager.current_player.tax_rate_change(true)
+	update_tax_label()
+	
+func ui_tax_button_decreased_pressed():
+	var success: bool = game.player_manager.current_player.tax_rate_change(false)
+	update_tax_label()
+	
+func update_tax_label():
+	var val: int = game.player_manager.current_player.tax_rate
+	var lbl: String = ""
+	match val:
+		0:
+			lbl = "None"
+		1:
+			lbl = "Low"
+		2:
+			lbl = "Medium"
+		3:
+			lbl = "High"
+	
+	if tax_label.text != lbl:
+		tax_label.text = lbl
+
 func woodchopper_button_pressed():
-	game.entity_manager.start_building_placement(Enums.BUILDING.WOODCHOPPER)
+	game.entity_manager.start_building_placement(Enums.ENTITY.BUILDING_WOODCHOPPER, game.player_manager.current_player)
 
 func unload(menu):
 	menu.visible = false

@@ -1,15 +1,19 @@
-[gd_scene load_steps=8 format=3 uid="uid://bc8apthe7ips4"]
+[gd_scene load_steps=9 format=3 uid="uid://1t7v4q5yh4fm"]
 
 [ext_resource type="PackedScene" uid="uid://db13moblr24n3" path="res://scenes/menus/main_menu.tscn" id="1_2240r"]
-[ext_resource type="Script" path="res://scripts/game.gd" id="1_efxwo"]
+[ext_resource type="Script" path="res://scripts/fh_game.gd" id="1_efxwo"]
 [ext_resource type="Script" path="res://scripts/menus/fh_ui_manager.gd" id="2_2gatk"]
 [ext_resource type="PackedScene" uid="uid://doy7n2kmjsvxi" path="res://scenes/menus/ui.tscn" id="3_d2e4o"]
 [ext_resource type="PackedScene" uid="uid://d1e0rys7lx72q" path="res://scenes/camera_controller.tscn" id="3_vvlqa"]
 [ext_resource type="Script" path="res://scripts/input_manager.gd" id="3_ykkxb"]
-[ext_resource type="Script" path="res://scripts/entity_manager.gd" id="5_aadkg"]
+[ext_resource type="Script" path="res://scripts/fh_entity_manager.gd" id="5_aadkg"]
+[ext_resource type="Script" path="res://scripts/fh_player_manager.gd" id="8_5nwvw"]
 
 [node name="game" type="Node3D"]
 script = ExtResource("1_efxwo")
+
+[node name="player_manager" type="Node" parent="."]
+script = ExtResource("8_5nwvw")
 
 [node name="ui_manager" type="Node" parent="."]
 script = ExtResource("2_2gatk")

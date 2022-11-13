@@ -1,5 +1,7 @@
 extends Node
 
+class_name fh_input_manager
+
 var BoundAction = load("res://BoundAction.gd")
 var InputCommand = load("res://scripts/InputCommand.gd")
 
