@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://bu8iwrbf0q1qc"]
+
+[ext_resource type="Script" path="res://scripts/starting_position.gd" id="1_hojri"]
+
+[node name="starting_position" type="Node3D"]
+script = ExtResource("1_hojri")

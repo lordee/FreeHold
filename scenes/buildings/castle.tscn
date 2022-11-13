@@ -1,0 +1,31 @@
+[gd_scene load_steps=5 format=3 uid="uid://bbgtrymosy44i"]
+
+[ext_resource type="PackedScene" uid="uid://mjtg2nubwfu7" path="res://assets/stone_watch_tower/stone_watch_tower.gltf" id="1_cwuw8"]
+[ext_resource type="Script" path="res://scripts/fh_entity.gd" id="2_ssyxo"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_85gx6"]
+size = Vector3(5, 6, 4)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_1et7g"]
+size = Vector3(3, 0.1, 3)
+
+[node name="castle" instance=ExtResource("1_cwuw8")]
+script = ExtResource("2_ssyxo")
+
+[node name="tower" parent="." index="0"]
+transform = Transform3D(0.1, 0, 0, 0, -4.37114e-09, -0.1, 0, 0.1, -4.37114e-09, 0, 0, 0)
+
+[node name="StaticBody3d" type="StaticBody3D" parent="." index="1"]
+
+[node name="CollisionShape3d" type="CollisionShape3D" parent="StaticBody3d" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 0)
+shape = SubResource("BoxShape3D_85gx6")
+
+[node name="entry" type="Node3D" parent="." index="2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.94363, 0.659609, 0)
+
+[node name="gather_area" type="StaticBody3D" parent="." index="3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.85242, 0.174747, 0)
+
+[node name="CollisionShape3d" type="CollisionShape3D" parent="gather_area" index="0"]
+shape = SubResource("BoxShape3D_1et7g")
