@@ -1,6 +1,7 @@
-[gd_scene load_steps=20 format=3 uid="uid://sr5gb35ryno7"]
+[gd_scene load_steps=21 format=3 uid="uid://sr5gb35ryno7"]
 
 [ext_resource type="Texture2D" uid="uid://ckdvp41hrxicn" path="res://assets/woodchopper/Stone Wall2.jpg" id="1_c87pv"]
+[ext_resource type="Script" path="res://scripts/fh_entity.gd" id="1_dbo6f"]
 [ext_resource type="Texture2D" uid="uid://x1ijbqjys8sm" path="res://assets/woodchopper/Door.jpg" id="2_rn33n"]
 [ext_resource type="Texture2D" uid="uid://en5tfu280nhj" path="res://assets/woodchopper/Tree_rings.jpg" id="3_fq08g"]
 [ext_resource type="Texture2D" uid="uid://bxr3ijmwygqan" path="res://assets/woodchopper/Bark.jpg" id="4_hu6i3"]
@@ -259,6 +260,7 @@ shadow_mesh = SubResource("ArrayMesh_cc8jo")
 size = Vector3(3.5, 1, 3.5)
 
 [node name="woodchopper" type="Node3D"]
+script = ExtResource("1_dbo6f")
 
 [node name="Celler" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1.78814e-07, -1, 0, 1, 1.78814e-07, 0, 0, 0)

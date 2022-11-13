@@ -14,11 +14,6 @@ _global_script_classes=[{
 "language": &"GDScript",
 "path": "res://BoundAction.gd"
 }, {
-"base": "Node",
-"class": &"EntityManager",
-"language": &"GDScript",
-"path": "res://scripts/entity_manager.gd"
-}, {
 "base": "RefCounted",
 "class": &"Enums",
 "language": &"GDScript",
@@ -34,15 +29,35 @@ _global_script_classes=[{
 "language": &"GDScript",
 "path": "res://scripts/KeyType.gd"
 }, {
-"base": "CharacterBody3D",
-"class": &"Unit",
+"base": "Node",
+"class": &"fh_entity",
 "language": &"GDScript",
-"path": "res://scripts/unit.gd"
+"path": "res://scripts/fh_entity.gd"
 }, {
-"base": "Object",
+"base": "Node",
+"class": &"fh_entity_manager",
+"language": &"GDScript",
+"path": "res://scripts/fh_entity_manager.gd"
+}, {
+"base": "Node3D",
+"class": &"fh_game",
+"language": &"GDScript",
+"path": "res://scripts/fh_game.gd"
+}, {
+"base": "Node",
+"class": &"fh_input_manager",
+"language": &"GDScript",
+"path": "res://scripts/input_manager.gd"
+}, {
+"base": "Node",
 "class": &"fh_player",
 "language": &"GDScript",
 "path": "res://scripts/fh_player.gd"
+}, {
+"base": "Node",
+"class": &"fh_player_manager",
+"language": &"GDScript",
+"path": "res://scripts/fh_player_manager.gd"
 }, {
 "base": "Object",
 "class": &"fh_resources",
@@ -53,17 +68,26 @@ _global_script_classes=[{
 "class": &"fh_ui_manager",
 "language": &"GDScript",
 "path": "res://scripts/menus/fh_ui_manager.gd"
+}, {
+"base": "Object",
+"class": &"game_settings",
+"language": &"GDScript",
+"path": "res://scripts/game_settings.gd"
 }]
 _global_script_class_icons={
 "BoundAction": "",
-"EntityManager": "",
 "Enums": "",
 "InputCommand": "",
 "KeyType": "",
-"Unit": "",
+"fh_entity": "",
+"fh_entity_manager": "",
+"fh_game": "",
+"fh_input_manager": "",
 "fh_player": "",
+"fh_player_manager": "",
 "fh_resources": "",
-"fh_ui_manager": ""
+"fh_ui_manager": "",
+"game_settings": ""
 }
 
 [application]

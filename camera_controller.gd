@@ -7,9 +7,9 @@ var elevation: Node3D
 var camera: Camera3D
 var selection_box: Control
 var input_manager
-var entity_manager: EntityManager
-var game
-var ui_manager
+var entity_manager: fh_entity_manager
+var game: fh_game
+var ui_manager: fh_ui_manager
 
 # settings
 var _movement_speed: float = 20
@@ -195,7 +195,7 @@ func select_objects(mouse_pos: Vector2):
 	if mouse_pos.distance_squared_to(_start_select_position) < 16:
 		var results: Dictionary = raycast_from_mouse()
 		if !results.is_empty():
-			if results["collider"] is Unit:
+			if results["collider"] is fh_unit:
 				entity_manager.select_object(results["collider"])
 			
 	else:
