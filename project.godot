@@ -64,10 +64,20 @@ _global_script_classes=[{
 "language": &"GDScript",
 "path": "res://scripts/fh_resources.gd"
 }, {
+"base": "fh_entity",
+"class": &"fh_tree",
+"language": &"GDScript",
+"path": "res://scripts/fh_tree.gd"
+}, {
 "base": "Node",
 "class": &"fh_ui_manager",
 "language": &"GDScript",
 "path": "res://scripts/menus/fh_ui_manager.gd"
+}, {
+"base": "CharacterBody3D",
+"class": &"fh_unit",
+"language": &"GDScript",
+"path": "res://scripts/fh_unit.gd"
 }, {
 "base": "Object",
 "class": &"game_settings",
@@ -86,7 +96,9 @@ _global_script_class_icons={
 "fh_player": "",
 "fh_player_manager": "",
 "fh_resources": "",
+"fh_tree": "",
 "fh_ui_manager": "",
+"fh_unit": "",
 "game_settings": ""
 }
 
@@ -94,7 +106,7 @@ _global_script_class_icons={
 
 config/name="Freehold"
 run/main_scene="res://scenes/game.tscn"
-config/features=PackedStringArray("4.0", "Vulkan Clustered")
+config/features=PackedStringArray("4.0")
 config/icon="res://icon.svg"
 
 [dotnet]

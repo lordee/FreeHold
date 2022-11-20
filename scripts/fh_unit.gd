@@ -3,7 +3,7 @@ class_name fh_unit
 # nodes
 @onready var selector: MeshInstance3D = $selector
 @onready var agent: NavigationAgent3D = $NavigationAgent3d
-@onready var game: fh_game = get_node("/root/game")
+@onready var game = get_node("/root/game")
 
 var SPEED: float = .2
 var MIN_DISTANCE: float = 1 # min distance to destinations before counted as being there
@@ -11,8 +11,10 @@ var WORK_TIME_MAX: float = 5
 
 # state
 var destination: Vector3
-var resources: fh_resources = fh_resources.new()
-var max_resources: fh_resources = fh_resources.new() # TODO
+var destination_goal: fh_entity
+
+var resources
+var max_resources
 var current_state: Enums.STATE = Enums.STATE.IDLE
 var unit_type: Enums.UNIT_TYPE = Enums.UNIT_TYPE.CIVILIAN 
 var _entity_type: Enums.ENTITY = Enums.ENTITY.UNIT_UNEMPLOYED
@@ -54,6 +56,8 @@ func _ready():
 	agent.velocity_computed.connect(on_velocity_computed)
 	agent.path_changed.connect(on_path_changed)
 	agent.target_reached.connect(on_target_reached)
+	resources = fh_resources.new()
+	max_resources = fh_resources.new()
 
 func _physics_process(delta: float) -> void:
 	match current_state:
@@ -75,30 +79,41 @@ func _physics_process(delta: float) -> void:
 				else:
 					move_to(player_owner.castle.gather_area.global_transform.origin)
 					current_state = Enums.STATE.MOVING
+				return
 				
 			if unit_type == Enums.UNIT_TYPE.CIVILIAN:
-				move_to(workplace.global_transform.origin)
-				current_state = Enums.STATE.MOVING
+				if is_near(workplace.entry.global_transform.origin):
+					# get resource or do work
+					if has_resources():
+						work_time = 0
+						current_state = Enums.STATE.WORKING
+					else:
+						var goal: fh_entity = game.entity_manager.find_work_target(entity_type, self)
+						if goal != null:
+							destination_goal = goal
+							move_to(goal.global_transform.origin)
+							current_state = Enums.STATE.MOVING
+				else:
+					if workplace == null:
+						entity_type = Enums.ENTITY.UNIT_UNEMPLOYED
+					else:
+						go_to_work_building()
+						
 			elif unit_type == Enums.UNIT_TYPE.MILITARY:
 				return # TODO
 		Enums.STATE.MOVING:
-			moving_tick()
-		Enums.STATE.MOVING_TO_WORK:
-			if is_near(workplace.global_transform.origin):
-				# get resource or do work
-				if has_resources():
-					work_time = 0
-					current_state = Enums.STATE.WORKING
-				else:
-					get_resources()
-			else:
-				moving_tick()
+			moving_tick(delta)
 		Enums.STATE.WORKING:
 			do_work(delta)
 		Enums.STATE.MOVING_TO_WAREHOUSE:
 			if is_near(destination):
 				# give resources to warehouse
 				# go back to idle
+				if destination_goal != null:
+					destination_goal.resources.add_resource(workplace_processed_resource_type, resources.get_resource_value(workplace_processed_resource_type))
+					resources.set_resource(workplace_processed_resource_type, 0)
+					current_state = Enums.STATE.IDLE
+				
 
 func do_work(delta: float):
 	if work_time == 0:
@@ -114,14 +129,15 @@ func do_work(delta: float):
 		resources.set_resource(workplace_processed_resource_type, max_resources.get_resource_value(workplace_processed_resource_type))
 		# send them to warehouse
 		var wh: fh_entity = null
-		wh = game.entity_manager.find_entity(wh, Enums.ENTITY.BUILDING_WAREHOUSE))
+		wh = game.entity_manager.find_entity(wh, Enums.ENTITY.BUILDING_WAREHOUSE)
 		while (wh != null):
 			if wh.player_owner == self.player_owner:
 				if wh.resources.space_left(workplace_processed_resource_type) >= resources.get_resource_value(workplace_processed_resource_type):
 					move_to(wh.global_transform.origin)
 					current_state = Enums.STATE.MOVING_TO_WAREHOUSE
+					destination_goal = wh
 					break
-			wh = game.entity_manager.find_entity(wh, Enums.ENTITY.BUILDING_WAREHOUSE))
+			wh = game.entity_manager.find_entity(wh, Enums.ENTITY.BUILDING_WAREHOUSE)
 			
 		if wh == null:
 			# not found, wait a bit before checking again
@@ -144,7 +160,7 @@ func is_near(org: Vector3) -> bool:
 	else:
 		return false
 
-func moving_tick():
+func moving_tick(delta):
 	if is_on_floor():
 		if agent.is_target_reachable():
 			var next_location = agent.get_next_location()
@@ -159,8 +175,9 @@ func moving_tick():
 		move_and_slide()
 
 func go_to_work_building():
-	move_to(workplace.global_transform.origin)
-	current_state = Enums.STATE.MOVING_TO_WORK
+	destination_goal = workplace
+	move_to(workplace.entry.global_transform.origin)
+	current_state = Enums.STATE.MOVING
 	
 
 func add_resource(resource_type: Enums.RESOURCE, val: int):

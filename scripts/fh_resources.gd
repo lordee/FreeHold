@@ -2,6 +2,7 @@ extends Object
 class_name fh_resources
 
 var MAX_PILE_AMOUNT: int = 1000
+var MAX_PILES: int = 16
 
 var wood: int = 0
 var gold: int = 0
@@ -71,21 +72,21 @@ func space_left(resource_type: Enums.RESOURCE) -> int:
 	# if no empty piles, are any piles not full?
 	var piles: int = 0
 	if wood > 0:
-		piles += ceil(wood / MAX_PILE_AMOUNT)
+		piles += int(ceil(wood / MAX_PILE_AMOUNT))
 	if gold > 0:
-		piles += ceil(gold / MAX_PILE_AMOUNT)
+		piles += int(ceil(gold / MAX_PILE_AMOUNT))
 	if stone > 0:
-		piles += ceil(stone / MAX_PILE_AMOUNT)
+		piles += int(ceil(stone / MAX_PILE_AMOUNT))
 	if flour > 0:
-		piles += ceil(flour / MAX_PILE_AMOUNT)
+		piles += int(ceil(flour / MAX_PILE_AMOUNT))
 	if wooden_planks > 0:
-		piles += ceil(wooden_planks / MAX_PILE_AMOUNT)
+		piles += int(ceil(wooden_planks / MAX_PILE_AMOUNT))
 	
 	if piles < MAX_PILES:
 		return (MAX_PILES - piles) * MAX_PILE_AMOUNT
 	else:
-		res_val = get_resource_value(resource_type)
-		rem = res_val % MAX_PILE_AMOUNT
+		var res_val = get_resource_value(resource_type)
+		var rem = res_val % MAX_PILE_AMOUNT
 		return rem
 	
 	

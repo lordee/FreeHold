@@ -7,6 +7,7 @@ var player_owner: fh_player = null
 @onready var entry: Node3D = get_node_or_null("entry")
 @onready var gather_area: StaticBody3D = get_node_or_null("gather_area")
 var occupied: bool = false
+var resources: fh_resources = fh_resources.new()
 
 # Called when the node enters the scene tree for the first time.
 func _ready():

@@ -4,7 +4,7 @@ class_name fh_entity_manager
 
 var entities: Array = Array()
 var selected_entities: Array = Array()
-@onready var game: fh_game = get_node("/root/game")
+@onready var game = get_node("/root/game")
 
 @onready var scene_woodchopper: PackedScene = ResourceLoader.load("res://scenes/buildings/woodchopper.tscn")
 @onready var scene_unit: PackedScene = ResourceLoader.load("res://scenes/unit.tscn")
@@ -85,7 +85,7 @@ func start_building_placement(building_type, p_owner: fh_player):
 	# spawn scene
 	var node = scene.instantiate()
 	add_child(node)
-	var area: Area3D = node.get_node("Area3d")
+	var area: Area3D = node.get_node("Area3D")
 	node.entity_type = building_type
 	
 	area.body_entered.connect(self.building_area_entered.bind(area))
@@ -131,7 +131,7 @@ func build() -> bool:
 		return false
 		
 	entities.append(building_being_placed)
-	var area: Area3D = building_being_placed.get_node("Area3d")
+	var area: Area3D = building_being_placed.get_node("Area3D")
 	
 	area.body_entered.disconnect(self.building_area_entered)
 	area.body_exited.disconnect(self.building_area_exited)
@@ -166,6 +166,26 @@ func spawn_peasant(player_owner: fh_player):
 	move_to_floor(unit)
 	game.map_nav_region.bake_navigation_mesh()
 	entities.append(unit)
+	
+func find_work_target(e_type: Enums.ENTITY, worker: fh_unit) -> fh_entity:
+	var targ: fh_entity = null
+	match e_type:
+		Enums.ENTITY.UNIT_WOODCHOPPER:
+			var ent: fh_entity = find_entity(null, Enums.ENTITY.RESOURCE_TREE)
+			if ent == null:
+				return ent
+			targ = ent
+			var old_dist = (worker.global_transform.origin - targ.global_transform.origin).length()
+			var new_dist
+			while (ent != null):
+				new_dist = (worker.global_transform.origin - ent.global_transform.origin).length()
+				if new_dist < old_dist:
+					targ = ent
+					old_dist = new_dist
+					
+				ent = find_entity(ent, Enums.ENTITY.RESOURCE_TREE)
+				
+	return targ
 	
 func process_entity(ent: fh_entity, adding_entity: bool):
 	var pop_add: int = 0

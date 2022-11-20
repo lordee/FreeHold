@@ -1,7 +1,7 @@
-extends Node3D
-#class_name fh_tree # FIXME - x is fh_tree not working on raycast here, so we will use groups
+extends fh_entity
+class_name fh_tree # FIXME - x is fh_tree not working on raycast here, so we will use groups
 
-var resources: fh_resources = fh_resources.new()
+#var resources: fh_resources = fh_resources.new()
 var resources_per_action_complete: int = 10
 var progress_per_action: int = 5
 
@@ -12,8 +12,9 @@ var total_progress: int = 0
 func _ready():
 	$tree2/StaticBody3d.add_to_group("fh_tree")
 	resources.wood = 50
+	entity_type = Enums.ENTITY.RESOURCE_TREE
 
-func action_performed(unit: Unit):
+func action_performed(unit: fh_unit):
 	total_progress += progress_per_action
 	if (total_progress >= 100):
 		# action complete

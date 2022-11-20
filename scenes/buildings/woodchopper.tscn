@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://sr5gb35ryno7"]
+[gd_scene load_steps=22 format=3 uid="uid://sr5gb35ryno7"]
 
 [ext_resource type="Texture2D" uid="uid://ckdvp41hrxicn" path="res://assets/woodchopper/Stone Wall2.jpg" id="1_c87pv"]
 [ext_resource type="Script" path="res://scripts/fh_entity.gd" id="1_dbo6f"]
@@ -259,6 +259,8 @@ shadow_mesh = SubResource("ArrayMesh_cc8jo")
 [sub_resource type="BoxShape3D" id="BoxShape3D_halga"]
 size = Vector3(3.5, 1, 3.5)
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_5qv4a"]
+
 [node name="woodchopper" type="Node3D"]
 script = ExtResource("1_dbo6f")
 
@@ -277,14 +279,22 @@ transform = Transform3D(1, 0, 0, 0, 1.78814e-07, -1, 0, 1, 1.78814e-07, -2.082, 
 mesh = SubResource("ArrayMesh_bbtqa")
 skeleton = NodePath("")
 
-[node name="Area3d" type="Area3D" parent="."]
+[node name="entry" type="Area3D" parent="."]
+transform = Transform3D(0.394937, 0, 0, 0, 1, 0, 0, 0, 0.357981, 0, 0, 1.67701)
 
-[node name="CollisionShape3d" type="CollisionShape3D" parent="Area3d"]
+[node name="CollisionShape3d" type="CollisionShape3D" parent="entry"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.327395, 0.536241, 0.393969)
 shape = SubResource("BoxShape3D_halga")
 
 [node name="StaticBody3d" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 0.664295, 0, 0, -0.219937)
 
 [node name="CollisionShape3d2" type="CollisionShape3D" parent="StaticBody3d"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.327395, 0.536241, 0.393969)
 shape = SubResource("BoxShape3D_halga")
+
+[node name="Area3D" type="Area3D" parent="."]
+transform = Transform3D(3.5, 0, 0, 0, 2, 0, 0, 0, 3.5, -0.452482, 1, 0.460769)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+shape = SubResource("BoxShape3D_5qv4a")
