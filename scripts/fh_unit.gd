@@ -7,7 +7,7 @@ class_name fh_unit
 
 var SPEED: float = .2
 var MIN_DISTANCE: float = 1 # min distance to destinations before counted as being there
-var WORK_TIME_MAX: float = 5
+var WORK_TIME_MAX: float = 1 # currently 1 swing of an axe, resource entity tracks progress of getting resource amount
 
 # state
 var destination: Vector3
@@ -17,6 +17,25 @@ var resources
 var max_resources
 var current_state: Enums.STATE = Enums.STATE.IDLE
 var unit_type: Enums.UNIT_TYPE = Enums.UNIT_TYPE.CIVILIAN 
+var entity_category: Enums.ENTITY_CATEGORY:
+	get:
+		match entity_type:
+			Enums.ENTITY.NOT_SET:
+				return Enums.ENTITY_CATEGORY.NOT_SET
+			Enums.ENTITY.BUILDING_CASTLE:
+				return Enums.ENTITY_CATEGORY.BUILDING
+			Enums.ENTITY.BUILDING_WOODCHOPPER:
+				return Enums.ENTITY_CATEGORY.BUILDING
+			Enums.ENTITY.BUILDING_WAREHOUSE:
+				return Enums.ENTITY_CATEGORY.BUILDING
+			Enums.ENTITY.UNIT_UNEMPLOYED:
+				return Enums.ENTITY_CATEGORY.UNIT
+			Enums.ENTITY.UNIT_WOODCHOPPER:
+				return Enums.ENTITY_CATEGORY.UNIT
+			Enums.ENTITY.RESOURCE_TREE:
+				return Enums.ENTITY_CATEGORY.RESOURCE
+		
+		return Enums.ENTITY_CATEGORY.NOT_SET
 var _entity_type: Enums.ENTITY = Enums.ENTITY.UNIT_UNEMPLOYED
 var entity_type: Enums.ENTITY:
 	get:
@@ -63,7 +82,7 @@ func _physics_process(delta: float) -> void:
 	match current_state:
 		Enums.STATE.IDLE:
 			if entity_type == Enums.ENTITY.UNIT_UNEMPLOYED:
-				if is_near(player_owner.castle.gather_area.global_transform.origin):
+				if is_near(game.entity_manager.get_entity_destination(player_owner.castle)):
 					# search for employment
 					var building = game.entity_manager.get_unoccupied_building(player_owner)
 					if building == null:
@@ -77,51 +96,80 @@ func _physics_process(delta: float) -> void:
 					workplace = building
 					return
 				else:
-					move_to(player_owner.castle.gather_area.global_transform.origin)
+					move_to(game.entity_manager.get_entity_destination(player_owner.castle))
 					current_state = Enums.STATE.MOVING
 				return
 				
 			if unit_type == Enums.UNIT_TYPE.CIVILIAN:
-				if is_near(workplace.entry.global_transform.origin):
-					# get resource or do work
-					if has_resources():
-						work_time = 0
-						current_state = Enums.STATE.WORKING
-					else:
-						var goal: fh_entity = game.entity_manager.find_work_target(entity_type, self)
-						if goal != null:
-							destination_goal = goal
-							move_to(goal.global_transform.origin)
-							current_state = Enums.STATE.MOVING
-				else:
+				# if they have a destination
+				if destination_goal == null || destination_goal == player_owner.castle:
+					# check for workplace or destination
 					if workplace == null:
 						entity_type = Enums.ENTITY.UNIT_UNEMPLOYED
 					else:
 						go_to_work_building()
-						
+				else:
+					if is_near(destination):
+						# going to work building
+						if destination_goal == workplace:
+							if has_resources():
+								work_time = 0
+								current_state = Enums.STATE.WORKING
+							else:
+								# get resource goal destination
+								var goal: fh_entity = game.entity_manager.find_work_target(entity_type, self)
+								if goal != null:
+									destination_goal = goal
+									move_to(game.entity_manager.get_entity_destination(destination_goal))
+									current_state = Enums.STATE.MOVING
+						# going to warehouse
+						elif destination_goal.entity_type == Enums.ENTITY.BUILDING_WAREHOUSE:
+							# drop off resources
+							destination_goal.resources.add_resource(workplace_processed_resource_type, resources.get_resource_value(workplace_processed_resource_type))
+							player_owner.resources.add_resource(workplace_processed_resource_type, resources.get_resource_value(workplace_processed_resource_type))
+							resources.set_resource(workplace_processed_resource_type, 0)
+							current_state = Enums.STATE.IDLE
+							destination_goal = null
+						# going to work target
+						elif destination_goal.entity_type == game.entity_manager.get_work_target_type(entity_type):
+							current_state = Enums.STATE.WORKING
+					else:
+						# not near destination, change state
+						current_state = Enums.STATE.MOVING
 			elif unit_type == Enums.UNIT_TYPE.MILITARY:
 				return # TODO
 		Enums.STATE.MOVING:
 			moving_tick(delta)
 		Enums.STATE.WORKING:
-			do_work(delta)
-		Enums.STATE.MOVING_TO_WAREHOUSE:
-			if is_near(destination):
-				# give resources to warehouse
-				# go back to idle
-				if destination_goal != null:
-					destination_goal.resources.add_resource(workplace_processed_resource_type, resources.get_resource_value(workplace_processed_resource_type))
-					resources.set_resource(workplace_processed_resource_type, 0)
-					current_state = Enums.STATE.IDLE
-				
+			if destination_goal == workplace:
+				do_work(delta)
+			else:
+				collect_resource(delta)
 
-func do_work(delta: float):
+func collect_resource(delta: float):
 	if work_time == 0:
 		# TODO play animation
 		pass
 	
 	if work_time >= WORK_TIME_MAX:
-		# work completed
+		var res_val: int = destination_goal.action_performed()
+		resources.add_resource(workplace_resource_type, res_val)
+		
+		if resources.get_resource_value(workplace_resource_type) >= max_resources.get_resource_value(workplace_resource_type):
+			go_to_work_building()
+			
+		work_time = 0
+	
+	work_time += delta
+
+# TODO - implement similar to collect resource, move tree logic to entity manager for action performed
+func do_work(delta: float):
+	if work_time == 0:
+		# TODO play animation
+		pass
+	
+	# work completed
+	if work_time >= WORK_TIME_MAX:
 		# minus old resource
 		resources.set_resource(workplace_resource_type, 0)
 		
@@ -133,14 +181,15 @@ func do_work(delta: float):
 		while (wh != null):
 			if wh.player_owner == self.player_owner:
 				if wh.resources.space_left(workplace_processed_resource_type) >= resources.get_resource_value(workplace_processed_resource_type):
-					move_to(wh.global_transform.origin)
-					current_state = Enums.STATE.MOVING_TO_WAREHOUSE
 					destination_goal = wh
+					move_to(game.entity_manager.get_entity_destination(wh))
+					current_state = Enums.STATE.MOVING
 					break
 			wh = game.entity_manager.find_entity(wh, Enums.ENTITY.BUILDING_WAREHOUSE)
 			
 		if wh == null:
 			# not found, wait a bit before checking again
+			print("No warehouse found!")
 			work_time -= 1
 		return
 	
@@ -168,22 +217,17 @@ func moving_tick(delta):
 			agent.set_velocity(v)
 			look_at(next_location)
 		else:
-			agent.set_velocity(Vector3.ZERO)
-			current_state = Enums.STATE.IDLE
+			move_to(agent.get_final_location())
+#			agent.set_velocity(Vector3.ZERO)
+#			current_state = Enums.STATE.IDLE
 	else:
 		velocity.y -= gravity * delta
 		move_and_slide()
 
 func go_to_work_building():
 	destination_goal = workplace
-	move_to(workplace.entry.global_transform.origin)
+	move_to(game.entity_manager.get_entity_destination(destination_goal))
 	current_state = Enums.STATE.MOVING
-	
-
-func add_resource(resource_type: Enums.RESOURCE, val: int):
-	resources.add_resource(resource_type, val)
-	# TODO - carrying animation
-	go_to_work_building()
 
 func move_to(dest: Vector3) -> void:
 	destination = dest

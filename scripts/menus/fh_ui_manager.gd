@@ -26,7 +26,8 @@ func _ready():
 	base_container.get_node("economy").pressed.connect(economy_button_pressed)
 	base_container.get_node("military").pressed.connect(military_button_pressed)
 	economy_container = ui.get_node("CenterContainer/EconomyContainer")
-	economy_container.get_node("woodchopper").pressed.connect(woodchopper_button_pressed)
+	economy_container.get_node("warehouse").pressed.connect(building_button_pressed.bind(Enums.ENTITY.BUILDING_WAREHOUSE))
+	economy_container.get_node("woodchopper").pressed.connect(building_button_pressed.bind(Enums.ENTITY.BUILDING_WOODCHOPPER))
 	economy_container.get_node("cancel").pressed.connect(ui_cancel_button_pressed)
 	tax_container.get_node("tax_increase").pressed.connect(ui_tax_button_increased_pressed)
 	tax_container.get_node("tax_decrease").pressed.connect(ui_tax_button_decreased_pressed)
@@ -39,7 +40,7 @@ func setup_ui():
 func _process(delta):
 	if game.player_manager.current_player != null:
 		population_label.text = str(game.player_manager.current_player.population) + "/" + str(game.player_manager.current_player.population_max)
-		wood_label.text = str(game.player_manager.current_player.resources.wood)
+		wood_label.text = str(game.player_manager.current_player.resources.wooden_planks)
 		gold_label.text = str(game.player_manager.current_player.resources.gold) + " (+" + str(game.player_manager.current_player.get_tax_income()) + ")"
 		happiness_label.text = str(game.player_manager.current_player.happiness)
 	
@@ -74,12 +75,15 @@ func ui_cancel_button_pressed():
 	economy_container.visible = false
 	game.entity_manager.cancel_building_placement()
 
+func building_button_pressed(entity_type: Enums.ENTITY):
+	game.entity_manager.start_building_placement(entity_type, game.player_manager.current_player)
+
 func economy_button_pressed():
 	base_container.visible = false
 	economy_container.visible = true
 
 func military_button_pressed():
-	print("military_button_pressed")
+	ui_print("military_button_pressed")
 
 func ui_tax_button_increased_pressed():
 	var success: bool = game.player_manager.current_player.tax_rate_change(true)
@@ -105,8 +109,9 @@ func update_tax_label():
 	if tax_label.text != lbl:
 		tax_label.text = lbl
 
-func woodchopper_button_pressed():
-	game.entity_manager.start_building_placement(Enums.ENTITY.BUILDING_WOODCHOPPER, game.player_manager.current_player)
+# TODO - console/messaging
+func ui_print(msg: String):
+	print(msg)
 
 func unload(menu):
 	menu.visible = false

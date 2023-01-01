@@ -36,6 +36,17 @@ func set_resource(resource_type: Enums.RESOURCE, val: int):
 		Enums.RESOURCE.WOODEN_PLANKS:
 			wooden_planks = val
 
+func merge_resource_objects(external_resource: fh_resources, add: bool):
+	var multiplier = 1
+	if !add:
+		multiplier = -1
+		
+	add_resource(Enums.RESOURCE.WOOD, external_resource.wood * multiplier)
+	add_resource(Enums.RESOURCE.GOLD, external_resource.gold * multiplier)
+	add_resource(Enums.RESOURCE.STONE, external_resource.stone * multiplier)
+	add_resource(Enums.RESOURCE.FLOUR, external_resource.flour * multiplier)
+	add_resource(Enums.RESOURCE.WOODEN_PLANKS, external_resource.wooden_planks * multiplier)
+
 func get_entity_type_resource(entity_type: Enums.ENTITY):
 	match entity_type:
 		Enums.ENTITY.UNIT_WOODCHOPPER:

@@ -15,7 +15,7 @@ var last_spawn_time: float = 0
 @onready var tax_rate: int = game.settings.tax_rate_min
 
 func _ready():
-	resources.set_resource(Enums.RESOURCE.WOOD, 500)
+	resources.set_resource(Enums.RESOURCE.WOODEN_PLANKS, 300)
 	resources.set_resource(Enums.RESOURCE.GOLD, 0)
 
 # TODO - accessors?

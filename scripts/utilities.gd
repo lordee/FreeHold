@@ -5,7 +5,7 @@ static func get_recursive_child(node) -> Node:
 	for child in node.get_children():
 		get_recursive_child(child)
 		
-		public static Node GetRecursiveChildByName(Node n, string name)
+public static Node GetRecursiveChildByName(Node n, string name)
 	{
 		foreach (Node n2 in n.GetChildren())
 		{

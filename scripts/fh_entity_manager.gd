@@ -5,15 +5,17 @@ class_name fh_entity_manager
 var entities: Array = Array()
 var selected_entities: Array = Array()
 @onready var game = get_node("/root/game")
-
-@onready var scene_woodchopper: PackedScene = ResourceLoader.load("res://scenes/buildings/woodchopper.tscn")
+var SCENES: Dictionary = {}
 @onready var scene_unit: PackedScene = ResourceLoader.load("res://scenes/unit.tscn")
+var entity_required_resources: Dictionary = {}
 
 var building_being_placed: Node3D
 var building_being_placed_valid: bool = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	SCENES[Enums.ENTITY.BUILDING_WOODCHOPPER] = ResourceLoader.load("res://scenes/buildings/woodchopper.tscn")
+	SCENES[Enums.ENTITY.BUILDING_WAREHOUSE] = ResourceLoader.load("res://scenes/buildings/warehouse.tscn")
 	pass
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -35,19 +37,43 @@ func find_entity(prev_ent: fh_entity, ent_type: Enums.ENTITY) -> fh_entity:
 				
 	return null
 
-func is_building(ent) -> bool:
-	match ent.entity_type:
-		Enums.ENTITY.BUILDING_CASTLE:
-			pass
-		Enums.ENTITY.BUILDING_WOODCHOPPER:
-			return true
+func remove_entity(ent):
+	entities.erase(ent)
+	ent.queue_free()
 	
-	return false
+func get_entity_required_resources(ent_type: Enums.ENTITY) -> fh_resources:
+	if entity_required_resources.has(ent_type):
+		return entity_required_resources[ent_type]
+	else:
+		var required_resources = fh_resources.new()
+		match ent_type:
+			Enums.ENTITY.BUILDING_WOODCHOPPER:
+				required_resources.wooden_planks = 20
+			Enums.ENTITY.BUILDING_WAREHOUSE:
+				required_resources.wooden_planks = 100
+		entity_required_resources[ent_type] = required_resources
+		return required_resources
+
+func get_entity_destination(entity: fh_entity) -> Vector3:
+	match entity.entity_category:
+		Enums.ENTITY_CATEGORY.NOT_SET:
+			return Vector3.ZERO
+		Enums.ENTITY_CATEGORY.UNIT:
+			return entity.global_transform.origin
+		Enums.ENTITY_CATEGORY.BUILDING:
+			if entity.entity_type == Enums.ENTITY.BUILDING_CASTLE:
+				return entity.gather_area.global_transform.origin
+			else:
+				return entity.entry.global_transform.origin
+		Enums.ENTITY_CATEGORY.RESOURCE:
+			return entity.global_transform.origin
+			
+	return Vector3.ZERO
 
 func get_unoccupied_building(p_owner: fh_player) -> fh_entity:
 	for ent in entities:
 		if ent.player_owner == p_owner:
-			if is_building(ent) && !ent.occupied:
+			if ent.entity_category == Enums.ENTITY_CATEGORY.BUILDING && !ent.occupied:
 				return ent
 	return null
 
@@ -69,17 +95,29 @@ func cancel_building_placement():
 	if building_being_placed != null:
 		building_being_placed.queue_free()
 		building_being_placed = null
-	game.input_manager.input_type = Enums.INPUT_TYPE.NO_SELECTION
-	
-func start_building_placement(building_type, p_owner: fh_player):
+	game.input_manager.input_type = Enums.ENTITY_CATEGORY.NOT_SET
+
+# TODO - rename func or move to fh_player
+func player_has_resources_to_create_entity(player: fh_player, entity_type: Enums.ENTITY) -> bool:
+	var resources_needed: fh_resources = get_entity_required_resources(entity_type)
+	var have_resources: bool = false
+	if (player.resources.flour >= resources_needed.flour 
+	and player.resources.wooden_planks >= resources_needed.wooden_planks
+	and player.resources.gold >= resources_needed.gold
+	and player.resources.stone >= resources_needed.stone
+	and player.resources.wood >= resources_needed.wood):
+		have_resources = true
+		
+	return have_resources
+
+func start_building_placement(building_type: Enums.ENTITY, p_owner: fh_player):
 	cancel_building_placement()
+	
 	var scene: PackedScene = null
-	match building_type:
-		Enums.ENTITY.BUILDING_WOODCHOPPER:
-			scene = scene_woodchopper
-			
+	scene = SCENES[building_type]
 	if scene == null:
-		print("scene not found in entity_manager start_building_placement")
+#		var enum_name = Enums.ENTITY.keys()[building_type] 
+		game.ui_manager.ui_print("scene not found in entity_manager start_building_placement")
 		return
 		
 	# spawn scene
@@ -94,7 +132,7 @@ func start_building_placement(building_type, p_owner: fh_player):
 	validate_building_placement(area)
 	building_being_placed = node
 	building_being_placed.player_owner = p_owner
-	game.input_manager.input_type = Enums.INPUT_TYPE.BUILDING
+	game.input_manager.input_type = Enums.ENTITY_CATEGORY.BUILDING
 
 func building_area_entered(body: Node3D, area: Area3D):
 	if body.get_parent() == area.get_parent():
@@ -130,6 +168,14 @@ func build() -> bool:
 		# TODO - sounds effects, message
 		return false
 		
+	# check for resources required for building
+	if (!player_has_resources_to_create_entity(building_being_placed.player_owner, building_being_placed.entity_type)):
+		# TODO - play a sound
+		game.ui_manager.ui_print("You do not have the resources for that")
+		return false
+		
+	building_being_placed.player_owner.resources.merge_resource_objects(get_entity_required_resources(building_being_placed.entity_type), false)
+		
 	entities.append(building_being_placed)
 	var area: Area3D = building_being_placed.get_node("Area3D")
 	
@@ -143,12 +189,6 @@ func build() -> bool:
 	return true
 
 func populate_entities():
-	# for testing
-	var u: fh_unit = get_node_or_null("/root/game/map/unit")
-	if u != null:
-		entities.append(u)
-		move_to_floor(u)
-		
 	for node in game.map_nav_region.get_children():
 		if node is fh_entity:
 			entities.append(node)
@@ -162,28 +202,36 @@ func spawn_peasant(player_owner: fh_player):
 	player_owner.population += 1
 	unit.player_owner = player_owner
 	unit.global_transform.origin = player_owner.castle.entry.global_transform.origin
-	unit.move_to(player_owner.castle.gather_area.global_transform.origin)
+	unit.destination_goal = player_owner.castle
+	unit.move_to(get_entity_destination(unit.destination_goal))
 	move_to_floor(unit)
 	game.map_nav_region.bake_navigation_mesh()
 	entities.append(unit)
-	
-func find_work_target(e_type: Enums.ENTITY, worker: fh_unit) -> fh_entity:
-	var targ: fh_entity = null
+
+func get_work_target_type(e_type: Enums.ENTITY):
 	match e_type:
 		Enums.ENTITY.UNIT_WOODCHOPPER:
-			var ent: fh_entity = find_entity(null, Enums.ENTITY.RESOURCE_TREE)
-			if ent == null:
-				return ent
+			return Enums.ENTITY.RESOURCE_TREE
+			
+	return Enums.ENTITY.NOT_SET
+
+func find_work_target(e_type: Enums.ENTITY, worker: fh_unit) -> fh_entity:
+	var targ: fh_entity = null
+	var targ_type: Enums.ENTITY = get_work_target_type(e_type)
+
+	var ent: fh_entity = find_entity(null, targ_type)
+	if ent == null:
+		return ent
+	targ = ent
+	var old_dist = (worker.global_transform.origin - targ.global_transform.origin).length()
+	var new_dist
+	while (ent != null):
+		new_dist = (worker.global_transform.origin - ent.global_transform.origin).length()
+		if new_dist < old_dist:
 			targ = ent
-			var old_dist = (worker.global_transform.origin - targ.global_transform.origin).length()
-			var new_dist
-			while (ent != null):
-				new_dist = (worker.global_transform.origin - ent.global_transform.origin).length()
-				if new_dist < old_dist:
-					targ = ent
-					old_dist = new_dist
-					
-				ent = find_entity(ent, Enums.ENTITY.RESOURCE_TREE)
+			old_dist = new_dist
+			
+		ent = find_entity(ent, targ_type)
 				
 	return targ
 	
@@ -233,7 +281,6 @@ func select_object(object):
 		
 	selector.show()
 	selected_entities.append(object)
-		
 	
 func deselect_all():
 	for ent in selected_entities:

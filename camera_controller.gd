@@ -110,11 +110,11 @@ func _process(delta):
 			selection_box.draw_box = false
 		
 		match input_manager.input_type:
-			Enums.INPUT_TYPE.UNIT:
+			Enums.ENTITY_CATEGORY.UNIT:
 				pass
-			Enums.INPUT_TYPE.NO_SELECTION:
+			Enums.ENTITY_CATEGORY.NOT_SET:
 				process_clicks(mouse_pos)
-			Enums.INPUT_TYPE.BUILDING:
+			Enums.ENTITY_CATEGORY.BUILDING:
 				process_building_input(mouse_pos)
 #					private void InputPlacingBuilding(Vector2 mPos)
 #	{
@@ -168,7 +168,7 @@ func process_building_input(mouse_pos):
 			return
 		var build_result = entity_manager.build()
 		if build_result:
-			input_manager.input_type = Enums.INPUT_TYPE.NO_SELECTION
+			input_manager.input_type = Enums.ENTITY_CATEGORY.NOT_SET
 
 func process_clicks(mouse_pos: Vector2):
 	if _click_right == -1: # set on release
