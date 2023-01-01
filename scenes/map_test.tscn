@@ -24,7 +24,7 @@ size = Vector3(40, 1, 40)
 [node name="map" type="Node3D"]
 
 [node name="NavigationRegion3d" type="NavigationRegion3D" parent="."]
-navmesh = SubResource("NavigationMesh_elq6o")
+navigation_mesh = SubResource("NavigationMesh_elq6o")
 
 [node name="tree" parent="NavigationRegion3d" instance=ExtResource("2_ngiq4")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.12741, 0, 0.588624)

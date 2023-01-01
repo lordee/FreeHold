@@ -35,21 +35,19 @@ text = "Military"
 
 [node name="EconomyContainer" type="GridContainer" parent="CenterContainer"]
 visible = false
-offset_left = 485.0
-offset_top = 4.0
-offset_right = 666.0
-offset_bottom = 35.0
+offset_left = 467.0
+offset_top = -13.0
+offset_right = 684.0
+offset_bottom = 53.0
 columns = 2
 
+[node name="warehouse" type="Button" parent="CenterContainer/EconomyContainer"]
+text = "Warehouse"
+
 [node name="woodchopper" type="Button" parent="CenterContainer/EconomyContainer"]
-offset_right = 117.0
-offset_bottom = 31.0
 text = "Woodchopper"
 
 [node name="cancel" type="Button" parent="CenterContainer/EconomyContainer"]
-offset_left = 121.0
-offset_right = 181.0
-offset_bottom = 31.0
 text = "Cancel"
 
 [node name="TaxContainerCenter" type="CenterContainer" parent="."]

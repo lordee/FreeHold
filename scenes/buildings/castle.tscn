@@ -27,7 +27,7 @@ shape = SubResource("BoxShape3D_85gx6")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.94363, 0.659609, 0)
 
 [node name="gather_area" type="StaticBody3D" parent="." index="3"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.85242, 0.174747, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.72806, 0.174747, 0)
 
 [node name="CollisionShape3d" type="CollisionShape3D" parent="gather_area" index="0"]
 shape = SubResource("BoxShape3D_1et7g")
