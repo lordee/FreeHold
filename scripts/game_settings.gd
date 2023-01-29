@@ -9,3 +9,4 @@ var tax_rate_min: int = 0
 var tax_rate_max: int = 3
 var spawn_time_min: float = 0.5
 var game_tick_period: float = 1
+var game_tick_year: int = roundi(300 / game_tick_period) # 300 ticks at 1 second = 5 minute years

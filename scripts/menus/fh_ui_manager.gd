@@ -14,6 +14,7 @@ var military_container: GridContainer
 @onready var wood_label: Label = resources_container.get_node("values_container").get_node("wood_label")
 @onready var population_label: Label = resources_container.get_node("values_container").get_node("population_label")
 @onready var gold_label: Label = resources_container.get_node("values_container").get_node("gold_label")
+@onready var stone_label: Label = resources_container.get_node("values_container").get_node("stone_label")
 @onready var happiness_label: Label = resources_container.get_node("values_container").get_node("happiness_label")
 
 @onready var tax_container: GridContainer = ui.get_node("TaxContainerCenter/TaxContainer")
@@ -28,6 +29,7 @@ func _ready():
 	economy_container = ui.get_node("CenterContainer/EconomyContainer")
 	economy_container.get_node("warehouse").pressed.connect(building_button_pressed.bind(Enums.ENTITY.BUILDING_WAREHOUSE))
 	economy_container.get_node("woodchopper").pressed.connect(building_button_pressed.bind(Enums.ENTITY.BUILDING_WOODCHOPPER))
+	economy_container.get_node("quarry").pressed.connect(building_button_pressed.bind(Enums.ENTITY.BUILDING_QUARRY))
 	economy_container.get_node("cancel").pressed.connect(ui_cancel_button_pressed)
 	tax_container.get_node("tax_increase").pressed.connect(ui_tax_button_increased_pressed)
 	tax_container.get_node("tax_decrease").pressed.connect(ui_tax_button_decreased_pressed)
@@ -37,12 +39,13 @@ func setup_ui():
 	update_tax_label()
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
+func _process(_delta):
 	if game.player_manager.current_player != null:
 		population_label.text = str(game.player_manager.current_player.population) + "/" + str(game.player_manager.current_player.population_max)
 		wood_label.text = str(game.player_manager.current_player.resources.wooden_planks)
 		gold_label.text = str(game.player_manager.current_player.resources.gold) + " (+" + str(game.player_manager.current_player.get_tax_income()) + ")"
 		happiness_label.text = str(game.player_manager.current_player.happiness)
+		stone_label.text = str(game.player_manager.current_player.resources.stone)
 	
 # TODO - track button state/coords instead of constant node traversal
 func button_recursive(node: Node, mouse_pos: Vector2) -> bool:
@@ -86,11 +89,11 @@ func military_button_pressed():
 	ui_print("military_button_pressed")
 
 func ui_tax_button_increased_pressed():
-	var success: bool = game.player_manager.current_player.tax_rate_change(true)
+	var _success: bool = game.player_manager.current_player.tax_rate_change(true)
 	update_tax_label()
 	
 func ui_tax_button_decreased_pressed():
-	var success: bool = game.player_manager.current_player.tax_rate_change(false)
+	var _success: bool = game.player_manager.current_player.tax_rate_change(false)
 	update_tax_label()
 	
 func update_tax_label():

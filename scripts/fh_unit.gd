@@ -28,11 +28,17 @@ var entity_category: Enums.ENTITY_CATEGORY:
 				return Enums.ENTITY_CATEGORY.BUILDING
 			Enums.ENTITY.BUILDING_WAREHOUSE:
 				return Enums.ENTITY_CATEGORY.BUILDING
+			Enums.ENTITY.BUILDING_QUARRY:
+				return Enums.ENTITY_CATEGORY.BUILDING
 			Enums.ENTITY.UNIT_UNEMPLOYED:
 				return Enums.ENTITY_CATEGORY.UNIT
 			Enums.ENTITY.UNIT_WOODCHOPPER:
 				return Enums.ENTITY_CATEGORY.UNIT
+			Enums.ENTITY.UNIT_QUARRYWORKER:
+				return Enums.ENTITY_CATEGORY.UNIT
 			Enums.ENTITY.RESOURCE_TREE:
+				return Enums.ENTITY_CATEGORY.RESOURCE
+			Enums.ENTITY.RESOURCE_STONE:
 				return Enums.ENTITY_CATEGORY.RESOURCE
 		
 		return Enums.ENTITY_CATEGORY.NOT_SET
@@ -68,7 +74,7 @@ func get_unit_type(ent_type: Enums.ENTITY):
 		Enums.ENTITY.UNIT_UNEMPLOYED:
 			return Enums.UNIT_TYPE.CIVILIAN
 
-	assert(false, "get_unit_type: ent_type not in match statement")
+	game.ui_manager.ui_print("get_unit_type: ent_type not in match statement")
 	return Enums.UNIT_TYPE.CIVILIAN
 
 func _ready():
@@ -156,7 +162,10 @@ func collect_resource(delta: float):
 		resources.add_resource(workplace_resource_type, res_val)
 		
 		if resources.get_resource_value(workplace_resource_type) >= max_resources.get_resource_value(workplace_resource_type):
-			go_to_work_building()
+			if workplace_resource_type == Enums.RESOURCE.STONE:
+				go_to_warehouse()
+			else:
+				go_to_work_building()
 			
 		work_time = 0
 	
@@ -176,24 +185,32 @@ func do_work(delta: float):
 		# add new resource
 		resources.set_resource(workplace_processed_resource_type, max_resources.get_resource_value(workplace_processed_resource_type))
 		# send them to warehouse
-		var wh: fh_entity = null
-		wh = game.entity_manager.find_entity(wh, Enums.ENTITY.BUILDING_WAREHOUSE)
-		while (wh != null):
-			if wh.player_owner == self.player_owner:
-				if wh.resources.space_left(workplace_processed_resource_type) >= resources.get_resource_value(workplace_processed_resource_type):
-					destination_goal = wh
-					move_to(game.entity_manager.get_entity_destination(wh))
-					current_state = Enums.STATE.MOVING
-					break
-			wh = game.entity_manager.find_entity(wh, Enums.ENTITY.BUILDING_WAREHOUSE)
-			
-		if wh == null:
-			# not found, wait a bit before checking again
-			print("No warehouse found!")
-			work_time -= 1
-		return
+		var gone_warehouse: bool = go_to_warehouse()
+		if !gone_warehouse:
+			return
+		
 	
 	work_time += delta
+
+func go_to_warehouse() -> bool:
+	var wh: fh_entity = null
+	wh = game.entity_manager.find_entity(wh, Enums.ENTITY.BUILDING_WAREHOUSE)
+	while (wh != null):
+		if wh.player_owner == self.player_owner:
+			if wh.resources.space_left(workplace_processed_resource_type) >= resources.get_resource_value(workplace_processed_resource_type):
+				destination_goal = wh
+				move_to(game.entity_manager.get_entity_destination(wh))
+				current_state = Enums.STATE.MOVING
+				break
+		wh = game.entity_manager.find_entity(wh, Enums.ENTITY.BUILDING_WAREHOUSE)
+		
+	if wh == null:
+		# not found, wait a bit before checking again
+		print("No warehouse found!")
+		work_time -= 1
+		return false
+		
+	return true
 
 func has_resources() -> bool:
 	if resources.get_resource_value(workplace_resource_type) > 0:
@@ -212,12 +229,12 @@ func is_near(org: Vector3) -> bool:
 func moving_tick(delta):
 	if is_on_floor():
 		if agent.is_target_reachable():
-			var next_location = agent.get_next_location()
+			var next_location = agent.get_next_path_position()
 			var v = global_transform.origin.direction_to(next_location).normalized() * SPEED
 			agent.set_velocity(v)
 			look_at(next_location)
 		else:
-			move_to(agent.get_final_location())
+			move_to(agent.get_final_position())
 #			agent.set_velocity(Vector3.ZERO)
 #			current_state = Enums.STATE.IDLE
 	else:
@@ -231,7 +248,7 @@ func go_to_work_building():
 
 func move_to(dest: Vector3) -> void:
 	destination = dest
-	agent.set_target_location(destination)
+	agent.set_target_position(destination)
 
 func select():
 	selector.show()

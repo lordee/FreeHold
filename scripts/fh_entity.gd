@@ -14,11 +14,17 @@ var entity_category: Enums.ENTITY_CATEGORY:
 				return Enums.ENTITY_CATEGORY.BUILDING
 			Enums.ENTITY.BUILDING_WAREHOUSE:
 				return Enums.ENTITY_CATEGORY.BUILDING
+			Enums.ENTITY.BUILDING_QUARRY:
+				return Enums.ENTITY_CATEGORY.BUILDING
 			Enums.ENTITY.UNIT_UNEMPLOYED:
 				return Enums.ENTITY_CATEGORY.UNIT
 			Enums.ENTITY.UNIT_WOODCHOPPER:
 				return Enums.ENTITY_CATEGORY.UNIT
+			Enums.ENTITY.UNIT_QUARRYWORKER:
+				return Enums.ENTITY_CATEGORY.UNIT
 			Enums.ENTITY.RESOURCE_TREE:
+				return Enums.ENTITY_CATEGORY.RESOURCE
+			Enums.ENTITY.RESOURCE_STONE:
 				return Enums.ENTITY_CATEGORY.RESOURCE
 		
 		return Enums.ENTITY_CATEGORY.NOT_SET
@@ -35,7 +41,7 @@ func _ready():
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
+func _process(_delta):
 	pass
 
 

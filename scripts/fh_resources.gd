@@ -35,6 +35,8 @@ func set_resource(resource_type: Enums.RESOURCE, val: int):
 			flour = val 
 		Enums.RESOURCE.WOODEN_PLANKS:
 			wooden_planks = val
+		Enums.RESOURCE.NOT_SET:
+			print("resource not set passed to set_resource")
 
 func merge_resource_objects(external_resource: fh_resources, add: bool):
 	var multiplier = 1
@@ -51,6 +53,8 @@ func get_entity_type_resource(entity_type: Enums.ENTITY):
 	match entity_type:
 		Enums.ENTITY.UNIT_WOODCHOPPER:
 			return Enums.RESOURCE.WOOD
+		Enums.ENTITY.UNIT_QUARRYWORKER:
+			return Enums.RESOURCE.STONE
 			
 	return Enums.RESOURCE.NOT_SET
 	
@@ -58,6 +62,8 @@ func get_entity_type_processed_resource(entity_type: Enums.ENTITY):
 	match entity_type:
 		Enums.ENTITY.UNIT_WOODCHOPPER:
 			return Enums.RESOURCE.WOODEN_PLANKS
+		Enums.ENTITY.UNIT_QUARRYWORKER:
+			return Enums.RESOURCE.STONE
 			
 	return Enums.RESOURCE.NOT_SET
 
@@ -83,15 +89,15 @@ func space_left(resource_type: Enums.RESOURCE) -> int:
 	# if no empty piles, are any piles not full?
 	var piles: int = 0
 	if wood > 0:
-		piles += int(ceil(wood / MAX_PILE_AMOUNT))
+		piles += int(ceil(float(wood) / float(MAX_PILE_AMOUNT)))
 	if gold > 0:
-		piles += int(ceil(gold / MAX_PILE_AMOUNT))
+		piles += int(ceil(float(gold) / float(MAX_PILE_AMOUNT)))
 	if stone > 0:
-		piles += int(ceil(stone / MAX_PILE_AMOUNT))
+		piles += int(ceil(float(stone) / float(MAX_PILE_AMOUNT)))
 	if flour > 0:
-		piles += int(ceil(flour / MAX_PILE_AMOUNT))
+		piles += int(ceil(float(flour) / float(MAX_PILE_AMOUNT)))
 	if wooden_planks > 0:
-		piles += int(ceil(wooden_planks / MAX_PILE_AMOUNT))
+		piles += int(ceil(float(wooden_planks) / float(MAX_PILE_AMOUNT)))
 	
 	if piles < MAX_PILES:
 		return (MAX_PILES - piles) * MAX_PILE_AMOUNT
@@ -100,8 +106,6 @@ func space_left(resource_type: Enums.RESOURCE) -> int:
 		var rem = res_val % MAX_PILE_AMOUNT
 		return rem
 	
-	
-
 func get_max_resources(ret_res, entity_type: Enums.ENTITY) -> fh_resources:
 	if ret_res == null:
 		ret_res = fh_resources.new()
@@ -110,5 +114,7 @@ func get_max_resources(ret_res, entity_type: Enums.ENTITY) -> fh_resources:
 		Enums.ENTITY.UNIT_WOODCHOPPER:
 			ret_res.wood = 10
 			ret_res.wooden_planks = 10
+		Enums.ENTITY.UNIT_QUARRYWORKER:
+			ret_res.stone = 10
 			
 	return ret_res

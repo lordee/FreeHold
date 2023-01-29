@@ -6,7 +6,6 @@ var entities: Array = Array()
 var selected_entities: Array = Array()
 @onready var game = get_node("/root/game")
 var SCENES: Dictionary = {}
-@onready var scene_unit: PackedScene = ResourceLoader.load("res://scenes/unit.tscn")
 var entity_required_resources: Dictionary = {}
 
 var building_being_placed: Node3D
@@ -16,11 +15,30 @@ var building_being_placed_valid: bool = false
 func _ready():
 	SCENES[Enums.ENTITY.BUILDING_WOODCHOPPER] = ResourceLoader.load("res://scenes/buildings/woodchopper.tscn")
 	SCENES[Enums.ENTITY.BUILDING_WAREHOUSE] = ResourceLoader.load("res://scenes/buildings/warehouse.tscn")
+	SCENES[Enums.ENTITY.BUILDING_QUARRY] = ResourceLoader.load("res://scenes/buildings/quarry.tscn")
+	SCENES[Enums.ENTITY.RESOURCE_TREE] = ResourceLoader.load("res://scenes/tree.tscn")
+	SCENES[Enums.ENTITY.RESOURCE_STONE] = ResourceLoader.load("res://scenes/stone.tscn")
+	SCENES[Enums.ENTITY.UNIT_UNEMPLOYED] = ResourceLoader.load("res://scenes/unit.tscn")
 	pass
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _physics_process(delta):
+func _physics_process(_delta):
 	pass
+
+# fh_game calls this for each game tick, spawn animals etc
+func process_entity_game_tick():
+	for ent in entities:
+		match ent.entity_type:
+			Enums.ENTITY.RESOURCE_TREE:
+				# chance for forest to grow
+				if ent.life_stage == Enums.LIFE_STAGE.MATURE:
+					# chance to sprout new tree within x distance
+					ent.reproduce(false)
+				else:
+					ent.game_tick_age += 1
+
+				# chance for animal to spawn
+			
 
 func find_entity(prev_ent: fh_entity, ent_type: Enums.ENTITY) -> fh_entity:
 	var found: bool = false
@@ -51,6 +69,8 @@ func get_entity_required_resources(ent_type: Enums.ENTITY) -> fh_resources:
 				required_resources.wooden_planks = 20
 			Enums.ENTITY.BUILDING_WAREHOUSE:
 				required_resources.wooden_planks = 100
+			Enums.ENTITY.BUILDING_QUARRY:
+				required_resources.wooden_planks = 150
 		entity_required_resources[ent_type] = required_resources
 		return required_resources
 
@@ -88,6 +108,8 @@ func get_occupation(e_type: Enums.ENTITY):
 	match e_type:
 		Enums.ENTITY.BUILDING_WOODCHOPPER:
 			return Enums.ENTITY.UNIT_WOODCHOPPER
+		Enums.ENTITY.BUILDING_QUARRY:
+			return Enums.ENTITY.UNIT_QUARRYWORKER
 			
 	return Enums.ENTITY.NOT_SET
 
@@ -113,11 +135,8 @@ func player_has_resources_to_create_entity(player: fh_player, entity_type: Enums
 func start_building_placement(building_type: Enums.ENTITY, p_owner: fh_player):
 	cancel_building_placement()
 	
-	var scene: PackedScene = null
-	scene = SCENES[building_type]
+	var scene: PackedScene = get_entity_scene(building_type)
 	if scene == null:
-#		var enum_name = Enums.ENTITY.keys()[building_type] 
-		game.ui_manager.ui_print("scene not found in entity_manager start_building_placement")
 		return
 		
 	# spawn scene
@@ -160,7 +179,7 @@ func validate_building_placement(area: Area3D):
 				building_being_placed_valid = false
 
 # somehow we can get less exits than enters, so instead of counting them, we will scan for overlaps on exit
-func building_area_exited(body: Node3D, area: Area3D):
+func building_area_exited(_body: Node3D, area: Area3D):
 	validate_building_placement(area)
 
 func build() -> bool:
@@ -196,7 +215,8 @@ func populate_entities():
 			process_entity(node, true)
 			
 func spawn_peasant(player_owner: fh_player):
-	var unit: fh_unit = scene_unit.instantiate()
+	var scene: PackedScene = get_entity_scene(Enums.ENTITY.UNIT_UNEMPLOYED)
+	var unit: fh_unit = scene.instantiate()
 	game.map_nav_region.add_child(unit)
 	# TODO - constructors?
 	player_owner.population += 1
@@ -207,11 +227,29 @@ func spawn_peasant(player_owner: fh_player):
 	move_to_floor(unit)
 	game.map_nav_region.bake_navigation_mesh()
 	entities.append(unit)
+	
+func get_entity_scene(entity_type: Enums.ENTITY) -> PackedScene:
+	var scene: PackedScene = null
+	scene = SCENES[entity_type]
+	if scene == null:
+#		var enum_name = Enums.ENTITY.keys()[building_type] 
+		game.ui_manager.ui_print("scene not found in entity_manager get_entity_scene")
+	
+	return scene
+	
+func spawn_entity(entity_type: Enums.ENTITY, org: Vector3):
+	var scene: PackedScene = get_entity_scene(entity_type)
+	var node = scene.instantiate()
+	game.map_nav_region.add_child(node)
+	node.global_transform.origin = org
+	game.map_nav_region.bake_navigation_mesh()
 
 func get_work_target_type(e_type: Enums.ENTITY):
 	match e_type:
 		Enums.ENTITY.UNIT_WOODCHOPPER:
 			return Enums.ENTITY.RESOURCE_TREE
+		Enums.ENTITY.UNIT_QUARRYWORKER:
+			return Enums.ENTITY.RESOURCE_STONE
 			
 	return Enums.ENTITY.NOT_SET
 
