@@ -1,0 +1,26 @@
+[gd_scene load_steps=6 format=3 uid="uid://d3qx11jku1rdy"]
+
+[ext_resource type="Script" path="res://scripts/fh_entity_resource.gd" id="1_tvhjl"]
+[ext_resource type="Texture2D" uid="uid://cblo8rlnc8h1w" path="res://assets/rocks/diffuse.tga" id="2_m2c6j"]
+[ext_resource type="ArrayMesh" uid="uid://2dvv4upyh8rc" path="res://assets/rocks/rocks_03.obj" id="3_5aicv"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_37pwg"]
+albedo_texture = ExtResource("2_m2c6j")
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_6b1t8"]
+
+[node name="stone" type="Node3D"]
+script = ExtResource("1_tvhjl")
+resource_type = 2
+entity_type = 7
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.01, 0, 0, 0, 0.01, 0, 0, 0, 0.01, 0, 0, 0)
+mesh = ExtResource("3_5aicv")
+surface_material_override/0 = SubResource("StandardMaterial3D_37pwg")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="MeshInstance3D"]
+transform = Transform3D(100, 0, 0, 0, 120, 0, 0, 0, 220, 0, 0, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D/StaticBody3D"]
+shape = SubResource("BoxShape3D_6b1t8")
