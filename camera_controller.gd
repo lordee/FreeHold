@@ -149,12 +149,12 @@ func process_building_input(mouse_pos):
 	var results: Dictionary = raycast_from_mouse()
 	
 	if !results.is_empty():
-		var position: Vector3 = results["position"]
+		var my_position: Vector3 = results["position"]
 #		position.y = game.map_floor.global_transform.origin.y * game.map_floor.scale.y
-		position.y = game.map_floor.mesh.size.y * game.map_floor.scale.y
+		my_position.y = game.map_floor.mesh.size.y * game.map_floor.scale.y
 		
 		#position.y += game.entity_manager.building_being_placed.position.y * game.entity_manager.building_being_placed.scale.y
-		entity_manager.building_being_placed.global_transform.origin = position
+		entity_manager.building_being_placed.global_transform.origin = my_position
 		
 	if _building_rotate == 1:
 		entity_manager.building_being_placed.rotate_y(90)
