@@ -263,8 +263,6 @@ size = Vector3(3.5, 1, 3.5)
 
 [node name="woodchopper" type="Node3D"]
 script = ExtResource("1_dbo6f")
-team_no = null
-entity_type = null
 
 [node name="Celler" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1.78814e-07, -1, 0, 1, 1.78814e-07, 0, 0, 0)

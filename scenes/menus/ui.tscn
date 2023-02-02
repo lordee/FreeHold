@@ -45,6 +45,10 @@ text = "Woodchopper"
 layout_mode = 2
 text = "Quarry"
 
+[node name="iron_mine" type="Button" parent="CenterContainer/EconomyContainer"]
+layout_mode = 2
+text = "Iron Mine"
+
 [node name="cancel" type="Button" parent="CenterContainer/EconomyContainer"]
 layout_mode = 2
 text = "Cancel"
@@ -126,8 +130,16 @@ custom_minimum_size = Vector2(4, 4)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-tooltip_text = "gold"
+tooltip_text = "stone"
 color = Color(0.180392, 0.180392, 0.180392, 1)
+
+[node name="iron_image" type="ColorRect" parent="ResourcesContainer/VBoxContainer"]
+custom_minimum_size = Vector2(4, 4)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+tooltip_text = "iron"
+color = Color(0.317647, 0.109804, 0.0117647, 1)
 
 [node name="values_container" type="VBoxContainer" parent="ResourcesContainer"]
 custom_minimum_size = Vector2(25, 25)
@@ -160,6 +172,12 @@ text = "100"
 
 [node name="stone_label" type="Label" parent="ResourcesContainer/values_container"]
 layout_mode = 2
-tooltip_text = "gold"
+tooltip_text = "stone"
+mouse_filter = 0
+text = "100"
+
+[node name="iron_label" type="Label" parent="ResourcesContainer/values_container"]
+layout_mode = 2
+tooltip_text = "iron"
 mouse_filter = 0
 text = "100"

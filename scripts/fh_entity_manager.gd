@@ -16,6 +16,7 @@ func _ready():
 	SCENES[Enums.ENTITY.BUILDING_WOODCHOPPER] = ResourceLoader.load("res://scenes/buildings/woodchopper.tscn")
 	SCENES[Enums.ENTITY.BUILDING_WAREHOUSE] = ResourceLoader.load("res://scenes/buildings/warehouse.tscn")
 	SCENES[Enums.ENTITY.BUILDING_QUARRY] = ResourceLoader.load("res://scenes/buildings/quarry.tscn")
+	SCENES[Enums.ENTITY.BUILDING_IRONMINE] = ResourceLoader.load("res://scenes/buildings/iron_mine.tscn")
 	SCENES[Enums.ENTITY.RESOURCE_TREE] = ResourceLoader.load("res://scenes/tree.tscn")
 	SCENES[Enums.ENTITY.RESOURCE_STONE] = ResourceLoader.load("res://scenes/stone.tscn")
 	SCENES[Enums.ENTITY.UNIT_UNEMPLOYED] = ResourceLoader.load("res://scenes/unit.tscn")
@@ -92,8 +93,6 @@ func occupy_building(building: fh_entity, unit: fh_unit):
 	building.occupied = true
 	return fh_entity.get_occupation(building.entity_type)
 	
-
-
 func cancel_building_placement():
 	if building_being_placed != null:
 		building_being_placed.queue_free()
@@ -113,11 +112,11 @@ func player_has_resources_to_create_entity(player: fh_player, entity_type: Enums
 		
 	return have_resources
 
-func get_entity_required_resources(ent_type):
+func get_entity_required_resources(ent_type) -> fh_resources:
 	if entity_required_resources.has(ent_type):
 		return entity_required_resources[ent_type]
 	else:
-		fh_entity.get_entity_required_resources(ent_type)
+		return fh_entity.get_entity_required_resources(ent_type)
 
 func start_building_placement(building_type: Enums.ENTITY, p_owner: fh_player):
 	cancel_building_placement()

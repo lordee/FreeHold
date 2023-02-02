@@ -1,22 +1,24 @@
-[gd_scene load_steps=6 format=3 uid="uid://d3qx11jku1rdy"]
+[gd_scene load_steps=6 format=3 uid="uid://2e145dr6rhsx"]
 
-[ext_resource type="Script" path="res://scripts/fh_entity_resource.gd" id="1_tvhjl"]
-[ext_resource type="Texture2D" uid="uid://cblo8rlnc8h1w" path="res://assets/rocks/diffuse.tga" id="2_m2c6j"]
-[ext_resource type="ArrayMesh" uid="uid://2dvv4upyh8rc" path="res://assets/rocks/rocks_03.obj" id="3_5aicv"]
+[ext_resource type="Script" path="res://scripts/fh_entity_resource.gd" id="1_wonm8"]
+[ext_resource type="ArrayMesh" uid="uid://2dvv4upyh8rc" path="res://assets/rocks/rocks_03.obj" id="2_hjju6"]
+[ext_resource type="Texture2D" uid="uid://cblo8rlnc8h1w" path="res://assets/rocks/diffuse.tga" id="3_b7e5s"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_37pwg"]
-albedo_texture = ExtResource("2_m2c6j")
+albedo_texture = ExtResource("3_b7e5s")
+metallic = 1.0
+roughness = 0.0
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_6b1t8"]
 
-[node name="stone" type="Node3D"]
-script = ExtResource("1_tvhjl")
-resource_type = 2
-entity_type = 9
+[node name="iron" type="Node3D"]
+script = ExtResource("1_wonm8")
+resource_type = 6
+entity_type = 10
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(0.01, 0, 0, 0, 0.01, 0, 0, 0, 0.01, 0, 0, 0)
-mesh = ExtResource("3_5aicv")
+mesh = ExtResource("2_hjju6")
 surface_material_override/0 = SubResource("StandardMaterial3D_37pwg")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="MeshInstance3D"]

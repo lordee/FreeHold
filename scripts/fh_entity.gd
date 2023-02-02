@@ -34,6 +34,8 @@ static func get_entity_category(ent_type) -> Enums.ENTITY_CATEGORY:
 			return Enums.ENTITY_CATEGORY.BUILDING
 		Enums.ENTITY.BUILDING_QUARRY:
 			return Enums.ENTITY_CATEGORY.BUILDING
+		Enums.ENTITY.BUILDING_IRONMINE:
+			return Enums.ENTITY_CATEGORY.BUILDING
 		Enums.ENTITY.UNIT_UNEMPLOYED:
 			return Enums.ENTITY_CATEGORY.UNIT
 		Enums.ENTITY.UNIT_WOODCHOPPER:
@@ -44,6 +46,8 @@ static func get_entity_category(ent_type) -> Enums.ENTITY_CATEGORY:
 			return Enums.ENTITY_CATEGORY.RESOURCE
 		Enums.ENTITY.RESOURCE_STONE:
 			return Enums.ENTITY_CATEGORY.RESOURCE
+		Enums.ENTITY.RESOURCE_IRON:
+			return Enums.ENTITY_CATEGORY.RESOURCE
 	
 	return Enums.ENTITY_CATEGORY.NOT_SET
 
@@ -53,6 +57,8 @@ static func get_work_target_type(e_type: Enums.ENTITY):
 			return Enums.ENTITY.RESOURCE_TREE
 		Enums.ENTITY.UNIT_QUARRYWORKER:
 			return Enums.ENTITY.RESOURCE_STONE
+		Enums.ENTITY.UNIT_IRONMINER:
+			return Enums.ENTITY.RESOURCE_IRON
 			
 	return Enums.ENTITY.NOT_SET
 
@@ -63,6 +69,8 @@ static func get_entity_type_resource(ent_type: Enums.ENTITY):
 			return Enums.RESOURCE.WOOD
 		Enums.ENTITY.UNIT_QUARRYWORKER:
 			return Enums.RESOURCE.STONE
+		Enums.ENTITY.UNIT_IRONMINER:
+			return Enums.RESOURCE.IRON
 			
 	return Enums.RESOURCE.NOT_SET
 	
@@ -72,6 +80,8 @@ static func get_entity_type_processed_resource(ent_type: Enums.ENTITY):
 			return Enums.RESOURCE.WOODEN_PLANKS
 		Enums.ENTITY.UNIT_QUARRYWORKER:
 			return Enums.RESOURCE.STONE
+		Enums.ENTITY.UNIT_IRONMINER:
+			return Enums.RESOURCE.IRON
 			
 	return Enums.RESOURCE.NOT_SET
 
@@ -85,6 +95,8 @@ static func get_max_resources(ret_res, ent_type: Enums.ENTITY) -> fh_resources:
 			ret_res.wooden_planks = 10
 		Enums.ENTITY.UNIT_QUARRYWORKER:
 			ret_res.stone = 10
+		Enums.ENTITY.UNIT_IRONMINER:
+			ret_res.iron = 10
 			
 	return ret_res
 
@@ -94,6 +106,8 @@ static func get_occupation(e_type: Enums.ENTITY):
 			return Enums.ENTITY.UNIT_WOODCHOPPER
 		Enums.ENTITY.BUILDING_QUARRY:
 			return Enums.ENTITY.UNIT_QUARRYWORKER
+		Enums.ENTITY.BUILDING_IRONMINE:
+			return Enums.ENTITY.UNIT_IRONMINER
 			
 	return Enums.ENTITY.NOT_SET
 
@@ -104,6 +118,8 @@ static func get_entity_required_resources(ent_type: Enums.ENTITY) -> fh_resource
 			required_resources.wooden_planks = 20
 		Enums.ENTITY.BUILDING_WAREHOUSE:
 			required_resources.wooden_planks = 100
-		Enums.ENTITY.BUILDING_QUARRY:
+		Enums.ENTITY.BUILDING_IRONMINE:
 			required_resources.wooden_planks = 150
+		Enums.ENTITY.BUILDING_QUARRY:
+			required_resources.wooden_planks = 100
 	return required_resources

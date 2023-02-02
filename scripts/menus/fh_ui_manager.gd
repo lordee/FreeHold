@@ -15,8 +15,8 @@ var military_container: GridContainer
 @onready var population_label: Label = resources_container.get_node("values_container").get_node("population_label")
 @onready var gold_label: Label = resources_container.get_node("values_container").get_node("gold_label")
 @onready var stone_label: Label = resources_container.get_node("values_container").get_node("stone_label")
+@onready var iron_label: Label = resources_container.get_node("values_container").get_node("iron_label")
 @onready var happiness_label: Label = resources_container.get_node("values_container").get_node("happiness_label")
-
 @onready var tax_container: GridContainer = ui.get_node("TaxContainerCenter/TaxContainer")
 @onready var tax_label: Label = tax_container.get_node("tax_label")
 
@@ -30,6 +30,7 @@ func _ready():
 	economy_container.get_node("warehouse").pressed.connect(building_button_pressed.bind(Enums.ENTITY.BUILDING_WAREHOUSE))
 	economy_container.get_node("woodchopper").pressed.connect(building_button_pressed.bind(Enums.ENTITY.BUILDING_WOODCHOPPER))
 	economy_container.get_node("quarry").pressed.connect(building_button_pressed.bind(Enums.ENTITY.BUILDING_QUARRY))
+	economy_container.get_node("iron_mine").pressed.connect(building_button_pressed.bind(Enums.ENTITY.BUILDING_IRONMINE))
 	economy_container.get_node("cancel").pressed.connect(ui_cancel_button_pressed)
 	tax_container.get_node("tax_increase").pressed.connect(ui_tax_button_increased_pressed)
 	tax_container.get_node("tax_decrease").pressed.connect(ui_tax_button_decreased_pressed)
@@ -46,6 +47,7 @@ func _process(_delta):
 		gold_label.text = str(game.player_manager.current_player.resources.gold) + " (+" + str(game.player_manager.current_player.get_tax_income()) + ")"
 		happiness_label.text = str(game.player_manager.current_player.happiness)
 		stone_label.text = str(game.player_manager.current_player.resources.stone)
+		iron_label.text = str(game.player_manager.current_player.resources.iron)
 	
 # TODO - track button state/coords instead of constant node traversal
 func button_recursive(node: Node, mouse_pos: Vector2) -> bool:
