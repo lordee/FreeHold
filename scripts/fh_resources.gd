@@ -49,24 +49,6 @@ func merge_resource_objects(external_resource: fh_resources, add: bool):
 	add_resource(Enums.RESOURCE.FLOUR, external_resource.flour * multiplier)
 	add_resource(Enums.RESOURCE.WOODEN_PLANKS, external_resource.wooden_planks * multiplier)
 
-func get_entity_type_resource(entity_type: Enums.ENTITY):
-	match entity_type:
-		Enums.ENTITY.UNIT_WOODCHOPPER:
-			return Enums.RESOURCE.WOOD
-		Enums.ENTITY.UNIT_QUARRYWORKER:
-			return Enums.RESOURCE.STONE
-			
-	return Enums.RESOURCE.NOT_SET
-	
-func get_entity_type_processed_resource(entity_type: Enums.ENTITY):
-	match entity_type:
-		Enums.ENTITY.UNIT_WOODCHOPPER:
-			return Enums.RESOURCE.WOODEN_PLANKS
-		Enums.ENTITY.UNIT_QUARRYWORKER:
-			return Enums.RESOURCE.STONE
-			
-	return Enums.RESOURCE.NOT_SET
-
 func get_resource_value(resource_type: Enums.RESOURCE):
 	match resource_type:
 		Enums.RESOURCE.WOOD:
@@ -106,15 +88,3 @@ func space_left(resource_type: Enums.RESOURCE) -> int:
 		var rem = res_val % MAX_PILE_AMOUNT
 		return rem
 	
-func get_max_resources(ret_res, entity_type: Enums.ENTITY) -> fh_resources:
-	if ret_res == null:
-		ret_res = fh_resources.new()
-	
-	match entity_type:
-		Enums.ENTITY.UNIT_WOODCHOPPER:
-			ret_res.wood = 10
-			ret_res.wooden_planks = 10
-		Enums.ENTITY.UNIT_QUARRYWORKER:
-			ret_res.stone = 10
-			
-	return ret_res

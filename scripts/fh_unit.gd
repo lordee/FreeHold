@@ -19,29 +19,8 @@ var current_state: Enums.STATE = Enums.STATE.IDLE
 var unit_type: Enums.UNIT_TYPE = Enums.UNIT_TYPE.CIVILIAN 
 var entity_category: Enums.ENTITY_CATEGORY:
 	get:
-		match entity_type:
-			Enums.ENTITY.NOT_SET:
-				return Enums.ENTITY_CATEGORY.NOT_SET
-			Enums.ENTITY.BUILDING_CASTLE:
-				return Enums.ENTITY_CATEGORY.BUILDING
-			Enums.ENTITY.BUILDING_WOODCHOPPER:
-				return Enums.ENTITY_CATEGORY.BUILDING
-			Enums.ENTITY.BUILDING_WAREHOUSE:
-				return Enums.ENTITY_CATEGORY.BUILDING
-			Enums.ENTITY.BUILDING_QUARRY:
-				return Enums.ENTITY_CATEGORY.BUILDING
-			Enums.ENTITY.UNIT_UNEMPLOYED:
-				return Enums.ENTITY_CATEGORY.UNIT
-			Enums.ENTITY.UNIT_WOODCHOPPER:
-				return Enums.ENTITY_CATEGORY.UNIT
-			Enums.ENTITY.UNIT_QUARRYWORKER:
-				return Enums.ENTITY_CATEGORY.UNIT
-			Enums.ENTITY.RESOURCE_TREE:
-				return Enums.ENTITY_CATEGORY.RESOURCE
-			Enums.ENTITY.RESOURCE_STONE:
-				return Enums.ENTITY_CATEGORY.RESOURCE
-		
-		return Enums.ENTITY_CATEGORY.NOT_SET
+		return fh_entity.get_entity_category(entity_type)
+
 var _entity_type: Enums.ENTITY = Enums.ENTITY.UNIT_UNEMPLOYED
 var entity_type: Enums.ENTITY:
 	get:
@@ -49,9 +28,9 @@ var entity_type: Enums.ENTITY:
 	set(value):
 		var u_type: Enums.UNIT_TYPE = get_unit_type(value)
 		unit_type = u_type
-		workplace_resource_type = resources.get_entity_type_resource(value)
-		workplace_processed_resource_type = resources.get_entity_type_processed_resource(value)
-		max_resources = resources.get_max_resources(max_resources, value)
+		workplace_resource_type = fh_entity.get_entity_type_resource(value)
+		workplace_processed_resource_type = fh_entity.get_entity_type_processed_resource(value)
+		max_resources = fh_entity.get_max_resources(max_resources, value)
 		if u_type == Enums.UNIT_TYPE.CIVILIAN:
 			if value != Enums.ENTITY.UNIT_UNEMPLOYED:
 				player_owner.work_population += 1
@@ -137,7 +116,7 @@ func _physics_process(delta: float) -> void:
 							current_state = Enums.STATE.IDLE
 							destination_goal = null
 						# going to work target
-						elif destination_goal.entity_type == game.entity_manager.get_work_target_type(entity_type):
+						elif destination_goal.entity_type == fh_entity.get_work_target_type(entity_type):
 							current_state = Enums.STATE.WORKING
 					else:
 						# not near destination, change state

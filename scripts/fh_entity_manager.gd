@@ -33,11 +33,12 @@ func process_entity_game_tick():
 				# chance for forest to grow
 				if ent.life_stage == Enums.LIFE_STAGE.MATURE:
 					# chance to sprout new tree within x distance
+					# TODO - does this work?
 					ent.reproduce(false)
 				else:
 					ent.game_tick_age += 1
 
-				# chance for animal to spawn
+				# TODO chance for animal to spawn
 			
 
 func find_entity(prev_ent: fh_entity, ent_type: Enums.ENTITY) -> fh_entity:
@@ -59,20 +60,7 @@ func remove_entity(ent):
 	entities.erase(ent)
 	ent.queue_free()
 	
-func get_entity_required_resources(ent_type: Enums.ENTITY) -> fh_resources:
-	if entity_required_resources.has(ent_type):
-		return entity_required_resources[ent_type]
-	else:
-		var required_resources = fh_resources.new()
-		match ent_type:
-			Enums.ENTITY.BUILDING_WOODCHOPPER:
-				required_resources.wooden_planks = 20
-			Enums.ENTITY.BUILDING_WAREHOUSE:
-				required_resources.wooden_planks = 100
-			Enums.ENTITY.BUILDING_QUARRY:
-				required_resources.wooden_planks = 150
-		entity_required_resources[ent_type] = required_resources
-		return required_resources
+
 
 func get_entity_destination(entity: fh_entity) -> Vector3:
 	match entity.entity_category:
@@ -102,16 +90,9 @@ func occupy_building(building: fh_entity, unit: fh_unit):
 		return Enums.ENTITY.UNIT_UNEMPLOYED
 		
 	building.occupied = true
-	return get_occupation(building.entity_type)
+	return fh_entity.get_occupation(building.entity_type)
 	
-func get_occupation(e_type: Enums.ENTITY):
-	match e_type:
-		Enums.ENTITY.BUILDING_WOODCHOPPER:
-			return Enums.ENTITY.UNIT_WOODCHOPPER
-		Enums.ENTITY.BUILDING_QUARRY:
-			return Enums.ENTITY.UNIT_QUARRYWORKER
-			
-	return Enums.ENTITY.NOT_SET
+
 
 func cancel_building_placement():
 	if building_being_placed != null:
@@ -131,6 +112,12 @@ func player_has_resources_to_create_entity(player: fh_player, entity_type: Enums
 		have_resources = true
 		
 	return have_resources
+
+func get_entity_required_resources(ent_type):
+	if entity_required_resources.has(ent_type):
+		return entity_required_resources[ent_type]
+	else:
+		fh_entity.get_entity_required_resources(ent_type)
 
 func start_building_placement(building_type: Enums.ENTITY, p_owner: fh_player):
 	cancel_building_placement()
@@ -244,18 +231,11 @@ func spawn_entity(entity_type: Enums.ENTITY, org: Vector3):
 	node.global_transform.origin = org
 	game.map_nav_region.bake_navigation_mesh()
 
-func get_work_target_type(e_type: Enums.ENTITY):
-	match e_type:
-		Enums.ENTITY.UNIT_WOODCHOPPER:
-			return Enums.ENTITY.RESOURCE_TREE
-		Enums.ENTITY.UNIT_QUARRYWORKER:
-			return Enums.ENTITY.RESOURCE_STONE
-			
-	return Enums.ENTITY.NOT_SET
+
 
 func find_work_target(e_type: Enums.ENTITY, worker: fh_unit) -> fh_entity:
 	var targ: fh_entity = null
-	var targ_type: Enums.ENTITY = get_work_target_type(e_type)
+	var targ_type: Enums.ENTITY = fh_entity.get_work_target_type(e_type)
 
 	var ent: fh_entity = find_entity(null, targ_type)
 	if ent == null:
