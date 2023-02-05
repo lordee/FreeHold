@@ -12,6 +12,7 @@ var wooden_planks: int = 0
 var iron: int = 0
 var fruit: int = 0
 var vegetable: int = 0
+var wheat: int = 0
 
 func add_resource(resource_type: Enums.RESOURCE, val: int):
 	match resource_type:
@@ -31,6 +32,8 @@ func add_resource(resource_type: Enums.RESOURCE, val: int):
 			fruit += val
 		Enums.RESOURCE.VEGETABLE:
 			vegetable += val
+		Enums.RESOURCE.WHEAT:
+			wheat += val
 		Enums.RESOURCE.NOT_SET:
 			print("resource not set passed to add_resource")
 			
@@ -52,6 +55,8 @@ func set_resource(resource_type: Enums.RESOURCE, val: int):
 			fruit = val
 		Enums.RESOURCE.VEGETABLE:
 			vegetable = val
+		Enums.RESOURCE.WHEAT:
+			wheat = val
 		Enums.RESOURCE.NOT_SET:
 			print("resource not set passed to set_resource")
 
@@ -68,6 +73,7 @@ func merge_resource_objects(external_resource: fh_resources, add: bool):
 	add_resource(Enums.RESOURCE.IRON, external_resource.iron * multiplier)
 	add_resource(Enums.RESOURCE.FRUIT, external_resource.fruit * multiplier)
 	add_resource(Enums.RESOURCE.VEGETABLE, external_resource.vegetable * multiplier)
+	add_resource(Enums.RESOURCE.WHEAT, external_resource.wheat * multiplier)
 
 func get_resource_value(resource_type: Enums.RESOURCE):
 	match resource_type:
@@ -87,6 +93,8 @@ func get_resource_value(resource_type: Enums.RESOURCE):
 			return fruit
 		Enums.RESOURCE.VEGETABLE:
 			return vegetable
+		Enums.RESOURCE.WHEAT:
+			return wheat
 
 # at the moment, warehouse specific
 func space_left(resource_type: Enums.RESOURCE) -> int:
@@ -112,6 +120,8 @@ func space_left(resource_type: Enums.RESOURCE) -> int:
 		piles += int(ceil(float(fruit) / float(MAX_PILE_AMOUNT)))
 	if vegetable > 0:
 		piles += int(ceil(float(vegetable) / float(MAX_PILE_AMOUNT)))
+	if wheat > 0:
+		piles += int(ceil(float(wheat) / float(MAX_PILE_AMOUNT)))
 	
 	if piles < MAX_PILES:
 		return (MAX_PILES - piles) * MAX_PILE_AMOUNT

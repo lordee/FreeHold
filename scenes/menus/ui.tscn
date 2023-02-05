@@ -57,6 +57,10 @@ text = "Orchard"
 layout_mode = 2
 text = "Vegetable Farm"
 
+[node name="wheat_farm" type="Button" parent="CenterContainer/EconomyContainer"]
+layout_mode = 2
+text = "Wheat Farm"
+
 [node name="cancel" type="Button" parent="CenterContainer/EconomyContainer"]
 layout_mode = 2
 text = "Cancel"
@@ -165,6 +169,14 @@ size_flags_vertical = 3
 tooltip_text = "vegetable"
 color = Color(1, 0.458824, 0.0156863, 1)
 
+[node name="wheat_image" type="ColorRect" parent="ResourcesContainer/VBoxContainer"]
+custom_minimum_size = Vector2(4, 4)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+tooltip_text = "wheat"
+color = Color(0.662745, 0.654902, 0.137255, 1)
+
 [node name="values_container" type="VBoxContainer" parent="ResourcesContainer"]
 custom_minimum_size = Vector2(25, 25)
 layout_mode = 2
@@ -215,5 +227,11 @@ text = "100"
 [node name="vegetable_label" type="Label" parent="ResourcesContainer/values_container"]
 layout_mode = 2
 tooltip_text = "vegetables"
+mouse_filter = 0
+text = "100"
+
+[node name="wheat_label" type="Label" parent="ResourcesContainer/values_container"]
+layout_mode = 2
+tooltip_text = "wheat"
 mouse_filter = 0
 text = "100"

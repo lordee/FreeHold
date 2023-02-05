@@ -19,6 +19,7 @@ func _ready():
 	SCENES[Enums.ENTITY.BUILDING_IRONMINE] = ResourceLoader.load("res://scenes/buildings/iron_mine.tscn")
 	SCENES[Enums.ENTITY.BUILDING_ORCHARD] = ResourceLoader.load("res://scenes/buildings/orchard.tscn")
 	SCENES[Enums.ENTITY.BUILDING_VEGETABLEFARM] = ResourceLoader.load("res://scenes/buildings/vegetable_farm.tscn")
+	SCENES[Enums.ENTITY.BUILDING_WHEATFARM] = ResourceLoader.load("res://scenes/buildings/wheat_farm.tscn")
 	SCENES[Enums.ENTITY.RESOURCE_TREE] = ResourceLoader.load("res://scenes/tree.tscn")
 	SCENES[Enums.ENTITY.RESOURCE_STONE] = ResourceLoader.load("res://scenes/stone.tscn")
 	SCENES[Enums.ENTITY.UNIT_UNEMPLOYED] = ResourceLoader.load("res://scenes/unit.tscn")
