@@ -18,6 +18,7 @@ func _ready():
 	SCENES[Enums.ENTITY.BUILDING_QUARRY] = ResourceLoader.load("res://scenes/buildings/quarry.tscn")
 	SCENES[Enums.ENTITY.BUILDING_IRONMINE] = ResourceLoader.load("res://scenes/buildings/iron_mine.tscn")
 	SCENES[Enums.ENTITY.BUILDING_ORCHARD] = ResourceLoader.load("res://scenes/buildings/orchard.tscn")
+	SCENES[Enums.ENTITY.BUILDING_VEGETABLEFARM] = ResourceLoader.load("res://scenes/buildings/vegetable_farm.tscn")
 	SCENES[Enums.ENTITY.RESOURCE_TREE] = ResourceLoader.load("res://scenes/tree.tscn")
 	SCENES[Enums.ENTITY.RESOURCE_STONE] = ResourceLoader.load("res://scenes/stone.tscn")
 	SCENES[Enums.ENTITY.UNIT_UNEMPLOYED] = ResourceLoader.load("res://scenes/unit.tscn")
@@ -41,7 +42,7 @@ func process_entity_game_tick():
 					ent.game_tick_age += 1
 
 				# TODO chance for animal to spawn
-			# TODO - growth stages for orchard
+			# TODO - growth stages for orchard, vegetable farm, wheat
 
 func find_entity(prev_ent: fh_entity, ent_type: Enums.ENTITY) -> fh_entity:
 	var found: bool = false
