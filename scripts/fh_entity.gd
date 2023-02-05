@@ -11,11 +11,13 @@ var player_owner: fh_player = null
 @onready var gather_area: StaticBody3D = get_node_or_null("gather_area")
 var occupied: bool = false
 var resources: fh_resources = fh_resources.new()
+var resource_nodes
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	
-	pass # Replace with function body.
+	var res = get_node_or_null("resources")
+	if res != null:
+		resource_nodes = res.get_children(true)
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -36,6 +38,8 @@ static func get_entity_category(ent_type) -> Enums.ENTITY_CATEGORY:
 			return Enums.ENTITY_CATEGORY.BUILDING
 		Enums.ENTITY.BUILDING_IRONMINE:
 			return Enums.ENTITY_CATEGORY.BUILDING
+		Enums.ENTITY.BUILDING_ORCHARD:
+			return Enums.ENTITY_CATEGORY.BUILDING
 		Enums.ENTITY.UNIT_UNEMPLOYED:
 			return Enums.ENTITY_CATEGORY.UNIT
 		Enums.ENTITY.UNIT_WOODCHOPPER:
@@ -48,8 +52,17 @@ static func get_entity_category(ent_type) -> Enums.ENTITY_CATEGORY:
 			return Enums.ENTITY_CATEGORY.RESOURCE
 		Enums.ENTITY.RESOURCE_IRON:
 			return Enums.ENTITY_CATEGORY.RESOURCE
+		Enums.ENTITY.RESOURCE_FRUIT:
+			return Enums.ENTITY_CATEGORY.RESOURCE
 	
 	return Enums.ENTITY_CATEGORY.NOT_SET
+
+static func is_resource_producer(e_type: Enums.ENTITY) -> bool:
+	match e_type:
+		Enums.ENTITY.BUILDING_ORCHARD:
+			return true
+			
+	return false
 
 static func get_work_target_type(e_type: Enums.ENTITY):
 	match e_type:
@@ -59,10 +72,12 @@ static func get_work_target_type(e_type: Enums.ENTITY):
 			return Enums.ENTITY.RESOURCE_STONE
 		Enums.ENTITY.UNIT_IRONMINER:
 			return Enums.ENTITY.RESOURCE_IRON
+		Enums.ENTITY.UNIT_ORCHARDWORKER:
+			return Enums.ENTITY.RESOURCE_FRUIT
 			
 	return Enums.ENTITY.NOT_SET
 
-
+# todo - how is this diff to work target type?
 static func get_entity_type_resource(ent_type: Enums.ENTITY):
 	match ent_type:
 		Enums.ENTITY.UNIT_WOODCHOPPER:
@@ -71,6 +86,8 @@ static func get_entity_type_resource(ent_type: Enums.ENTITY):
 			return Enums.RESOURCE.STONE
 		Enums.ENTITY.UNIT_IRONMINER:
 			return Enums.RESOURCE.IRON
+		Enums.ENTITY.UNIT_ORCHARDWORKER:
+			return Enums.RESOURCE.FRUIT
 			
 	return Enums.RESOURCE.NOT_SET
 	
@@ -82,8 +99,36 @@ static func get_entity_type_processed_resource(ent_type: Enums.ENTITY):
 			return Enums.RESOURCE.STONE
 		Enums.ENTITY.UNIT_IRONMINER:
 			return Enums.RESOURCE.IRON
+		Enums.ENTITY.UNIT_ORCHARDWORKER:
+			return Enums.RESOURCE.FRUIT
 			
 	return Enums.RESOURCE.NOT_SET
+
+static func get_unit_type(ent_type: Enums.ENTITY):
+	match ent_type:
+		Enums.ENTITY.UNIT_WOODCHOPPER:
+			return Enums.UNIT_TYPE.CIVILIAN
+		Enums.ENTITY.UNIT_UNEMPLOYED:
+			return Enums.UNIT_TYPE.CIVILIAN
+		Enums.ENTITY.UNIT_QUARRYWORKER:
+			return Enums.UNIT_TYPE.CIVILIAN
+		Enums.ENTITY.UNIT_IRONMINER:
+			return Enums.UNIT_TYPE.CIVILIAN
+		Enums.ENTITY.UNIT_ORCHARDWORKER:
+			return Enums.UNIT_TYPE.CIVILIAN
+
+	return Enums.UNIT_TYPE.NOT_SET
+
+static func resource_collection_point(res_type: Enums.RESOURCE) -> Enums.RESOURCE_PROCESS_POINT:
+	match res_type:
+		Enums.RESOURCE.STONE:
+			return Enums.RESOURCE_PROCESS_POINT.WAREHOUSE
+		Enums.RESOURCE.IRON:
+			return Enums.RESOURCE_PROCESS_POINT.WAREHOUSE
+		Enums.RESOURCE.FRUIT:
+			return Enums.RESOURCE_PROCESS_POINT.WAREHOUSE
+		_:
+			return Enums.RESOURCE_PROCESS_POINT.WORKPLACE
 
 static func get_max_resources(ret_res, ent_type: Enums.ENTITY) -> fh_resources:
 	if ret_res == null:
@@ -97,6 +142,8 @@ static func get_max_resources(ret_res, ent_type: Enums.ENTITY) -> fh_resources:
 			ret_res.stone = 10
 		Enums.ENTITY.UNIT_IRONMINER:
 			ret_res.iron = 10
+		Enums.ENTITY.UNIT_ORCHARDWORKER:
+			ret_res.fruit = 10
 			
 	return ret_res
 
@@ -108,6 +155,8 @@ static func get_occupation(e_type: Enums.ENTITY):
 			return Enums.ENTITY.UNIT_QUARRYWORKER
 		Enums.ENTITY.BUILDING_IRONMINE:
 			return Enums.ENTITY.UNIT_IRONMINER
+		Enums.ENTITY.BUILDING_ORCHARD:
+			return Enums.ENTITY.UNIT_ORCHARDWORKER
 			
 	return Enums.ENTITY.NOT_SET
 
@@ -122,4 +171,6 @@ static func get_entity_required_resources(ent_type: Enums.ENTITY) -> fh_resource
 			required_resources.wooden_planks = 150
 		Enums.ENTITY.BUILDING_QUARRY:
 			required_resources.wooden_planks = 100
+		Enums.ENTITY.BUILDING_ORCHARD:
+			required_resources.wooden_planks = 50
 	return required_resources

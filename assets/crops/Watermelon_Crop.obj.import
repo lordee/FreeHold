@@ -1,0 +1,21 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://b0hs14r5e87y4"
+path="res://.godot/imported/Watermelon_Crop.obj-5114f086c21be5653f19dc7485abfb18.mesh"
+
+[deps]
+
+files=["res://.godot/imported/Watermelon_Crop.obj-5114f086c21be5653f19dc7485abfb18.mesh"]
+
+source_file="res://assets/crops/Watermelon_Crop.obj"
+dest_files=["res://.godot/imported/Watermelon_Crop.obj-5114f086c21be5653f19dc7485abfb18.mesh", "res://.godot/imported/Watermelon_Crop.obj-5114f086c21be5653f19dc7485abfb18.mesh"]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+optimize_mesh=true

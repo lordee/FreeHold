@@ -1,0 +1,21 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://dxqqbi0xjxw7f"
+path="res://.godot/imported/Corn_3.obj-861a9baf7d8abfe36c488cc64e9842ae.mesh"
+
+[deps]
+
+files=["res://.godot/imported/Corn_3.obj-861a9baf7d8abfe36c488cc64e9842ae.mesh"]
+
+source_file="res://assets/crops/Corn_3.obj"
+dest_files=["res://.godot/imported/Corn_3.obj-861a9baf7d8abfe36c488cc64e9842ae.mesh", "res://.godot/imported/Corn_3.obj-861a9baf7d8abfe36c488cc64e9842ae.mesh"]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+optimize_mesh=true

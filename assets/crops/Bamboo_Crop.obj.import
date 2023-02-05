@@ -1,0 +1,21 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://bhwu1ykjgbxfd"
+path="res://.godot/imported/Bamboo_Crop.obj-686c2d66c68172859304d9369ed1269c.mesh"
+
+[deps]
+
+files=["res://.godot/imported/Bamboo_Crop.obj-686c2d66c68172859304d9369ed1269c.mesh"]
+
+source_file="res://assets/crops/Bamboo_Crop.obj"
+dest_files=["res://.godot/imported/Bamboo_Crop.obj-686c2d66c68172859304d9369ed1269c.mesh", "res://.godot/imported/Bamboo_Crop.obj-686c2d66c68172859304d9369ed1269c.mesh"]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+optimize_mesh=true

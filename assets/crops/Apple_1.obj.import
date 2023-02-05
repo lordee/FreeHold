@@ -1,0 +1,21 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://dsn280sjnr1yd"
+path="res://.godot/imported/Apple_1.obj-2600ec39573d280d240def5ed27d7b94.mesh"
+
+[deps]
+
+files=["res://.godot/imported/Apple_1.obj-2600ec39573d280d240def5ed27d7b94.mesh"]
+
+source_file="res://assets/crops/Apple_1.obj"
+dest_files=["res://.godot/imported/Apple_1.obj-2600ec39573d280d240def5ed27d7b94.mesh", "res://.godot/imported/Apple_1.obj-2600ec39573d280d240def5ed27d7b94.mesh"]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+optimize_mesh=true

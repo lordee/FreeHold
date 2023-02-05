@@ -1,0 +1,21 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://pcnotbfrptq5"
+path="res://.godot/imported/Beet_Crop.obj-d90372b4006909e7f9350f49f999b640.mesh"
+
+[deps]
+
+files=["res://.godot/imported/Beet_Crop.obj-d90372b4006909e7f9350f49f999b640.mesh"]
+
+source_file="res://assets/crops/Beet_Crop.obj"
+dest_files=["res://.godot/imported/Beet_Crop.obj-d90372b4006909e7f9350f49f999b640.mesh", "res://.godot/imported/Beet_Crop.obj-d90372b4006909e7f9350f49f999b640.mesh"]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+optimize_mesh=true

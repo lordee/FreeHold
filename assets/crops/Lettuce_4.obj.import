@@ -1,0 +1,21 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://voww8bxy4xa4"
+path="res://.godot/imported/Lettuce_4.obj-f5f45e518f61dcf5147c139ef1d2e85e.mesh"
+
+[deps]
+
+files=["res://.godot/imported/Lettuce_4.obj-f5f45e518f61dcf5147c139ef1d2e85e.mesh"]
+
+source_file="res://assets/crops/Lettuce_4.obj"
+dest_files=["res://.godot/imported/Lettuce_4.obj-f5f45e518f61dcf5147c139ef1d2e85e.mesh", "res://.godot/imported/Lettuce_4.obj-f5f45e518f61dcf5147c139ef1d2e85e.mesh"]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+optimize_mesh=true

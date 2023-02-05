@@ -17,6 +17,7 @@ func _ready():
 	SCENES[Enums.ENTITY.BUILDING_WAREHOUSE] = ResourceLoader.load("res://scenes/buildings/warehouse.tscn")
 	SCENES[Enums.ENTITY.BUILDING_QUARRY] = ResourceLoader.load("res://scenes/buildings/quarry.tscn")
 	SCENES[Enums.ENTITY.BUILDING_IRONMINE] = ResourceLoader.load("res://scenes/buildings/iron_mine.tscn")
+	SCENES[Enums.ENTITY.BUILDING_ORCHARD] = ResourceLoader.load("res://scenes/buildings/orchard.tscn")
 	SCENES[Enums.ENTITY.RESOURCE_TREE] = ResourceLoader.load("res://scenes/tree.tscn")
 	SCENES[Enums.ENTITY.RESOURCE_STONE] = ResourceLoader.load("res://scenes/stone.tscn")
 	SCENES[Enums.ENTITY.UNIT_UNEMPLOYED] = ResourceLoader.load("res://scenes/unit.tscn")
@@ -40,7 +41,7 @@ func process_entity_game_tick():
 					ent.game_tick_age += 1
 
 				# TODO chance for animal to spawn
-			
+			# TODO - growth stages for orchard
 
 func find_entity(prev_ent: fh_entity, ent_type: Enums.ENTITY) -> fh_entity:
 	var found: bool = false
@@ -230,25 +231,26 @@ func spawn_entity(entity_type: Enums.ENTITY, org: Vector3):
 	node.global_transform.origin = org
 	game.map_nav_region.bake_navigation_mesh()
 
-
-
 func find_work_target(e_type: Enums.ENTITY, worker: fh_unit) -> fh_entity:
 	var targ: fh_entity = null
 	var targ_type: Enums.ENTITY = fh_entity.get_work_target_type(e_type)
 
-	var ent: fh_entity = find_entity(null, targ_type)
-	if ent == null:
-		return ent
-	targ = ent
-	var old_dist = (worker.global_transform.origin - targ.global_transform.origin).length()
-	var new_dist
-	while (ent != null):
-		new_dist = (worker.global_transform.origin - ent.global_transform.origin).length()
-		if new_dist < old_dist:
-			targ = ent
-			old_dist = new_dist
-			
-		ent = find_entity(ent, targ_type)
+	if fh_entity.is_resource_producer(worker.workplace.entity_type):
+		var rand = randi_range(0, len(worker.workplace.resource_nodes)-1)
+		targ = worker.workplace.resource_nodes[rand]
+	else:
+		var ent: fh_entity = find_entity(null, targ_type)
+		if ent == null:
+			return ent
+		var old_dist
+		var new_dist
+		while (ent != null):
+			new_dist = (worker.global_transform.origin - ent.global_transform.origin).length()
+			if new_dist < old_dist or targ == null:
+				targ = ent
+				old_dist = new_dist
+				
+			ent = find_entity(ent, targ_type)
 				
 	return targ
 	

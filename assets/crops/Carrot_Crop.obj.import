@@ -1,0 +1,21 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://dyflhyj6gc46p"
+path="res://.godot/imported/Carrot_Crop.obj-01cb2f5a6ccb35b5dc10725ed56dea44.mesh"
+
+[deps]
+
+files=["res://.godot/imported/Carrot_Crop.obj-01cb2f5a6ccb35b5dc10725ed56dea44.mesh"]
+
+source_file="res://assets/crops/Carrot_Crop.obj"
+dest_files=["res://.godot/imported/Carrot_Crop.obj-01cb2f5a6ccb35b5dc10725ed56dea44.mesh", "res://.godot/imported/Carrot_Crop.obj-01cb2f5a6ccb35b5dc10725ed56dea44.mesh"]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+optimize_mesh=true

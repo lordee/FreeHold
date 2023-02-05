@@ -1,0 +1,21 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://c7ua1ywdmyowa"
+path="res://.godot/imported/BushBerries_Crop.obj-313fc1584feb26f1c76b70fea7fbb9f6.mesh"
+
+[deps]
+
+files=["res://.godot/imported/BushBerries_Crop.obj-313fc1584feb26f1c76b70fea7fbb9f6.mesh"]
+
+source_file="res://assets/crops/BushBerries_Crop.obj"
+dest_files=["res://.godot/imported/BushBerries_Crop.obj-313fc1584feb26f1c76b70fea7fbb9f6.mesh", "res://.godot/imported/BushBerries_Crop.obj-313fc1584feb26f1c76b70fea7fbb9f6.mesh"]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+optimize_mesh=true

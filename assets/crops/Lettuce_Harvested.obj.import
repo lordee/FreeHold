@@ -1,0 +1,21 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://dqaq3kr5p1el1"
+path="res://.godot/imported/Lettuce_Harvested.obj-3506e36d13093e8170c7d6725fe7e957.mesh"
+
+[deps]
+
+files=["res://.godot/imported/Lettuce_Harvested.obj-3506e36d13093e8170c7d6725fe7e957.mesh"]
+
+source_file="res://assets/crops/Lettuce_Harvested.obj"
+dest_files=["res://.godot/imported/Lettuce_Harvested.obj-3506e36d13093e8170c7d6725fe7e957.mesh", "res://.godot/imported/Lettuce_Harvested.obj-3506e36d13093e8170c7d6725fe7e957.mesh"]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+optimize_mesh=true

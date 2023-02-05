@@ -1,0 +1,21 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://qtfq8nkik0tv"
+path="res://.godot/imported/Cactus_4.obj-b4b13461331e8e5c602c595c8a1a0e41.mesh"
+
+[deps]
+
+files=["res://.godot/imported/Cactus_4.obj-b4b13461331e8e5c602c595c8a1a0e41.mesh"]
+
+source_file="res://assets/crops/Cactus_4.obj"
+dest_files=["res://.godot/imported/Cactus_4.obj-b4b13461331e8e5c602c595c8a1a0e41.mesh", "res://.godot/imported/Cactus_4.obj-b4b13461331e8e5c602c595c8a1a0e41.mesh"]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+optimize_mesh=true

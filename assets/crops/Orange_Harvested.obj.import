@@ -1,0 +1,21 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://cfeowxtwk6guo"
+path="res://.godot/imported/Orange_Harvested.obj-ccb0a33056d207765763eadcf64cb82e.mesh"
+
+[deps]
+
+files=["res://.godot/imported/Orange_Harvested.obj-ccb0a33056d207765763eadcf64cb82e.mesh"]
+
+source_file="res://assets/crops/Orange_Harvested.obj"
+dest_files=["res://.godot/imported/Orange_Harvested.obj-ccb0a33056d207765763eadcf64cb82e.mesh", "res://.godot/imported/Orange_Harvested.obj-ccb0a33056d207765763eadcf64cb82e.mesh"]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+optimize_mesh=true

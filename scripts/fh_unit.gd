@@ -3,7 +3,7 @@ class_name fh_unit
 # nodes
 @onready var selector: MeshInstance3D = $selector
 @onready var agent: NavigationAgent3D = $NavigationAgent3d
-@onready var game = get_node("/root/game")
+@onready var game: fh_game = get_node("/root/game")
 
 var SPEED: float = .2
 var MIN_DISTANCE: float = 1 # min distance to destinations before counted as being there
@@ -26,7 +26,7 @@ var entity_type: Enums.ENTITY:
 	get:
 		return _entity_type
 	set(value):
-		var u_type: Enums.UNIT_TYPE = get_unit_type(value)
+		var u_type: Enums.UNIT_TYPE = fh_entity.get_unit_type(value)
 		unit_type = u_type
 		workplace_resource_type = fh_entity.get_entity_type_resource(value)
 		workplace_processed_resource_type = fh_entity.get_entity_type_processed_resource(value)
@@ -45,16 +45,6 @@ var player_owner: fh_player = null
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
-
-func get_unit_type(ent_type: Enums.ENTITY):
-	match ent_type:
-		Enums.ENTITY.UNIT_WOODCHOPPER:
-			return Enums.UNIT_TYPE.CIVILIAN
-		Enums.ENTITY.UNIT_UNEMPLOYED:
-			return Enums.UNIT_TYPE.CIVILIAN
-
-	game.ui_manager.ui_print("get_unit_type: ent_type not in match statement")
-	return Enums.UNIT_TYPE.CIVILIAN
 
 func _ready():
 	agent.velocity_computed.connect(on_velocity_computed)
@@ -141,10 +131,14 @@ func collect_resource(delta: float):
 		resources.add_resource(workplace_resource_type, res_val)
 		
 		if resources.get_resource_value(workplace_resource_type) >= max_resources.get_resource_value(workplace_resource_type):
-			if workplace_resource_type == Enums.RESOURCE.STONE:
-				go_to_warehouse()
-			else:
-				go_to_work_building()
+			match fh_entity.resource_collection_point(workplace_resource_type):
+				Enums.RESOURCE_PROCESS_POINT.WAREHOUSE:
+					go_to_warehouse()
+				Enums.RESOURCE_PROCESS_POINT.WORKPLACE:
+					go_to_work_building()
+				Enums.RESOURCE_PROCESS_POINT.NOT_SET:
+					game.ui_manager.ui_print("collect_resource resource process point not set")
+
 			
 		work_time = 0
 	
@@ -208,6 +202,10 @@ func is_near(org: Vector3) -> bool:
 func moving_tick(delta):
 	if is_on_floor():
 		if agent.is_target_reachable():
+			# sometimes we get stuck in a loop, let's measure distance to final position
+			if is_near(destination):
+				on_target_reached()
+			# TODO - eventually we should just change position or stop the body
 			var next_location = agent.get_next_path_position()
 			var v = global_transform.origin.direction_to(next_location).normalized() * SPEED
 			agent.set_velocity(v)

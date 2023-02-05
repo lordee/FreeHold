@@ -1,0 +1,21 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://n7wg0tb281j1"
+path="res://.godot/imported/Tomato_Harvested.obj-5d2bfcea9c8327a274c42d735e45781f.mesh"
+
+[deps]
+
+files=["res://.godot/imported/Tomato_Harvested.obj-5d2bfcea9c8327a274c42d735e45781f.mesh"]
+
+source_file="res://assets/crops/Tomato_Harvested.obj"
+dest_files=["res://.godot/imported/Tomato_Harvested.obj-5d2bfcea9c8327a274c42d735e45781f.mesh", "res://.godot/imported/Tomato_Harvested.obj-5d2bfcea9c8327a274c42d735e45781f.mesh"]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+optimize_mesh=true
