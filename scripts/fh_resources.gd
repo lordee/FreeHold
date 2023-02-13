@@ -14,50 +14,52 @@ var fruit: int = 0
 var vegetable: int = 0
 var wheat: int = 0
 
-func add_resource(resource_type: Enums.RESOURCE, val: int):
-	match resource_type:
-		Enums.RESOURCE.WOOD:
+var reserved_resources: fh_resources = null
+
+func add_resource(e_type: Enums.ENTITY, val: int):
+	match e_type:
+		Enums.ENTITY.RESOURCE_WOOD:
 			wood += val
-		Enums.RESOURCE.GOLD:
+		Enums.ENTITY.RESOURCE_GOLD:
 			gold += val
-		Enums.RESOURCE.STONE:
+		Enums.ENTITY.RESOURCE_STONE:
 			stone += val
-		Enums.RESOURCE.FLOUR:
+		Enums.ENTITY.RESOURCE_FLOUR:
 			flour += val 
-		Enums.RESOURCE.WOODEN_PLANKS:
+		Enums.ENTITY.RESOURCE_WOODEN_PLANKS:
 			wooden_planks += val
-		Enums.RESOURCE.IRON:
+		Enums.ENTITY.RESOURCE_IRON:
 			iron += val
-		Enums.RESOURCE.FRUIT:
+		Enums.ENTITY.RESOURCE_FRUIT:
 			fruit += val
-		Enums.RESOURCE.VEGETABLE:
+		Enums.ENTITY.RESOURCE_VEGETABLE:
 			vegetable += val
-		Enums.RESOURCE.WHEAT:
+		Enums.ENTITY.RESOURCE_WHEAT:
 			wheat += val
-		Enums.RESOURCE.NOT_SET:
+		Enums.ENTITY.NOT_SET:
 			print("resource not set passed to add_resource")
 			
-func set_resource(resource_type: Enums.RESOURCE, val: int):
-	match resource_type:
-		Enums.RESOURCE.WOOD:
+func set_resource(e_type: Enums.ENTITY, val: int):
+	match e_type:
+		Enums.ENTITY.RESOURCE_WOOD:
 			wood = val
-		Enums.RESOURCE.GOLD:
+		Enums.ENTITY.RESOURCE_GOLD:
 			gold = val
-		Enums.RESOURCE.STONE:
+		Enums.ENTITY.RESOURCE_STONE:
 			stone = val
-		Enums.RESOURCE.FLOUR:
+		Enums.ENTITY.RESOURCE_FLOUR:
 			flour = val 
-		Enums.RESOURCE.WOODEN_PLANKS:
+		Enums.ENTITY.RESOURCE_WOODEN_PLANKS:
 			wooden_planks = val
-		Enums.RESOURCE.IRON:
+		Enums.ENTITY.RESOURCE_IRON:
 			iron = val
-		Enums.RESOURCE.FRUIT:
+		Enums.ENTITY.RESOURCE_FRUIT:
 			fruit = val
-		Enums.RESOURCE.VEGETABLE:
+		Enums.ENTITY.RESOURCE_VEGETABLE:
 			vegetable = val
-		Enums.RESOURCE.WHEAT:
+		Enums.ENTITY.RESOURCE_WHEAT:
 			wheat = val
-		Enums.RESOURCE.NOT_SET:
+		Enums.ENTITY.NOT_SET:
 			print("resource not set passed to set_resource")
 
 func merge_resource_objects(external_resource: fh_resources, add: bool):
@@ -65,39 +67,59 @@ func merge_resource_objects(external_resource: fh_resources, add: bool):
 	if !add:
 		multiplier = -1
 		
-	add_resource(Enums.RESOURCE.WOOD, external_resource.wood * multiplier)
-	add_resource(Enums.RESOURCE.GOLD, external_resource.gold * multiplier)
-	add_resource(Enums.RESOURCE.STONE, external_resource.stone * multiplier)
-	add_resource(Enums.RESOURCE.FLOUR, external_resource.flour * multiplier)
-	add_resource(Enums.RESOURCE.WOODEN_PLANKS, external_resource.wooden_planks * multiplier)
-	add_resource(Enums.RESOURCE.IRON, external_resource.iron * multiplier)
-	add_resource(Enums.RESOURCE.FRUIT, external_resource.fruit * multiplier)
-	add_resource(Enums.RESOURCE.VEGETABLE, external_resource.vegetable * multiplier)
-	add_resource(Enums.RESOURCE.WHEAT, external_resource.wheat * multiplier)
+	add_resource(Enums.ENTITY.RESOURCE_WOOD, external_resource.wood * multiplier)
+	add_resource(Enums.ENTITY.RESOURCE_GOLD, external_resource.gold * multiplier)
+	add_resource(Enums.ENTITY.RESOURCE_STONE, external_resource.stone * multiplier)
+	add_resource(Enums.ENTITY.RESOURCE_FLOUR, external_resource.flour * multiplier)
+	add_resource(Enums.ENTITY.RESOURCE_WOODEN_PLANKS, external_resource.wooden_planks * multiplier)
+	add_resource(Enums.ENTITY.RESOURCE_IRON, external_resource.iron * multiplier)
+	add_resource(Enums.ENTITY.RESOURCE_FRUIT, external_resource.fruit * multiplier)
+	add_resource(Enums.ENTITY.RESOURCE_VEGETABLE, external_resource.vegetable * multiplier)
+	add_resource(Enums.ENTITY.RESOURCE_WHEAT, external_resource.wheat * multiplier)
 
-func get_resource_value(resource_type: Enums.RESOURCE):
-	match resource_type:
-		Enums.RESOURCE.WOOD:
-			return wood
-		Enums.RESOURCE.GOLD:
-			return gold
-		Enums.RESOURCE.STONE:
-			return stone
-		Enums.RESOURCE.FLOUR:
-			return flour 
-		Enums.RESOURCE.WOODEN_PLANKS:
-			return wooden_planks
-		Enums.RESOURCE.IRON:
-			return iron
-		Enums.RESOURCE.FRUIT:
-			return fruit
-		Enums.RESOURCE.VEGETABLE:
-			return vegetable
-		Enums.RESOURCE.WHEAT:
-			return wheat
+func get_resource_value(e_type: Enums.ENTITY, include_reserved: bool = true) -> int:
+	match e_type:
+		Enums.ENTITY.RESOURCE_TREE:
+			return wood if include_reserved else wood - reserved_resources.wood
+		Enums.ENTITY.RESOURCE_WOOD:
+			return wood if include_reserved else wood - reserved_resources.wood
+		Enums.ENTITY.RESOURCE_GOLD:
+			return gold if include_reserved else gold - reserved_resources.gold
+		Enums.ENTITY.RESOURCE_STONE:
+			return stone if include_reserved else stone - reserved_resources.stone
+		Enums.ENTITY.RESOURCE_FLOUR:
+			return flour  if include_reserved else flour - reserved_resources.flour
+		Enums.ENTITY.RESOURCE_WOODEN_PLANKS:
+			return wooden_planks if include_reserved else wooden_planks - reserved_resources.wooden_planks
+		Enums.ENTITY.RESOURCE_IRON:
+			return iron if include_reserved else iron - reserved_resources.iron
+		Enums.ENTITY.RESOURCE_FRUIT:
+			return fruit if include_reserved else fruit - reserved_resources.fruit
+		Enums.ENTITY.RESOURCE_VEGETABLE:
+			return vegetable if include_reserved else vegetable - reserved_resources.vegetable
+		Enums.ENTITY.RESOURCE_WHEAT:
+			return wheat if include_reserved else wheat - reserved_resources.wheat
+			
+	print("get_resource_value enum not found")
+	return 0
+
+func reserve_resource(e_type: Enums.ENTITY, value: int) -> bool: # FIXME maybe return value instead, but we do all or nothing for now
+	if reserved_resources == null:
+		reserved_resources = fh_resources.new()
+	var val_avail: int = get_resource_value(e_type, false)
+	
+	var res_value: int = value if val_avail >= value else val_avail
+	
+	
+	reserved_resources.add_resource(e_type, res_value)
+	var val_left: int = val_avail - res_value
+	set_resource(e_type, val_left)
+	
+	return true
+		
 
 # at the moment, warehouse specific
-func space_left(resource_type: Enums.RESOURCE) -> int:
+func space_left(e_type: Enums.ENTITY) -> int:
 	# add up number of unique resources
 	# figure out number of piles within resources
 	# count the piles
@@ -126,7 +148,7 @@ func space_left(resource_type: Enums.RESOURCE) -> int:
 	if piles < MAX_PILES:
 		return (MAX_PILES - piles) * MAX_PILE_AMOUNT
 	else:
-		var res_val = get_resource_value(resource_type)
+		var res_val = get_resource_value(e_type)
 		var rem = res_val % MAX_PILE_AMOUNT
 		return rem
 	

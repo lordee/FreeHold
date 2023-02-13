@@ -9,11 +9,11 @@ var progress_per_action: int = 10
 @onready var game = get_node("/root/game")
 var total_progress: int = 0
 
-@export var resource_type: Enums.RESOURCE = Enums.RESOURCE.NOT_SET
+#@export var resource_type: Enums.ENTITY = Enums.ENTITY.NOT_SET
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	resources.set_resource(resource_type, 50)
+	resources.set_resource(entity_type, 50)
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -25,11 +25,11 @@ func action_performed() -> int:
 	if (total_progress >= 100):
 		# action complete
 		total_progress = 0
-		var resources_left = resources.get_resource_value(resource_type)
+		var resources_left = resources.get_resource_value(entity_type)
 		var val = resources_per_action_complete if resources_left >= resources_per_action_complete else resources_left
 		resources_left -= val
 		
-		resources.set_resource(resource_type, resources_left)
+		resources.set_resource(entity_type, resources_left)
 		if resources_left <= 0:
 			die()
 		return val

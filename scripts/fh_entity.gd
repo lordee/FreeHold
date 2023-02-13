@@ -44,6 +44,8 @@ static func get_entity_category(ent_type) -> Enums.ENTITY_CATEGORY:
 			return Enums.ENTITY_CATEGORY.BUILDING
 		Enums.ENTITY.BUILDING_WHEATFARM:
 			return Enums.ENTITY_CATEGORY.BUILDING
+		Enums.ENTITY.BUILDING_WINDMILL:
+			return Enums.ENTITY_CATEGORY.BUILDING
 		Enums.ENTITY.UNIT_UNEMPLOYED:
 			return Enums.ENTITY_CATEGORY.UNIT
 		Enums.ENTITY.UNIT_WOODCHOPPER:
@@ -56,6 +58,8 @@ static func get_entity_category(ent_type) -> Enums.ENTITY_CATEGORY:
 			return Enums.ENTITY_CATEGORY.UNIT
 		Enums.ENTITY.UNIT_WHEATFARMER:
 			return Enums.ENTITY_CATEGORY.UNIT
+		Enums.ENTITY.UNIT_MILLWORKER:
+			return Enums.ENTITY_CATEGORY.UNIT
 		Enums.ENTITY.RESOURCE_TREE:
 			return Enums.ENTITY_CATEGORY.RESOURCE
 		Enums.ENTITY.RESOURCE_STONE:
@@ -67,6 +71,8 @@ static func get_entity_category(ent_type) -> Enums.ENTITY_CATEGORY:
 		Enums.ENTITY.RESOURCE_VEGETABLE:
 			return Enums.ENTITY_CATEGORY.RESOURCE
 		Enums.ENTITY.RESOURCE_WHEAT:
+			return Enums.ENTITY_CATEGORY.RESOURCE
+		Enums.ENTITY.RESOURCE_FLOUR:
 			return Enums.ENTITY_CATEGORY.RESOURCE
 	
 	return Enums.ENTITY_CATEGORY.NOT_SET
@@ -96,6 +102,8 @@ static func get_work_target_type(e_type: Enums.ENTITY):
 			return Enums.ENTITY.RESOURCE_VEGETABLE
 		Enums.ENTITY.UNIT_WHEATFARMER:
 			return Enums.ENTITY.RESOURCE_WHEAT
+		Enums.ENTITY.UNIT_MILLWORKER:
+			return Enums.ENTITY.RESOURCE_WHEAT
 			
 	return Enums.ENTITY.NOT_SET
 
@@ -103,38 +111,42 @@ static func get_work_target_type(e_type: Enums.ENTITY):
 static func get_entity_type_resource(ent_type: Enums.ENTITY):
 	match ent_type:
 		Enums.ENTITY.UNIT_WOODCHOPPER:
-			return Enums.RESOURCE.WOOD
+			return Enums.ENTITY.RESOURCE_WOOD
 		Enums.ENTITY.UNIT_QUARRYWORKER:
-			return Enums.RESOURCE.STONE
+			return Enums.ENTITY.RESOURCE_STONE
 		Enums.ENTITY.UNIT_IRONMINER:
-			return Enums.RESOURCE.IRON
+			return Enums.ENTITY.RESOURCE_IRON
 		Enums.ENTITY.UNIT_ORCHARDWORKER:
-			return Enums.RESOURCE.FRUIT
+			return Enums.ENTITY.RESOURCE_FRUIT
 		Enums.ENTITY.UNIT_VEGETABLEFARMER:
-			return Enums.RESOURCE.VEGETABLE
+			return Enums.ENTITY.RESOURCE_VEGETABLE
 		Enums.ENTITY.UNIT_WHEATFARMER:
-			return Enums.RESOURCE.WHEAT
+			return Enums.ENTITY.RESOURCE_WHEAT
+		Enums.ENTITY.UNIT_MILLWORKER:
+			return Enums.ENTITY.RESOURCE_WHEAT
 			
-	return Enums.RESOURCE.NOT_SET
+	return Enums.ENTITY.NOT_SET
 	
 static func get_entity_type_processed_resource(ent_type: Enums.ENTITY):
 	match ent_type:
 		Enums.ENTITY.UNIT_WOODCHOPPER:
-			return Enums.RESOURCE.WOODEN_PLANKS
+			return Enums.ENTITY.RESOURCE_WOODEN_PLANKS
 		Enums.ENTITY.UNIT_QUARRYWORKER:
-			return Enums.RESOURCE.STONE
+			return Enums.ENTITY.RESOURCE_STONE
 		Enums.ENTITY.UNIT_IRONMINER:
-			return Enums.RESOURCE.IRON
+			return Enums.ENTITY.RESOURCE_IRON
 		Enums.ENTITY.UNIT_ORCHARDWORKER:
-			return Enums.RESOURCE.FRUIT
+			return Enums.ENTITY.RESOURCE_FRUIT
 		Enums.ENTITY.UNIT_VEGETABLEFARMER:
-			return Enums.RESOURCE.VEGETABLE
+			return Enums.ENTITY.RESOURCE_VEGETABLE
 		Enums.ENTITY.UNIT_WHEATFARMER:
-			return Enums.RESOURCE.WHEAT
+			return Enums.ENTITY.RESOURCE_WHEAT
+		Enums.ENTITY.UNIT_MILLWORKER:
+			return Enums.ENTITY.RESOURCE_FLOUR
 			
-	return Enums.RESOURCE.NOT_SET
+	return Enums.ENTITY.NOT_SET
 
-static func get_unit_type(ent_type: Enums.ENTITY):
+static func get_unit_type(ent_type: Enums.ENTITY) -> Enums.UNIT_TYPE:
 	match ent_type:
 		Enums.ENTITY.UNIT_WOODCHOPPER:
 			return Enums.UNIT_TYPE.CIVILIAN
@@ -150,20 +162,29 @@ static func get_unit_type(ent_type: Enums.ENTITY):
 			return Enums.UNIT_TYPE.CIVILIAN
 		Enums.ENTITY.UNIT_WHEATFARMER:
 			return Enums.UNIT_TYPE.CIVILIAN
+		Enums.ENTITY.UNIT_MILLWORKER:
+			return Enums.UNIT_TYPE.CIVILIAN
 
 	return Enums.UNIT_TYPE.NOT_SET
 
-static func resource_collection_point(res_type: Enums.RESOURCE) -> Enums.RESOURCE_PROCESS_POINT:
-	match res_type:
-		Enums.RESOURCE.STONE:
+static func resource_collection_point(e_type: Enums.ENTITY) -> Enums.RESOURCE_PROCESS_POINT:
+	match e_type:
+		Enums.ENTITY.UNIT_MILLWORKER:
 			return Enums.RESOURCE_PROCESS_POINT.WAREHOUSE
-		Enums.RESOURCE.IRON:
+		_:
+			return Enums.RESOURCE_PROCESS_POINT.MAP
+
+static func resource_dropoff_point(e_type: Enums.ENTITY) -> Enums.RESOURCE_PROCESS_POINT:
+	match e_type:
+		Enums.ENTITY.RESOURCE_STONE:
 			return Enums.RESOURCE_PROCESS_POINT.WAREHOUSE
-		Enums.RESOURCE.FRUIT:
+		Enums.ENTITY.RESOURCE_IRON:
 			return Enums.RESOURCE_PROCESS_POINT.WAREHOUSE
-		Enums.RESOURCE.VEGETABLE:
+		Enums.ENTITY.RESOURCE_FRUIT:
 			return Enums.RESOURCE_PROCESS_POINT.WAREHOUSE
-		Enums.RESOURCE.WHEAT:
+		Enums.ENTITY.RESOURCE_VEGETABLE:
+			return Enums.RESOURCE_PROCESS_POINT.WAREHOUSE
+		Enums.ENTITY.RESOURCE_WHEAT:
 			return Enums.RESOURCE_PROCESS_POINT.WAREHOUSE
 		_:
 			return Enums.RESOURCE_PROCESS_POINT.WORKPLACE
@@ -186,6 +207,9 @@ static func get_max_resources(ret_res, ent_type: Enums.ENTITY) -> fh_resources:
 			ret_res.vegetable = 10
 		Enums.ENTITY.UNIT_WHEATFARMER:
 			ret_res.wheat = 10
+		Enums.ENTITY.UNIT_MILLWORKER:
+			ret_res.wheat = 10
+			ret_res.flour = 10
 			
 	return ret_res
 
@@ -203,6 +227,8 @@ static func get_occupation(e_type: Enums.ENTITY):
 			return Enums.ENTITY.UNIT_VEGETABLEFARMER
 		Enums.ENTITY.BUILDING_WHEATFARM:
 			return Enums.ENTITY.UNIT_WHEATFARMER
+		Enums.ENTITY.BUILDING_WINDMILL:
+			return Enums.ENTITY.UNIT_MILLWORKER
 			
 	return Enums.ENTITY.NOT_SET
 
@@ -222,5 +248,7 @@ static func get_entity_required_resources(ent_type: Enums.ENTITY) -> fh_resource
 		Enums.ENTITY.BUILDING_VEGETABLEFARM:
 			required_resources.wooden_planks = 50
 		Enums.ENTITY.BUILDING_WHEATFARM:
+			required_resources.wooden_planks = 50
+		Enums.ENTITY.BUILDING_WINDMILL:
 			required_resources.wooden_planks = 50
 	return required_resources

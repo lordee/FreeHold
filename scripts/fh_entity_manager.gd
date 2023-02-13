@@ -20,6 +20,7 @@ func _ready():
 	SCENES[Enums.ENTITY.BUILDING_ORCHARD] = ResourceLoader.load("res://scenes/buildings/orchard.tscn")
 	SCENES[Enums.ENTITY.BUILDING_VEGETABLEFARM] = ResourceLoader.load("res://scenes/buildings/vegetable_farm.tscn")
 	SCENES[Enums.ENTITY.BUILDING_WHEATFARM] = ResourceLoader.load("res://scenes/buildings/wheat_farm.tscn")
+	SCENES[Enums.ENTITY.BUILDING_WINDMILL] = ResourceLoader.load("res://scenes/buildings/windmill.tscn")
 	SCENES[Enums.ENTITY.RESOURCE_TREE] = ResourceLoader.load("res://scenes/tree.tscn")
 	SCENES[Enums.ENTITY.RESOURCE_STONE] = ResourceLoader.load("res://scenes/stone.tscn")
 	SCENES[Enums.ENTITY.UNIT_UNEMPLOYED] = ResourceLoader.load("res://scenes/unit.tscn")
@@ -63,8 +64,6 @@ func find_entity(prev_ent: fh_entity, ent_type: Enums.ENTITY) -> fh_entity:
 func remove_entity(ent):
 	entities.erase(ent)
 	ent.queue_free()
-	
-
 
 func get_entity_destination(entity: fh_entity) -> Vector3:
 	match entity.entity_category:
@@ -237,18 +236,41 @@ func find_work_target(e_type: Enums.ENTITY, worker: fh_unit) -> fh_entity:
 	var targ: fh_entity = null
 	var targ_type: Enums.ENTITY = fh_entity.get_work_target_type(e_type)
 
+	var old_dist
+	var new_dist
+
 	if fh_entity.is_resource_producer(worker.workplace.entity_type):
 		var rand = randi_range(0, len(worker.workplace.resource_nodes)-1)
 		targ = worker.workplace.resource_nodes[rand]
+	elif fh_entity.resource_collection_point(worker.entity_type) == Enums.RESOURCE_PROCESS_POINT.WAREHOUSE:
+		var wh: fh_entity = null
+		wh = game.entity_manager.find_entity(wh, Enums.ENTITY.BUILDING_WAREHOUSE)
+		
+		while (wh != null):
+			if wh.player_owner == self.player_owner:
+				# if wh has unreserved resources, check them for distance
+				var res_have: int = wh.resources.get_resource_value(targ_type)
+				if res_have > 0:
+					new_dist = (worker.global_transform.origin - wh.global_transform.origin).length()
+					if new_dist < old_dist or targ == null:
+						targ = wh
+						old_dist = new_dist
+				
+			wh = game.entity_manager.find_entity(wh, Enums.ENTITY.BUILDING_WAREHOUSE)
+			
+		# we have closest warehouse with unreserved resources
+		# FIXME - allow multiple collection sites
+		if targ != null:
+			var val_needed: int = worker.max_resources.get_resource_value(targ_type) - worker.max_resources.get_resource_value(targ_type)
+			targ.resources.reserve_resource(targ_type, val_needed)
 	else:
 		var ent: fh_entity = find_entity(null, targ_type)
 		if ent == null:
 			return ent
-		var old_dist
-		var new_dist
+		
 		while (ent != null):
 			new_dist = (worker.global_transform.origin - ent.global_transform.origin).length()
-			if new_dist < old_dist or targ == null:
+			if targ == null or new_dist < old_dist :
 				targ = ent
 				old_dist = new_dist
 				

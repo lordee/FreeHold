@@ -48,7 +48,7 @@ func _physics_process(delta):
 		if game_tick >= settings.game_tick_period:
 			game_tick = 0
 			# pay taxes
-			player.resources.add_resource(Enums.RESOURCE.GOLD, player.get_tax_income())
+			player.resources.add_resource(Enums.ENTITY.RESOURCE_GOLD, player.get_tax_income())
 			
 			# spawn animals, grow food, trees etc
 			entity_manager.process_entity_game_tick()

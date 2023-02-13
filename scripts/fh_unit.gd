@@ -36,8 +36,8 @@ var entity_type: Enums.ENTITY:
 				player_owner.work_population += 1
 		_entity_type = value
 var workplace
-var workplace_resource_type: Enums.RESOURCE = Enums.RESOURCE.NOT_SET
-var workplace_processed_resource_type: Enums.RESOURCE = Enums.RESOURCE.NOT_SET
+var workplace_resource_type: Enums.ENTITY = Enums.ENTITY.NOT_SET
+var workplace_processed_resource_type: Enums.ENTITY = Enums.ENTITY.NOT_SET
 
 var work_time: float = 0
 
@@ -131,7 +131,7 @@ func collect_resource(delta: float):
 		resources.add_resource(workplace_resource_type, res_val)
 		
 		if resources.get_resource_value(workplace_resource_type) >= max_resources.get_resource_value(workplace_resource_type):
-			match fh_entity.resource_collection_point(workplace_resource_type):
+			match fh_entity.resource_dropoff_point(workplace_resource_type):
 				Enums.RESOURCE_PROCESS_POINT.WAREHOUSE:
 					go_to_warehouse()
 				Enums.RESOURCE_PROCESS_POINT.WORKPLACE:

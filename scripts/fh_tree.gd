@@ -21,7 +21,6 @@ func _ready():
 	body.add_to_group("fh_tree")
 	resources.wood = 50
 	entity_type = Enums.ENTITY.RESOURCE_TREE
-	resource_type = Enums.RESOURCE.WOOD
 
 func reproduce(force_reproduce: bool = false):
 	if force_reproduce == false:
