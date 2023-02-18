@@ -86,6 +86,7 @@ roughness = 0.0
 
 [node name="iron_mine" type="Node3D"]
 script = ExtResource("1_por22")
+entity_type = 20
 
 [node name="entry" type="Area3D" parent="."]
 transform = Transform3D(0.394937, 0, 0, 0, 1, 0, 0, 0, 0.357981, 0, 0, 1.67701)

@@ -55,7 +55,6 @@ shape = SubResource("BoxShape3D_c7dqb")
 [node name="castle" parent="NavigationRegion3d" instance=ExtResource("2_1tkut")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.68303, -9.34186)
 team_no = 1
-entity_type = 1
 
 [node name="stone" parent="NavigationRegion3d" instance=ExtResource("3_f2fa7")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.89983, 1.13391, 4.66427)

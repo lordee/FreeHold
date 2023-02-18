@@ -15,6 +15,7 @@ var vegetable: int = 0
 var wheat: int = 0
 
 var reserved_resources: fh_resources = null
+var reserved_resources_dict: Dictionary = {}
 
 func add_resource(e_type: Enums.ENTITY, val: int):
 	match e_type:
@@ -78,6 +79,9 @@ func merge_resource_objects(external_resource: fh_resources, add: bool):
 	add_resource(Enums.ENTITY.RESOURCE_WHEAT, external_resource.wheat * multiplier)
 
 func get_resource_value(e_type: Enums.ENTITY, include_reserved: bool = true) -> int:
+	if reserved_resources == null:
+		reserved_resources = fh_resources.new()
+		
 	match e_type:
 		Enums.ENTITY.RESOURCE_TREE:
 			return wood if include_reserved else wood - reserved_resources.wood
@@ -103,20 +107,58 @@ func get_resource_value(e_type: Enums.ENTITY, include_reserved: bool = true) -> 
 	print("get_resource_value enum not found")
 	return 0
 
-func reserve_resource(e_type: Enums.ENTITY, value: int) -> bool: # FIXME maybe return value instead, but we do all or nothing for now
+func collect_resource(requester: fh_unit, e_type: Enums.ENTITY, value: int) -> bool:
+	if reserved_resources_dict.has(requester.name):
+		# i'm sure this will be a bug some day, but we only have people requesting/reserving a single resource at a time
+		# unreserve everything, allowing us to query the pool of resources
+		for key in reserved_resources_dict[requester.name]:
+			var val: int = reserved_resources_dict[requester.name][key]
+			unreserve_resource(key, val)
+
+	var val_avail: int = get_resource_value(e_type, false)
+	
+	var total_resources: int = value if value <= val_avail else val_avail
+	val_avail = val_avail - total_resources
+	set_resource(e_type, val_avail)
+	
+	# shouldn't be doing this here
+	requester.resources.add_resource(e_type, total_resources)
+	
+	if total_resources > 0:
+		return true
+	else:
+		return false
+
+func reserve_resource(requester: fh_unit, e_type: Enums.ENTITY, value: int) -> bool: # TODO maybe return value instead, but we do all or nothing for now
 	if reserved_resources == null:
 		reserved_resources = fh_resources.new()
 	var val_avail: int = get_resource_value(e_type, false)
 	
 	var res_value: int = value if val_avail >= value else val_avail
 	
-	
 	reserved_resources.add_resource(e_type, res_value)
+	
+	if !reserved_resources_dict.has(requester.name):
+		reserved_resources_dict[requester.name] = {}
+		
+	for key in reserved_resources_dict[requester.name]:
+		unreserve_resource(key, res_value)
+	reserved_resources_dict[requester.name] = {}
+	reserved_resources_dict[requester.name][e_type] = res_value
+	
 	var val_left: int = val_avail - res_value
 	set_resource(e_type, val_left)
 	
 	return true
-		
+
+func unreserve_resource(e_type: Enums.ENTITY, value: int):
+	var res_val: int = reserved_resources.get_resource_value(e_type)
+	res_val = res_val - value
+	reserved_resources.set_resource(e_type, res_val)
+	
+	var val_avail = get_resource_value(e_type, false)
+	val_avail = val_avail + res_val
+	add_resource(e_type, val_avail)
 
 # at the moment, warehouse specific
 func space_left(e_type: Enums.ENTITY) -> int:

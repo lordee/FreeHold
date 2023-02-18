@@ -13,6 +13,7 @@ roughness = 0.0
 
 [node name="iron" type="Node3D"]
 script = ExtResource("1_wonm8")
+entity_type = 10
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(0.01, 0, 0, 0, 0.01, 0, 0, 0, 0.01, 0, 0, 0)

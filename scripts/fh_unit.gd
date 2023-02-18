@@ -13,9 +13,10 @@ var WORK_TIME_MAX: float = 1 # currently 1 swing of an axe, resource entity trac
 var destination: Vector3
 var destination_goal: fh_entity
 
-var resources
-var max_resources
+var resources: fh_resources
+var max_resources: fh_resources
 var current_state: Enums.STATE = Enums.STATE.IDLE
+var collecting_resources: bool = false #dirty hack
 var unit_type: Enums.UNIT_TYPE = Enums.UNIT_TYPE.CIVILIAN 
 var entity_category: Enums.ENTITY_CATEGORY:
 	get:
@@ -57,60 +58,11 @@ func _physics_process(delta: float) -> void:
 	match current_state:
 		Enums.STATE.IDLE:
 			if entity_type == Enums.ENTITY.UNIT_UNEMPLOYED:
-				if is_near(game.entity_manager.get_entity_destination(player_owner.castle)):
-					# search for employment
-					var building = game.entity_manager.get_unoccupied_building(player_owner)
-					if building == null:
-						return
-					
-					var e_type: Enums.ENTITY = game.entity_manager.occupy_building(building, self)
-					if e_type == Enums.ENTITY.NOT_SET:
-						return
-						
-					entity_type = e_type
-					workplace = building
-					return
-				else:
-					move_to(game.entity_manager.get_entity_destination(player_owner.castle))
-					current_state = Enums.STATE.MOVING
+				unemployed_idle()
 				return
 				
 			if unit_type == Enums.UNIT_TYPE.CIVILIAN:
-				# if they have a destination
-				if destination_goal == null || destination_goal == player_owner.castle:
-					# check for workplace or destination
-					if workplace == null:
-						entity_type = Enums.ENTITY.UNIT_UNEMPLOYED
-					else:
-						go_to_work_building()
-				else:
-					if is_near(destination):
-						# going to work building
-						if destination_goal == workplace:
-							if has_resources():
-								work_time = 0
-								current_state = Enums.STATE.WORKING
-							else:
-								# get resource goal destination
-								var goal: fh_entity = game.entity_manager.find_work_target(entity_type, self)
-								if goal != null:
-									destination_goal = goal
-									move_to(game.entity_manager.get_entity_destination(destination_goal))
-									current_state = Enums.STATE.MOVING
-						# going to warehouse
-						elif destination_goal.entity_type == Enums.ENTITY.BUILDING_WAREHOUSE:
-							# drop off resources
-							destination_goal.resources.add_resource(workplace_processed_resource_type, resources.get_resource_value(workplace_processed_resource_type))
-							player_owner.resources.add_resource(workplace_processed_resource_type, resources.get_resource_value(workplace_processed_resource_type))
-							resources.set_resource(workplace_processed_resource_type, 0)
-							current_state = Enums.STATE.IDLE
-							destination_goal = null
-						# going to work target
-						elif destination_goal.entity_type == fh_entity.get_work_target_type(entity_type):
-							current_state = Enums.STATE.WORKING
-					else:
-						# not near destination, change state
-						current_state = Enums.STATE.MOVING
+				civilian_idle()
 			elif unit_type == Enums.UNIT_TYPE.MILITARY:
 				return # TODO
 		Enums.STATE.MOVING:
@@ -120,6 +72,77 @@ func _physics_process(delta: float) -> void:
 				do_work(delta)
 			else:
 				collect_resource(delta)
+
+func unemployed_idle():
+	if is_near(game.entity_manager.get_entity_destination(player_owner.castle)):
+		# search for employment
+		var building = game.entity_manager.get_unoccupied_building(player_owner)
+		if building == null:
+			return
+		
+		var e_type: Enums.ENTITY = game.entity_manager.occupy_building(building, self)
+		if e_type == Enums.ENTITY.NOT_SET:
+			return
+			
+		entity_type = e_type
+		workplace = building
+		return
+	else:
+		move_to(game.entity_manager.get_entity_destination(player_owner.castle))
+		current_state = Enums.STATE.MOVING
+	
+func civilian_idle():
+	# if they don't have a destination or are heading to the castle
+	if destination_goal == null || destination_goal == player_owner.castle:
+		# check for workplace or go unemployed
+		if workplace == null:
+			entity_type = Enums.ENTITY.UNIT_UNEMPLOYED
+		else:
+			# TODO - allow to go back to work collecting rather than back to workplace - 
+			# for instance flour drop off is an extra trip back to workplace to then return to warehouse for more wheat
+			go_to_work_building()
+			collecting_resources = false
+	else: # they are heading somewhere
+		if is_near(destination):
+			# if going to work building
+			if destination_goal == workplace:
+				# resources + workplace = working
+				if has_resources():
+					work_time = 0
+					current_state = Enums.STATE.WORKING
+				else: # needs to get resources
+					# get resource goal destination
+					var goal: fh_entity = game.entity_manager.find_work_target(entity_type, self)
+					if goal != null:
+						destination_goal = goal
+						move_to(game.entity_manager.get_entity_destination(destination_goal))
+						current_state = Enums.STATE.MOVING
+						if destination_goal.entity_type == Enums.ENTITY.BUILDING_WAREHOUSE:
+							collecting_resources = true
+			# going to warehouse
+			elif destination_goal.entity_type == Enums.ENTITY.BUILDING_WAREHOUSE:
+				if collecting_resources == true:
+					# get the resources we reserved + extra if needed
+					var req_amount = self.max_resources.get_resource_value(workplace_resource_type)
+					req_amount = req_amount - self.resources.get_resource_value(workplace_resource_type)
+					destination_goal.resources.collect_resource(self, workplace_resource_type, req_amount)
+					
+					# return to work
+					go_to_work_building()
+					collecting_resources = false
+				else:
+					# drop off resources
+					destination_goal.resources.add_resource(workplace_processed_resource_type, resources.get_resource_value(workplace_processed_resource_type))
+					player_owner.resources.add_resource(workplace_processed_resource_type, resources.get_resource_value(workplace_processed_resource_type))
+					resources.set_resource(workplace_processed_resource_type, 0)
+					current_state = Enums.STATE.IDLE
+					destination_goal = null
+			# going to work target
+			elif destination_goal.entity_type == fh_entity.get_work_target_type(entity_type):
+				current_state = Enums.STATE.WORKING
+		else:
+			# not near destination, change state
+			current_state = Enums.STATE.MOVING
 
 func collect_resource(delta: float):
 	if work_time == 0:

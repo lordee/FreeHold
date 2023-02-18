@@ -31,7 +31,7 @@ text = "Military"
 [node name="EconomyContainer" type="GridContainer" parent="CenterContainer"]
 visible = false
 layout_mode = 2
-columns = 2
+columns = 3
 
 [node name="warehouse" type="Button" parent="CenterContainer/EconomyContainer"]
 layout_mode = 2
@@ -60,6 +60,10 @@ text = "Vegetable Farm"
 [node name="wheat_farm" type="Button" parent="CenterContainer/EconomyContainer"]
 layout_mode = 2
 text = "Wheat Farm"
+
+[node name="windmill" type="Button" parent="CenterContainer/EconomyContainer"]
+layout_mode = 2
+text = "Windmill"
 
 [node name="cancel" type="Button" parent="CenterContainer/EconomyContainer"]
 layout_mode = 2
@@ -177,6 +181,12 @@ size_flags_vertical = 3
 tooltip_text = "wheat"
 color = Color(0.662745, 0.654902, 0.137255, 1)
 
+[node name="flour_image" type="ColorRect" parent="ResourcesContainer/VBoxContainer"]
+custom_minimum_size = Vector2(30, 4)
+layout_mode = 2
+size_flags_vertical = 3
+tooltip_text = "flour"
+
 [node name="values_container" type="VBoxContainer" parent="ResourcesContainer"]
 custom_minimum_size = Vector2(25, 25)
 layout_mode = 2
@@ -233,5 +243,11 @@ text = "100"
 [node name="wheat_label" type="Label" parent="ResourcesContainer/values_container"]
 layout_mode = 2
 tooltip_text = "wheat"
+mouse_filter = 0
+text = "100"
+
+[node name="flour_label" type="Label" parent="ResourcesContainer/values_container"]
+layout_mode = 2
+tooltip_text = "flour"
 mouse_filter = 0
 text = "100"

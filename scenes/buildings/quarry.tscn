@@ -84,6 +84,7 @@ shadow_mesh = SubResource("ArrayMesh_j4tq1")
 
 [node name="quarry" type="Node3D"]
 script = ExtResource("1_dq741")
+entity_type = 7
 
 [node name="entry" type="Area3D" parent="."]
 transform = Transform3D(0.394937, 0, 0, 0, 1, 0, 0, 0, 0.357981, 0, 0, 1.67701)

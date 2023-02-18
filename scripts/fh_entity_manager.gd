@@ -247,12 +247,12 @@ func find_work_target(e_type: Enums.ENTITY, worker: fh_unit) -> fh_entity:
 		wh = game.entity_manager.find_entity(wh, Enums.ENTITY.BUILDING_WAREHOUSE)
 		
 		while (wh != null):
-			if wh.player_owner == self.player_owner:
+			if wh.player_owner == worker.player_owner:
 				# if wh has unreserved resources, check them for distance
 				var res_have: int = wh.resources.get_resource_value(targ_type)
 				if res_have > 0:
 					new_dist = (worker.global_transform.origin - wh.global_transform.origin).length()
-					if new_dist < old_dist or targ == null:
+					if targ == null or new_dist < old_dist:
 						targ = wh
 						old_dist = new_dist
 				
@@ -262,7 +262,7 @@ func find_work_target(e_type: Enums.ENTITY, worker: fh_unit) -> fh_entity:
 		# FIXME - allow multiple collection sites
 		if targ != null:
 			var val_needed: int = worker.max_resources.get_resource_value(targ_type) - worker.max_resources.get_resource_value(targ_type)
-			targ.resources.reserve_resource(targ_type, val_needed)
+			targ.resources.reserve_resource(worker, targ_type, val_needed)
 	else:
 		var ent: fh_entity = find_entity(null, targ_type)
 		if ent == null:

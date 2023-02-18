@@ -19,6 +19,7 @@ var military_container: GridContainer
 @onready var fruit_label: Label = resources_container.get_node("values_container").get_node("fruit_label")
 @onready var vegetable_label: Label = resources_container.get_node("values_container").get_node("vegetable_label")
 @onready var wheat_label: Label = resources_container.get_node("values_container").get_node("wheat_label")
+@onready var flour_label: Label = resources_container.get_node("values_container").get_node("flour_label")
 @onready var happiness_label: Label = resources_container.get_node("values_container").get_node("happiness_label")
 @onready var tax_container: GridContainer = ui.get_node("TaxContainerCenter/TaxContainer")
 @onready var tax_label: Label = tax_container.get_node("tax_label")
@@ -37,6 +38,7 @@ func _ready():
 	economy_container.get_node("orchard").pressed.connect(building_button_pressed.bind(Enums.ENTITY.BUILDING_ORCHARD))
 	economy_container.get_node("vegetable_farm").pressed.connect(building_button_pressed.bind(Enums.ENTITY.BUILDING_VEGETABLEFARM))
 	economy_container.get_node("wheat_farm").pressed.connect(building_button_pressed.bind(Enums.ENTITY.BUILDING_WHEATFARM))
+	economy_container.get_node("windmill").pressed.connect(building_button_pressed.bind(Enums.ENTITY.BUILDING_WINDMILL))
 	economy_container.get_node("cancel").pressed.connect(ui_cancel_button_pressed)
 	tax_container.get_node("tax_increase").pressed.connect(ui_tax_button_increased_pressed)
 	tax_container.get_node("tax_decrease").pressed.connect(ui_tax_button_decreased_pressed)
@@ -57,6 +59,7 @@ func _process(_delta):
 		fruit_label.text = str(game.player_manager.current_player.resources.fruit)
 		vegetable_label.text = str(game.player_manager.current_player.resources.vegetable)
 		wheat_label.text = str(game.player_manager.current_player.resources.wheat)
+		flour_label.text = str(game.player_manager.current_player.resources.flour)
 	
 # TODO - track button state/coords instead of constant node traversal
 func button_recursive(node: Node, mouse_pos: Vector2) -> bool:
