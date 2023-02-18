@@ -46,6 +46,8 @@ static func get_entity_category(ent_type) -> Enums.ENTITY_CATEGORY:
 			return Enums.ENTITY_CATEGORY.BUILDING
 		Enums.ENTITY.BUILDING_WINDMILL:
 			return Enums.ENTITY_CATEGORY.BUILDING
+		Enums.ENTITY.BUILDING_BAKERY:
+			return Enums.ENTITY_CATEGORY.BUILDING
 		Enums.ENTITY.UNIT_UNEMPLOYED:
 			return Enums.ENTITY_CATEGORY.UNIT
 		Enums.ENTITY.UNIT_WOODCHOPPER:
@@ -109,6 +111,8 @@ static func get_work_target_type(e_type: Enums.ENTITY):
 			return Enums.ENTITY.RESOURCE_WHEAT
 		Enums.ENTITY.UNIT_MILLWORKER:
 			return Enums.ENTITY.RESOURCE_WHEAT
+		Enums.ENTITY.UNIT_BAKER:
+			return Enums.ENTITY.RESOURCE_FLOUR
 			
 	return Enums.ENTITY.NOT_SET
 
