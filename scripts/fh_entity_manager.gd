@@ -24,6 +24,7 @@ func _ready():
 	SCENES[Enums.ENTITY.RESOURCE_TREE] = ResourceLoader.load("res://scenes/tree.tscn")
 	SCENES[Enums.ENTITY.RESOURCE_STONE] = ResourceLoader.load("res://scenes/stone.tscn")
 	SCENES[Enums.ENTITY.UNIT_UNEMPLOYED] = ResourceLoader.load("res://scenes/unit.tscn")
+	SCENES[Enums.ENTITY.BUILDING_BAKERY] = ResourceLoader.load("res://scenes/buildings/bakery.tscn")
 	pass
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -261,7 +262,7 @@ func find_work_target(e_type: Enums.ENTITY, worker: fh_unit) -> fh_entity:
 		# we have closest warehouse with unreserved resources
 		# FIXME - allow multiple collection sites
 		if targ != null:
-			var val_needed: int = worker.max_resources.get_resource_value(targ_type) - worker.max_resources.get_resource_value(targ_type)
+			var val_needed: int = worker.max_resources.get_resource_value(targ_type) - worker.resources.get_resource_value(targ_type)
 			targ.resources.reserve_resource(worker, targ_type, val_needed)
 	else:
 		var ent: fh_entity = find_entity(null, targ_type)

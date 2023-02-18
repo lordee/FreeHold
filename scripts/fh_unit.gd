@@ -126,6 +126,7 @@ func civilian_idle():
 					var req_amount = self.max_resources.get_resource_value(workplace_resource_type)
 					req_amount = req_amount - self.resources.get_resource_value(workplace_resource_type)
 					destination_goal.resources.collect_resource(self, workplace_resource_type, req_amount)
+					player_owner.resources.collect_resource(self, workplace_resource_type, req_amount)
 					
 					# return to work
 					go_to_work_building()

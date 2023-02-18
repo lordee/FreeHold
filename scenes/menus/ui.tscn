@@ -65,6 +65,10 @@ text = "Wheat Farm"
 layout_mode = 2
 text = "Windmill"
 
+[node name="bakery" type="Button" parent="CenterContainer/EconomyContainer"]
+layout_mode = 2
+text = "Bakery"
+
 [node name="cancel" type="Button" parent="CenterContainer/EconomyContainer"]
 layout_mode = 2
 text = "Cancel"
@@ -187,6 +191,13 @@ layout_mode = 2
 size_flags_vertical = 3
 tooltip_text = "flour"
 
+[node name="bread_image" type="ColorRect" parent="ResourcesContainer/VBoxContainer"]
+custom_minimum_size = Vector2(30, 4)
+layout_mode = 2
+size_flags_vertical = 3
+tooltip_text = "bread"
+color = Color(0.937255, 0.572549, 0.368627, 1)
+
 [node name="values_container" type="VBoxContainer" parent="ResourcesContainer"]
 custom_minimum_size = Vector2(25, 25)
 layout_mode = 2
@@ -249,5 +260,11 @@ text = "100"
 [node name="flour_label" type="Label" parent="ResourcesContainer/values_container"]
 layout_mode = 2
 tooltip_text = "flour"
+mouse_filter = 0
+text = "100"
+
+[node name="bread_label" type="Label" parent="ResourcesContainer/values_container"]
+layout_mode = 2
+tooltip_text = "bread"
 mouse_filter = 0
 text = "100"

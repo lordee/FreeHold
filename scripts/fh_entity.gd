@@ -60,6 +60,8 @@ static func get_entity_category(ent_type) -> Enums.ENTITY_CATEGORY:
 			return Enums.ENTITY_CATEGORY.UNIT
 		Enums.ENTITY.UNIT_MILLWORKER:
 			return Enums.ENTITY_CATEGORY.UNIT
+		Enums.ENTITY.UNIT_BAKER:
+			return Enums.ENTITY_CATEGORY.UNIT
 		Enums.ENTITY.RESOURCE_TREE:
 			return Enums.ENTITY_CATEGORY.RESOURCE
 		Enums.ENTITY.RESOURCE_STONE:
@@ -74,6 +76,9 @@ static func get_entity_category(ent_type) -> Enums.ENTITY_CATEGORY:
 			return Enums.ENTITY_CATEGORY.RESOURCE
 		Enums.ENTITY.RESOURCE_FLOUR:
 			return Enums.ENTITY_CATEGORY.RESOURCE
+		Enums.ENTITY.RESOURCE_BREAD:
+			return Enums.ENTITY_CATEGORY.RESOURCE
+		
 	
 	return Enums.ENTITY_CATEGORY.NOT_SET
 
@@ -124,6 +129,8 @@ static func get_entity_type_resource(ent_type: Enums.ENTITY):
 			return Enums.ENTITY.RESOURCE_WHEAT
 		Enums.ENTITY.UNIT_MILLWORKER:
 			return Enums.ENTITY.RESOURCE_WHEAT
+		Enums.ENTITY.UNIT_BAKER:
+			return Enums.ENTITY.RESOURCE_FLOUR
 			
 	return Enums.ENTITY.NOT_SET
 	
@@ -143,6 +150,8 @@ static func get_entity_type_processed_resource(ent_type: Enums.ENTITY):
 			return Enums.ENTITY.RESOURCE_WHEAT
 		Enums.ENTITY.UNIT_MILLWORKER:
 			return Enums.ENTITY.RESOURCE_FLOUR
+		Enums.ENTITY.UNIT_BAKER:
+			return Enums.ENTITY.RESOURCE_BREAD
 			
 	return Enums.ENTITY.NOT_SET
 
@@ -164,12 +173,16 @@ static func get_unit_type(ent_type: Enums.ENTITY) -> Enums.UNIT_TYPE:
 			return Enums.UNIT_TYPE.CIVILIAN
 		Enums.ENTITY.UNIT_MILLWORKER:
 			return Enums.UNIT_TYPE.CIVILIAN
+		Enums.ENTITY.UNIT_BAKER:
+			return Enums.UNIT_TYPE.CIVILIAN
 
 	return Enums.UNIT_TYPE.NOT_SET
 
 static func resource_collection_point(e_type: Enums.ENTITY) -> Enums.RESOURCE_PROCESS_POINT:
 	match e_type:
 		Enums.ENTITY.UNIT_MILLWORKER:
+			return Enums.RESOURCE_PROCESS_POINT.WAREHOUSE
+		Enums.ENTITY.UNIT_BAKER:
 			return Enums.RESOURCE_PROCESS_POINT.WAREHOUSE
 		_:
 			return Enums.RESOURCE_PROCESS_POINT.MAP
@@ -186,6 +199,9 @@ static func resource_dropoff_point(e_type: Enums.ENTITY) -> Enums.RESOURCE_PROCE
 			return Enums.RESOURCE_PROCESS_POINT.WAREHOUSE
 		Enums.ENTITY.RESOURCE_WHEAT:
 			return Enums.RESOURCE_PROCESS_POINT.WAREHOUSE
+		Enums.ENTITY.RESOURCE_BREAD:
+			return Enums.RESOURCE_PROCESS_POINT.WAREHOUSE
+		# TODO - why is flour not in this list and it works....?
 		_:
 			return Enums.RESOURCE_PROCESS_POINT.WORKPLACE
 
@@ -210,6 +226,9 @@ static func get_max_resources(ret_res, ent_type: Enums.ENTITY) -> fh_resources:
 		Enums.ENTITY.UNIT_MILLWORKER:
 			ret_res.wheat = 10
 			ret_res.flour = 10
+		Enums.ENTITY.UNIT_BAKER:
+			ret_res.bread = 10
+			ret_res.flour = 10
 			
 	return ret_res
 
@@ -229,6 +248,8 @@ static func get_occupation(e_type: Enums.ENTITY):
 			return Enums.ENTITY.UNIT_WHEATFARMER
 		Enums.ENTITY.BUILDING_WINDMILL:
 			return Enums.ENTITY.UNIT_MILLWORKER
+		Enums.ENTITY.BUILDING_BAKERY:
+			return Enums.ENTITY.UNIT_BAKER
 			
 	return Enums.ENTITY.NOT_SET
 
@@ -250,5 +271,7 @@ static func get_entity_required_resources(ent_type: Enums.ENTITY) -> fh_resource
 		Enums.ENTITY.BUILDING_WHEATFARM:
 			required_resources.wooden_planks = 50
 		Enums.ENTITY.BUILDING_WINDMILL:
+			required_resources.wooden_planks = 50
+		Enums.ENTITY.BUILDING_BAKERY:
 			required_resources.wooden_planks = 50
 	return required_resources

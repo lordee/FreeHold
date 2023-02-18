@@ -13,6 +13,7 @@ var iron: int = 0
 var fruit: int = 0
 var vegetable: int = 0
 var wheat: int = 0
+var bread: int = 0
 
 var reserved_resources: fh_resources = null
 var reserved_resources_dict: Dictionary = {}
@@ -37,6 +38,8 @@ func add_resource(e_type: Enums.ENTITY, val: int):
 			vegetable += val
 		Enums.ENTITY.RESOURCE_WHEAT:
 			wheat += val
+		Enums.ENTITY.RESOURCE_BREAD:
+			bread += val
 		Enums.ENTITY.NOT_SET:
 			print("resource not set passed to add_resource")
 			
@@ -60,6 +63,8 @@ func set_resource(e_type: Enums.ENTITY, val: int):
 			vegetable = val
 		Enums.ENTITY.RESOURCE_WHEAT:
 			wheat = val
+		Enums.ENTITY.RESOURCE_BREAD:
+			bread = val
 		Enums.ENTITY.NOT_SET:
 			print("resource not set passed to set_resource")
 
@@ -77,6 +82,7 @@ func merge_resource_objects(external_resource: fh_resources, add: bool):
 	add_resource(Enums.ENTITY.RESOURCE_FRUIT, external_resource.fruit * multiplier)
 	add_resource(Enums.ENTITY.RESOURCE_VEGETABLE, external_resource.vegetable * multiplier)
 	add_resource(Enums.ENTITY.RESOURCE_WHEAT, external_resource.wheat * multiplier)
+	add_resource(Enums.ENTITY.RESOURCE_BREAD, external_resource.bread * multiplier)
 
 func get_resource_value(e_type: Enums.ENTITY, include_reserved: bool = true) -> int:
 	if reserved_resources == null:
@@ -92,7 +98,7 @@ func get_resource_value(e_type: Enums.ENTITY, include_reserved: bool = true) -> 
 		Enums.ENTITY.RESOURCE_STONE:
 			return stone if include_reserved else stone - reserved_resources.stone
 		Enums.ENTITY.RESOURCE_FLOUR:
-			return flour  if include_reserved else flour - reserved_resources.flour
+			return flour if include_reserved else flour - reserved_resources.flour
 		Enums.ENTITY.RESOURCE_WOODEN_PLANKS:
 			return wooden_planks if include_reserved else wooden_planks - reserved_resources.wooden_planks
 		Enums.ENTITY.RESOURCE_IRON:
@@ -103,6 +109,8 @@ func get_resource_value(e_type: Enums.ENTITY, include_reserved: bool = true) -> 
 			return vegetable if include_reserved else vegetable - reserved_resources.vegetable
 		Enums.ENTITY.RESOURCE_WHEAT:
 			return wheat if include_reserved else wheat - reserved_resources.wheat
+		Enums.ENTITY.RESOURCE_BREAD:
+			return bread if include_reserved else bread - reserved_resources.bread
 			
 	print("get_resource_value enum not found")
 	return 0
@@ -114,6 +122,7 @@ func collect_resource(requester: fh_unit, e_type: Enums.ENTITY, value: int) -> b
 		for key in reserved_resources_dict[requester.name]:
 			var val: int = reserved_resources_dict[requester.name][key]
 			unreserve_resource(key, val)
+		reserved_resources_dict[requester.name] = {}
 
 	var val_avail: int = get_resource_value(e_type, false)
 	
@@ -157,7 +166,7 @@ func unreserve_resource(e_type: Enums.ENTITY, value: int):
 	reserved_resources.set_resource(e_type, res_val)
 	
 	var val_avail = get_resource_value(e_type, false)
-	val_avail = val_avail + res_val
+	val_avail = val_avail + res_val + value
 	add_resource(e_type, val_avail)
 
 # at the moment, warehouse specific
@@ -186,6 +195,8 @@ func space_left(e_type: Enums.ENTITY) -> int:
 		piles += int(ceil(float(vegetable) / float(MAX_PILE_AMOUNT)))
 	if wheat > 0:
 		piles += int(ceil(float(wheat) / float(MAX_PILE_AMOUNT)))
+	if bread > 0:
+		piles += int(ceil(float(bread) / float(MAX_PILE_AMOUNT)))
 	
 	if piles < MAX_PILES:
 		return (MAX_PILES - piles) * MAX_PILE_AMOUNT
