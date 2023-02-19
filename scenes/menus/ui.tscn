@@ -69,6 +69,14 @@ text = "Windmill"
 layout_mode = 2
 text = "Bakery"
 
+[node name="dairyfarm" type="Button" parent="CenterContainer/EconomyContainer"]
+layout_mode = 2
+text = "Dairy Farm"
+
+[node name="pigfarm" type="Button" parent="CenterContainer/EconomyContainer"]
+layout_mode = 2
+text = "Pig Farm"
+
 [node name="cancel" type="Button" parent="CenterContainer/EconomyContainer"]
 layout_mode = 2
 text = "Cancel"
@@ -198,6 +206,20 @@ size_flags_vertical = 3
 tooltip_text = "bread"
 color = Color(0.937255, 0.572549, 0.368627, 1)
 
+[node name="cheese_image" type="ColorRect" parent="ResourcesContainer/VBoxContainer"]
+custom_minimum_size = Vector2(30, 4)
+layout_mode = 2
+size_flags_vertical = 3
+tooltip_text = "cheese"
+color = Color(0.937255, 0.87451, 0.368627, 1)
+
+[node name="meat_image" type="ColorRect" parent="ResourcesContainer/VBoxContainer"]
+custom_minimum_size = Vector2(30, 4)
+layout_mode = 2
+size_flags_vertical = 3
+tooltip_text = "meat"
+color = Color(0.937255, 0.0196078, 0.368627, 1)
+
 [node name="values_container" type="VBoxContainer" parent="ResourcesContainer"]
 custom_minimum_size = Vector2(25, 25)
 layout_mode = 2
@@ -266,5 +288,17 @@ text = "100"
 [node name="bread_label" type="Label" parent="ResourcesContainer/values_container"]
 layout_mode = 2
 tooltip_text = "bread"
+mouse_filter = 0
+text = "100"
+
+[node name="cheese_label" type="Label" parent="ResourcesContainer/values_container"]
+layout_mode = 2
+tooltip_text = "cheese"
+mouse_filter = 0
+text = "100"
+
+[node name="meat_label" type="Label" parent="ResourcesContainer/values_container"]
+layout_mode = 2
+tooltip_text = "meat"
 mouse_filter = 0
 text = "100"

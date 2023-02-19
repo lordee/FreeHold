@@ -11,6 +11,8 @@ var military_container: GridContainer
 
 # labels
 @onready var resources_container: GridContainer = ui.get_node("ResourcesContainer")
+@onready var tax_container: GridContainer = ui.get_node("TaxContainerCenter/TaxContainer")
+@onready var tax_label: Label = tax_container.get_node("tax_label")
 @onready var wood_label: Label = resources_container.get_node("values_container").get_node("wood_label")
 @onready var population_label: Label = resources_container.get_node("values_container").get_node("population_label")
 @onready var gold_label: Label = resources_container.get_node("values_container").get_node("gold_label")
@@ -20,10 +22,11 @@ var military_container: GridContainer
 @onready var vegetable_label: Label = resources_container.get_node("values_container").get_node("vegetable_label")
 @onready var wheat_label: Label = resources_container.get_node("values_container").get_node("wheat_label")
 @onready var flour_label: Label = resources_container.get_node("values_container").get_node("flour_label")
+@onready var cheese_label: Label = resources_container.get_node("values_container").get_node("cheese_label")
 @onready var happiness_label: Label = resources_container.get_node("values_container").get_node("happiness_label")
 @onready var bread_label: Label = resources_container.get_node("values_container").get_node("bread_label")
-@onready var tax_container: GridContainer = ui.get_node("TaxContainerCenter/TaxContainer")
-@onready var tax_label: Label = tax_container.get_node("tax_label")
+@onready var meat_label: Label = resources_container.get_node("values_container").get_node("meat_label")
+
 
 
 func _ready():
@@ -41,6 +44,8 @@ func _ready():
 	economy_container.get_node("wheat_farm").pressed.connect(building_button_pressed.bind(Enums.ENTITY.BUILDING_WHEATFARM))
 	economy_container.get_node("windmill").pressed.connect(building_button_pressed.bind(Enums.ENTITY.BUILDING_WINDMILL))
 	economy_container.get_node("bakery").pressed.connect(building_button_pressed.bind(Enums.ENTITY.BUILDING_BAKERY))
+	economy_container.get_node("dairyfarm").pressed.connect(building_button_pressed.bind(Enums.ENTITY.BUILDING_DAIRYFARM))
+	economy_container.get_node("pigfarm").pressed.connect(building_button_pressed.bind(Enums.ENTITY.BUILDING_PIGFARM))
 	economy_container.get_node("cancel").pressed.connect(ui_cancel_button_pressed)
 	tax_container.get_node("tax_increase").pressed.connect(ui_tax_button_increased_pressed)
 	tax_container.get_node("tax_decrease").pressed.connect(ui_tax_button_decreased_pressed)
@@ -63,6 +68,8 @@ func _process(_delta):
 		wheat_label.text = str(game.player_manager.current_player.resources.wheat)
 		flour_label.text = str(game.player_manager.current_player.resources.flour)
 		bread_label.text = str(game.player_manager.current_player.resources.bread)
+		cheese_label.text = str(game.player_manager.current_player.resources.cheese)
+		meat_label.text = str(game.player_manager.current_player.resources.meat)
 	
 # TODO - track button state/coords instead of constant node traversal
 func button_recursive(node: Node, mouse_pos: Vector2) -> bool:

@@ -1,6 +1,9 @@
 extends fh_entity_resource
 class_name fh_tree # FIXME - x is fh_tree not working on raycast here, so we will use groups, godot 4 beta bug?
 
+@onready var mesh: MeshInstance3D = get_node("MeshInstance3D")
+@onready var body: StaticBody3D = $MeshInstance3D/StaticBody3D
+
 # state
 var life_stage: Enums.LIFE_STAGE = Enums.LIFE_STAGE.MATURE
 

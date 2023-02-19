@@ -14,6 +14,10 @@ var fruit: int = 0
 var vegetable: int = 0
 var wheat: int = 0
 var bread: int = 0
+var cheese: int = 0
+var milk: int = 0
+var pig: int = 0
+var meat: int = 0
 
 var reserved_resources: fh_resources = null
 var reserved_resources_dict: Dictionary = {}
@@ -40,6 +44,14 @@ func add_resource(e_type: Enums.ENTITY, val: int):
 			wheat += val
 		Enums.ENTITY.RESOURCE_BREAD:
 			bread += val
+		Enums.ENTITY.RESOURCE_CHEESE:
+			cheese += val
+		Enums.ENTITY.RESOURCE_MILK:
+			milk += val
+		Enums.ENTITY.RESOURCE_PIG:
+			pig += val
+		Enums.ENTITY.RESOURCE_MEAT:
+			meat += val
 		Enums.ENTITY.NOT_SET:
 			print("resource not set passed to add_resource")
 			
@@ -65,6 +77,14 @@ func set_resource(e_type: Enums.ENTITY, val: int):
 			wheat = val
 		Enums.ENTITY.RESOURCE_BREAD:
 			bread = val
+		Enums.ENTITY.RESOURCE_CHEESE:
+			cheese = val
+		Enums.ENTITY.RESOURCE_MILK:
+			milk = val
+		Enums.ENTITY.RESOURCE_PIG:
+			pig = val
+		Enums.ENTITY.RESOURCE_MEAT:
+			meat = val
 		Enums.ENTITY.NOT_SET:
 			print("resource not set passed to set_resource")
 
@@ -83,6 +103,10 @@ func merge_resource_objects(external_resource: fh_resources, add: bool):
 	add_resource(Enums.ENTITY.RESOURCE_VEGETABLE, external_resource.vegetable * multiplier)
 	add_resource(Enums.ENTITY.RESOURCE_WHEAT, external_resource.wheat * multiplier)
 	add_resource(Enums.ENTITY.RESOURCE_BREAD, external_resource.bread * multiplier)
+	add_resource(Enums.ENTITY.RESOURCE_CHEESE, external_resource.cheese * multiplier)
+	add_resource(Enums.ENTITY.RESOURCE_MILK, external_resource.milk * multiplier)
+	add_resource(Enums.ENTITY.RESOURCE_PIG, external_resource.pig * multiplier)
+	add_resource(Enums.ENTITY.RESOURCE_MEAT, external_resource.meat * multiplier)
 
 func get_resource_value(e_type: Enums.ENTITY, include_reserved: bool = true) -> int:
 	if reserved_resources == null:
@@ -111,6 +135,14 @@ func get_resource_value(e_type: Enums.ENTITY, include_reserved: bool = true) -> 
 			return wheat if include_reserved else wheat - reserved_resources.wheat
 		Enums.ENTITY.RESOURCE_BREAD:
 			return bread if include_reserved else bread - reserved_resources.bread
+		Enums.ENTITY.RESOURCE_CHEESE:
+			return cheese if include_reserved else cheese - reserved_resources.cheese
+		Enums.ENTITY.RESOURCE_MILK:
+			return milk if include_reserved else milk - reserved_resources.milk
+		Enums.ENTITY.RESOURCE_PIG:
+			return pig if include_reserved else pig - reserved_resources.pig
+		Enums.ENTITY.RESOURCE_MEAT:
+			return meat if include_reserved else meat - reserved_resources.meat
 			
 	print("get_resource_value enum not found")
 	return 0
@@ -197,6 +229,14 @@ func space_left(e_type: Enums.ENTITY) -> int:
 		piles += int(ceil(float(wheat) / float(MAX_PILE_AMOUNT)))
 	if bread > 0:
 		piles += int(ceil(float(bread) / float(MAX_PILE_AMOUNT)))
+	if cheese > 0:
+		piles += int(ceil(float(cheese) / float(MAX_PILE_AMOUNT)))
+	if milk > 0:
+		piles += int(ceil(float(milk) / float(MAX_PILE_AMOUNT)))
+	if pig > 0:
+		piles += int(ceil(float(pig) / float(MAX_PILE_AMOUNT)))
+	if meat > 0:
+		piles += int(ceil(float(meat) / float(MAX_PILE_AMOUNT)))
 	
 	if piles < MAX_PILES:
 		return (MAX_PILES - piles) * MAX_PILE_AMOUNT

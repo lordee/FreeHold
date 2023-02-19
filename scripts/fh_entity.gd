@@ -48,6 +48,10 @@ static func get_entity_category(ent_type) -> Enums.ENTITY_CATEGORY:
 			return Enums.ENTITY_CATEGORY.BUILDING
 		Enums.ENTITY.BUILDING_BAKERY:
 			return Enums.ENTITY_CATEGORY.BUILDING
+		Enums.ENTITY.BUILDING_DAIRYFARM:
+			return Enums.ENTITY_CATEGORY.BUILDING
+		Enums.ENTITY.BUILDING_PIGFARM:
+			return Enums.ENTITY_CATEGORY.BUILDING
 		Enums.ENTITY.UNIT_UNEMPLOYED:
 			return Enums.ENTITY_CATEGORY.UNIT
 		Enums.ENTITY.UNIT_WOODCHOPPER:
@@ -63,6 +67,10 @@ static func get_entity_category(ent_type) -> Enums.ENTITY_CATEGORY:
 		Enums.ENTITY.UNIT_MILLWORKER:
 			return Enums.ENTITY_CATEGORY.UNIT
 		Enums.ENTITY.UNIT_BAKER:
+			return Enums.ENTITY_CATEGORY.UNIT
+		Enums.ENTITY.UNIT_DAIRYFARMER:
+			return Enums.ENTITY_CATEGORY.UNIT
+		Enums.ENTITY.UNIT_PIGFARMER:
 			return Enums.ENTITY_CATEGORY.UNIT
 		Enums.ENTITY.RESOURCE_TREE:
 			return Enums.ENTITY_CATEGORY.RESOURCE
@@ -80,7 +88,14 @@ static func get_entity_category(ent_type) -> Enums.ENTITY_CATEGORY:
 			return Enums.ENTITY_CATEGORY.RESOURCE
 		Enums.ENTITY.RESOURCE_BREAD:
 			return Enums.ENTITY_CATEGORY.RESOURCE
-		
+		Enums.ENTITY.RESOURCE_CHEESE:
+			return Enums.ENTITY_CATEGORY.RESOURCE
+		Enums.ENTITY.RESOURCE_MILK:
+			return Enums.ENTITY_CATEGORY.RESOURCE
+		Enums.ENTITY.RESOURCE_PIG:
+			return Enums.ENTITY_CATEGORY.RESOURCE
+		Enums.ENTITY.RESOURCE_MEAT:
+			return Enums.ENTITY_CATEGORY.RESOURCE
 	
 	return Enums.ENTITY_CATEGORY.NOT_SET
 
@@ -91,6 +106,10 @@ static func is_resource_producer(e_type: Enums.ENTITY) -> bool:
 		Enums.ENTITY.BUILDING_VEGETABLEFARM:
 			return true
 		Enums.ENTITY.BUILDING_WHEATFARM:
+			return true
+		Enums.ENTITY.BUILDING_DAIRYFARM:
+			return true
+		Enums.ENTITY.BUILDING_PIGFARM:
 			return true
 			
 	return false
@@ -113,6 +132,10 @@ static func get_work_target_type(e_type: Enums.ENTITY):
 			return Enums.ENTITY.RESOURCE_WHEAT
 		Enums.ENTITY.UNIT_BAKER:
 			return Enums.ENTITY.RESOURCE_FLOUR
+		Enums.ENTITY.UNIT_DAIRYFARMER:
+			return Enums.ENTITY.RESOURCE_MILK
+		Enums.ENTITY.UNIT_PIGFARMER:
+			return Enums.ENTITY.RESOURCE_PIG
 			
 	return Enums.ENTITY.NOT_SET
 
@@ -135,6 +158,10 @@ static func get_entity_type_resource(ent_type: Enums.ENTITY):
 			return Enums.ENTITY.RESOURCE_WHEAT
 		Enums.ENTITY.UNIT_BAKER:
 			return Enums.ENTITY.RESOURCE_FLOUR
+		Enums.ENTITY.UNIT_DAIRYFARMER:
+			return Enums.ENTITY.RESOURCE_MILK
+		Enums.ENTITY.UNIT_PIGFARMER:
+			return Enums.ENTITY.RESOURCE_PIG
 			
 	return Enums.ENTITY.NOT_SET
 	
@@ -156,6 +183,10 @@ static func get_entity_type_processed_resource(ent_type: Enums.ENTITY):
 			return Enums.ENTITY.RESOURCE_FLOUR
 		Enums.ENTITY.UNIT_BAKER:
 			return Enums.ENTITY.RESOURCE_BREAD
+		Enums.ENTITY.UNIT_DAIRYFARMER:
+			return Enums.ENTITY.RESOURCE_CHEESE
+		Enums.ENTITY.UNIT_PIGFARMER:
+			return Enums.ENTITY.RESOURCE_MEAT
 			
 	return Enums.ENTITY.NOT_SET
 
@@ -179,9 +210,14 @@ static func get_unit_type(ent_type: Enums.ENTITY) -> Enums.UNIT_TYPE:
 			return Enums.UNIT_TYPE.CIVILIAN
 		Enums.ENTITY.UNIT_BAKER:
 			return Enums.UNIT_TYPE.CIVILIAN
+		Enums.ENTITY.UNIT_DAIRYFARMER:
+			return Enums.UNIT_TYPE.CIVILIAN
+		Enums.ENTITY.UNIT_PIGFARMER:
+			return Enums.UNIT_TYPE.CIVILIAN
 
 	return Enums.UNIT_TYPE.NOT_SET
 
+# FIXME - merge with is_resource_provider for orchard, fruit farm, vegetable farm etc
 static func resource_collection_point(e_type: Enums.ENTITY) -> Enums.RESOURCE_PROCESS_POINT:
 	match e_type:
 		Enums.ENTITY.UNIT_MILLWORKER:
@@ -191,6 +227,7 @@ static func resource_collection_point(e_type: Enums.ENTITY) -> Enums.RESOURCE_PR
 		_:
 			return Enums.RESOURCE_PROCESS_POINT.MAP
 
+# TODO - i think we can remove processed resources from this list
 static func resource_dropoff_point(e_type: Enums.ENTITY) -> Enums.RESOURCE_PROCESS_POINT:
 	match e_type:
 		Enums.ENTITY.RESOURCE_STONE:
@@ -205,7 +242,10 @@ static func resource_dropoff_point(e_type: Enums.ENTITY) -> Enums.RESOURCE_PROCE
 			return Enums.RESOURCE_PROCESS_POINT.WAREHOUSE
 		Enums.ENTITY.RESOURCE_BREAD:
 			return Enums.RESOURCE_PROCESS_POINT.WAREHOUSE
-		# TODO - why is flour not in this list and it works....?
+		Enums.ENTITY.RESOURCE_CHEESE:
+			return Enums.RESOURCE_PROCESS_POINT.WAREHOUSE
+		Enums.ENTITY.RESOURCE_MEAT:
+			return Enums.RESOURCE_PROCESS_POINT.WAREHOUSE
 		_:
 			return Enums.RESOURCE_PROCESS_POINT.WORKPLACE
 
@@ -233,6 +273,12 @@ static func get_max_resources(ret_res, ent_type: Enums.ENTITY) -> fh_resources:
 		Enums.ENTITY.UNIT_BAKER:
 			ret_res.bread = 10
 			ret_res.flour = 10
+		Enums.ENTITY.UNIT_DAIRYFARMER:
+			ret_res.milk = 10
+			ret_res.cheese = 10
+		Enums.ENTITY.UNIT_PIGFARMER:
+			ret_res.pig = 10
+			ret_res.meat = 10
 			
 	return ret_res
 
@@ -254,6 +300,10 @@ static func get_occupation(e_type: Enums.ENTITY):
 			return Enums.ENTITY.UNIT_MILLWORKER
 		Enums.ENTITY.BUILDING_BAKERY:
 			return Enums.ENTITY.UNIT_BAKER
+		Enums.ENTITY.BUILDING_DAIRYFARM:
+			return Enums.ENTITY.UNIT_DAIRYFARMER
+		Enums.ENTITY.BUILDING_PIGFARM:
+			return Enums.ENTITY.UNIT_PIGFARMER
 			
 	return Enums.ENTITY.NOT_SET
 
@@ -277,5 +327,9 @@ static func get_entity_required_resources(ent_type: Enums.ENTITY) -> fh_resource
 		Enums.ENTITY.BUILDING_WINDMILL:
 			required_resources.wooden_planks = 50
 		Enums.ENTITY.BUILDING_BAKERY:
+			required_resources.wooden_planks = 50
+		Enums.ENTITY.BUILDING_DAIRYFARM:
+			required_resources.wooden_planks = 50
+		Enums.ENTITY.BUILDING_PIGFARM:
 			required_resources.wooden_planks = 50
 	return required_resources

@@ -25,6 +25,8 @@ func _ready():
 	SCENES[Enums.ENTITY.RESOURCE_STONE] = ResourceLoader.load("res://scenes/stone.tscn")
 	SCENES[Enums.ENTITY.UNIT_UNEMPLOYED] = ResourceLoader.load("res://scenes/unit.tscn")
 	SCENES[Enums.ENTITY.BUILDING_BAKERY] = ResourceLoader.load("res://scenes/buildings/bakery.tscn")
+	SCENES[Enums.ENTITY.BUILDING_DAIRYFARM] = ResourceLoader.load("res://scenes/buildings/dairy_farm.tscn")
+	SCENES[Enums.ENTITY.BUILDING_PIGFARM] = ResourceLoader.load("res://scenes/buildings/pig_farm.tscn")
 	pass
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

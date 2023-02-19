@@ -1,8 +1,8 @@
 extends fh_entity
 class_name fh_entity_resource
 
-@onready var mesh: MeshInstance3D = get_node("MeshInstance3D")
-@onready var body: StaticBody3D = $MeshInstance3D/StaticBody3D
+#@onready var mesh: MeshInstance3D = get_node("MeshInstance3D")
+#@onready var body: StaticBody3D = $MeshInstance3D/StaticBody3D
 
 var resources_per_action_complete: int = 10
 var progress_per_action: int = 10
