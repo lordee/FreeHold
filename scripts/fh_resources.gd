@@ -18,6 +18,8 @@ var cheese: int = 0
 var milk: int = 0
 var pig: int = 0
 var meat: int = 0
+var hops: int = 0
+var ale: int = 0
 
 var reserved_resources: fh_resources = null
 var reserved_resources_dict: Dictionary = {}
@@ -52,6 +54,10 @@ func add_resource(e_type: Enums.ENTITY, val: int):
 			pig += val
 		Enums.ENTITY.RESOURCE_MEAT:
 			meat += val
+		Enums.ENTITY.RESOURCE_HOPS:
+			hops += val
+		Enums.ENTITY.RESOURCE_ALE:
+			ale += val
 		Enums.ENTITY.NOT_SET:
 			print("resource not set passed to add_resource")
 			
@@ -85,6 +91,10 @@ func set_resource(e_type: Enums.ENTITY, val: int):
 			pig = val
 		Enums.ENTITY.RESOURCE_MEAT:
 			meat = val
+		Enums.ENTITY.RESOURCE_HOPS:
+			hops = val
+		Enums.ENTITY.RESOURCE_ALE:
+			ale = val
 		Enums.ENTITY.NOT_SET:
 			print("resource not set passed to set_resource")
 
@@ -107,6 +117,8 @@ func merge_resource_objects(external_resource: fh_resources, add: bool):
 	add_resource(Enums.ENTITY.RESOURCE_MILK, external_resource.milk * multiplier)
 	add_resource(Enums.ENTITY.RESOURCE_PIG, external_resource.pig * multiplier)
 	add_resource(Enums.ENTITY.RESOURCE_MEAT, external_resource.meat * multiplier)
+	add_resource(Enums.ENTITY.RESOURCE_HOPS, external_resource.hops * multiplier)
+	add_resource(Enums.ENTITY.RESOURCE_ALE, external_resource.ale * multiplier)
 
 func get_resource_value(e_type: Enums.ENTITY, include_reserved: bool = true) -> int:
 	if reserved_resources == null:
@@ -143,6 +155,10 @@ func get_resource_value(e_type: Enums.ENTITY, include_reserved: bool = true) -> 
 			return pig if include_reserved else pig - reserved_resources.pig
 		Enums.ENTITY.RESOURCE_MEAT:
 			return meat if include_reserved else meat - reserved_resources.meat
+		Enums.ENTITY.RESOURCE_HOPS:
+			return hops if include_reserved else hops - reserved_resources.hops
+		Enums.ENTITY.RESOURCE_ALE:
+			return ale if include_reserved else ale - reserved_resources.ale
 			
 	print("get_resource_value enum not found")
 	return 0
@@ -237,6 +253,10 @@ func space_left(e_type: Enums.ENTITY) -> int:
 		piles += int(ceil(float(pig) / float(MAX_PILE_AMOUNT)))
 	if meat > 0:
 		piles += int(ceil(float(meat) / float(MAX_PILE_AMOUNT)))
+	if hops > 0:
+		piles += int(ceil(float(hops) / float(MAX_PILE_AMOUNT)))
+	if ale > 0:
+		piles += int(ceil(float(ale) / float(MAX_PILE_AMOUNT)))
 	
 	if piles < MAX_PILES:
 		return (MAX_PILES - piles) * MAX_PILE_AMOUNT

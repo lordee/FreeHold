@@ -26,6 +26,8 @@ var military_container: GridContainer
 @onready var happiness_label: Label = resources_container.get_node("values_container").get_node("happiness_label")
 @onready var bread_label: Label = resources_container.get_node("values_container").get_node("bread_label")
 @onready var meat_label: Label = resources_container.get_node("values_container").get_node("meat_label")
+@onready var hops_label: Label = resources_container.get_node("values_container").get_node("hops_label")
+@onready var ale_label: Label = resources_container.get_node("values_container").get_node("ale_label")
 
 
 
@@ -46,6 +48,8 @@ func _ready():
 	economy_container.get_node("bakery").pressed.connect(building_button_pressed.bind(Enums.ENTITY.BUILDING_BAKERY))
 	economy_container.get_node("dairyfarm").pressed.connect(building_button_pressed.bind(Enums.ENTITY.BUILDING_DAIRYFARM))
 	economy_container.get_node("pigfarm").pressed.connect(building_button_pressed.bind(Enums.ENTITY.BUILDING_PIGFARM))
+	economy_container.get_node("hopsfarm").pressed.connect(building_button_pressed.bind(Enums.ENTITY.BUILDING_HOPSFARM))
+	economy_container.get_node("brewery").pressed.connect(building_button_pressed.bind(Enums.ENTITY.BUILDING_BREWERY))
 	economy_container.get_node("cancel").pressed.connect(ui_cancel_button_pressed)
 	tax_container.get_node("tax_increase").pressed.connect(ui_tax_button_increased_pressed)
 	tax_container.get_node("tax_decrease").pressed.connect(ui_tax_button_decreased_pressed)
@@ -70,6 +74,8 @@ func _process(_delta):
 		bread_label.text = str(game.player_manager.current_player.resources.bread)
 		cheese_label.text = str(game.player_manager.current_player.resources.cheese)
 		meat_label.text = str(game.player_manager.current_player.resources.meat)
+		hops_label.text = str(game.player_manager.current_player.resources.hops)
+		ale_label.text = str(game.player_manager.current_player.resources.ale)
 	
 # TODO - track button state/coords instead of constant node traversal
 func button_recursive(node: Node, mouse_pos: Vector2) -> bool:

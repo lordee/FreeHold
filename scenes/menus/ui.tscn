@@ -77,6 +77,14 @@ text = "Dairy Farm"
 layout_mode = 2
 text = "Pig Farm"
 
+[node name="hopsfarm" type="Button" parent="CenterContainer/EconomyContainer"]
+layout_mode = 2
+text = "Hops Farm"
+
+[node name="brewery" type="Button" parent="CenterContainer/EconomyContainer"]
+layout_mode = 2
+text = "Brewery"
+
 [node name="cancel" type="Button" parent="CenterContainer/EconomyContainer"]
 layout_mode = 2
 text = "Cancel"
@@ -220,6 +228,20 @@ size_flags_vertical = 3
 tooltip_text = "meat"
 color = Color(0.937255, 0.0196078, 0.368627, 1)
 
+[node name="hops_image" type="ColorRect" parent="ResourcesContainer/VBoxContainer"]
+custom_minimum_size = Vector2(30, 4)
+layout_mode = 2
+size_flags_vertical = 3
+tooltip_text = "hops"
+color = Color(0.145098, 0.384314, 0.133333, 1)
+
+[node name="ale_image" type="ColorRect" parent="ResourcesContainer/VBoxContainer"]
+custom_minimum_size = Vector2(30, 4)
+layout_mode = 2
+size_flags_vertical = 3
+tooltip_text = "ale"
+color = Color(0.890196, 0.690196, 0.27451, 1)
+
 [node name="values_container" type="VBoxContainer" parent="ResourcesContainer"]
 custom_minimum_size = Vector2(25, 25)
 layout_mode = 2
@@ -300,5 +322,17 @@ text = "100"
 [node name="meat_label" type="Label" parent="ResourcesContainer/values_container"]
 layout_mode = 2
 tooltip_text = "meat"
+mouse_filter = 0
+text = "100"
+
+[node name="hops_label" type="Label" parent="ResourcesContainer/values_container"]
+layout_mode = 2
+tooltip_text = "hops"
+mouse_filter = 0
+text = "100"
+
+[node name="ale_label" type="Label" parent="ResourcesContainer/values_container"]
+layout_mode = 2
+tooltip_text = "ale"
 mouse_filter = 0
 text = "100"
