@@ -85,6 +85,10 @@ text = "Hops Farm"
 layout_mode = 2
 text = "Brewery"
 
+[node name="tavern" type="Button" parent="CenterContainer/EconomyContainer"]
+layout_mode = 2
+text = "Tavern"
+
 [node name="cancel" type="Button" parent="CenterContainer/EconomyContainer"]
 layout_mode = 2
 text = "Cancel"

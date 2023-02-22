@@ -13,6 +13,8 @@ var occupied: bool = false
 var resources: fh_resources = fh_resources.new()
 var resource_nodes
 
+var time: int = 0
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	var res = get_node_or_null("resources")
@@ -55,6 +57,8 @@ static func get_entity_category(ent_type) -> Enums.ENTITY_CATEGORY:
 			return Enums.ENTITY_CATEGORY.BUILDING
 		Enums.ENTITY.BUILDING_BREWERY:
 			return Enums.ENTITY_CATEGORY.BUILDING
+		Enums.ENTITY.BUILDING_TAVERN:
+			return Enums.ENTITY_CATEGORY.BUILDING
 		Enums.ENTITY.UNIT_UNEMPLOYED:
 			return Enums.ENTITY_CATEGORY.UNIT
 		Enums.ENTITY.UNIT_WOODCHOPPER:
@@ -78,6 +82,8 @@ static func get_entity_category(ent_type) -> Enums.ENTITY_CATEGORY:
 		Enums.ENTITY.UNIT_HOPSFARMER:
 			return Enums.ENTITY_CATEGORY.UNIT
 		Enums.ENTITY.UNIT_BREWER:
+			return Enums.ENTITY_CATEGORY.UNIT
+		Enums.ENTITY.UNIT_INNKEEPER:
 			return Enums.ENTITY_CATEGORY.UNIT
 		Enums.ENTITY.RESOURCE_TREE:
 			return Enums.ENTITY_CATEGORY.RESOURCE
@@ -153,6 +159,8 @@ static func get_work_target_type(e_type: Enums.ENTITY):
 			return Enums.ENTITY.RESOURCE_HOPS
 		Enums.ENTITY.UNIT_BREWER:
 			return Enums.ENTITY.RESOURCE_HOPS
+		Enums.ENTITY.UNIT_INNKEEPER:
+			return Enums.ENTITY.RESOURCE_ALE
 			
 	return Enums.ENTITY.NOT_SET
 
@@ -183,6 +191,8 @@ static func get_entity_type_resource(ent_type: Enums.ENTITY):
 			return Enums.ENTITY.RESOURCE_HOPS
 		Enums.ENTITY.UNIT_BREWER:
 			return Enums.ENTITY.RESOURCE_HOPS
+		Enums.ENTITY.UNIT_INNKEEPER:
+			return Enums.ENTITY.RESOURCE_ALE
 			
 	return Enums.ENTITY.NOT_SET
 	
@@ -212,6 +222,8 @@ static func get_entity_type_processed_resource(ent_type: Enums.ENTITY):
 			return Enums.ENTITY.RESOURCE_HOPS
 		Enums.ENTITY.UNIT_BREWER:
 			return Enums.ENTITY.RESOURCE_ALE
+#		Enums.ENTITY.UNIT_INNKEEPER:
+#			return Enums.ENTITY.RESOURCE_ALE
 			
 	return Enums.ENTITY.NOT_SET
 
@@ -243,6 +255,8 @@ static func get_unit_type(ent_type: Enums.ENTITY) -> Enums.UNIT_TYPE:
 			return Enums.UNIT_TYPE.CIVILIAN
 		Enums.ENTITY.UNIT_BREWER:
 			return Enums.UNIT_TYPE.CIVILIAN
+		Enums.ENTITY.UNIT_INNKEEPER:
+			return Enums.UNIT_TYPE.CIVILIAN
 
 	return Enums.UNIT_TYPE.NOT_SET
 
@@ -254,6 +268,8 @@ static func resource_collection_point(e_type: Enums.ENTITY) -> Enums.RESOURCE_PR
 		Enums.ENTITY.UNIT_BAKER:
 			return Enums.RESOURCE_PROCESS_POINT.WAREHOUSE
 		Enums.ENTITY.UNIT_BREWER:
+			return Enums.RESOURCE_PROCESS_POINT.WAREHOUSE
+		Enums.ENTITY.UNIT_INNKEEPER:
 			return Enums.RESOURCE_PROCESS_POINT.WAREHOUSE
 		_:
 			return Enums.RESOURCE_PROCESS_POINT.MAP
@@ -317,6 +333,8 @@ static func get_max_resources(ret_res, ent_type: Enums.ENTITY) -> fh_resources:
 		Enums.ENTITY.UNIT_BREWER:
 			ret_res.hops = 10
 			ret_res.ale = 10
+		Enums.ENTITY.UNIT_INNKEEPER:
+			ret_res.ale = 0
 			
 	return ret_res
 
@@ -346,6 +364,8 @@ static func get_occupation(e_type: Enums.ENTITY):
 			return Enums.ENTITY.UNIT_HOPSFARMER
 		Enums.ENTITY.BUILDING_BREWERY:
 			return Enums.ENTITY.UNIT_BREWER
+		Enums.ENTITY.BUILDING_TAVERN:
+			return Enums.ENTITY.UNIT_INNKEEPER
 			
 	return Enums.ENTITY.NOT_SET
 
@@ -377,5 +397,7 @@ static func get_entity_required_resources(ent_type: Enums.ENTITY) -> fh_resource
 		Enums.ENTITY.BUILDING_HOPSFARM:
 			required_resources.wooden_planks = 50
 		Enums.ENTITY.BUILDING_BREWERY:
+			required_resources.wooden_planks = 50
+		Enums.ENTITY.BUILDING_TAVERN:
 			required_resources.wooden_planks = 50
 	return required_resources

@@ -29,8 +29,6 @@ var military_container: GridContainer
 @onready var hops_label: Label = resources_container.get_node("values_container").get_node("hops_label")
 @onready var ale_label: Label = resources_container.get_node("values_container").get_node("ale_label")
 
-
-
 func _ready():
 	main_menu = $main_menu
 	base_container = ui.get_node("CenterContainer/UIBaseContainer")
@@ -50,6 +48,7 @@ func _ready():
 	economy_container.get_node("pigfarm").pressed.connect(building_button_pressed.bind(Enums.ENTITY.BUILDING_PIGFARM))
 	economy_container.get_node("hopsfarm").pressed.connect(building_button_pressed.bind(Enums.ENTITY.BUILDING_HOPSFARM))
 	economy_container.get_node("brewery").pressed.connect(building_button_pressed.bind(Enums.ENTITY.BUILDING_BREWERY))
+	economy_container.get_node("tavern").pressed.connect(building_button_pressed.bind(Enums.ENTITY.BUILDING_TAVERN))
 	economy_container.get_node("cancel").pressed.connect(ui_cancel_button_pressed)
 	tax_container.get_node("tax_increase").pressed.connect(ui_tax_button_increased_pressed)
 	tax_container.get_node("tax_decrease").pressed.connect(ui_tax_button_decreased_pressed)

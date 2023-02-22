@@ -29,6 +29,7 @@ func _ready():
 	SCENES[Enums.ENTITY.BUILDING_PIGFARM] = ResourceLoader.load("res://scenes/buildings/pig_farm.tscn")
 	SCENES[Enums.ENTITY.BUILDING_HOPSFARM] = ResourceLoader.load("res://scenes/buildings/hops_farm.tscn")
 	SCENES[Enums.ENTITY.BUILDING_BREWERY] = ResourceLoader.load("res://scenes/buildings/brewery.tscn")
+	SCENES[Enums.ENTITY.BUILDING_TAVERN] = ResourceLoader.load("res://scenes/buildings/tavern.tscn")
 	pass
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -50,6 +51,16 @@ func process_entity_game_tick():
 
 				# TODO chance for animal to spawn
 			# TODO - growth stages for orchard, vegetable farm, wheat
+			Enums.ENTITY.BUILDING_TAVERN:
+				# TODO - consumption of ale levels for happiness modifiers
+				ent.time += 1
+				if ent.time >= 10:
+					var ale_left: int = ent.player_owner.resources.get_resource_value(Enums.ENTITY.RESOURCE_ALE)
+					if ale_left > 0:
+						ent.player_owner.resources.add_resource(Enums.ENTITY.RESOURCE_ALE, -1)
+						ent.time = 0
+					
+				
 
 func find_entity(prev_ent: fh_entity, ent_type: Enums.ENTITY) -> fh_entity:
 	var found: bool = false
