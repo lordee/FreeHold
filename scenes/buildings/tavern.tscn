@@ -1282,268 +1282,267 @@ transform = Transform3D(9.2393, 0, 0, 0, 1.05903, 0, 0, 0, 6.85751, 1.22208, 0.6
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
 shape = SubResource("BoxShape3D_5qv4a")
 
-[node name="tavern" type="Node3D" parent="."]
-transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0.659288, 0)
-
-[node name="Sign" type="MeshInstance3D" parent="tavern"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.046, 1.48307, 1.76025)
+[node name="Sign" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 5.023, 1.40082, 0.880125)
 mesh = SubResource("ArrayMesh_c7lhe")
 skeleton = NodePath("")
 
-[node name="BackBalconyLogEdges" type="MeshInstance3D" parent="tavern"]
-transform = Transform3D(-1, 0, 1.51793e-06, 0, 1, 0, -1.51793e-06, 0, -1, 5.57308, 1.6847, -6.94431)
+[node name="BackBalconyLogEdges" type="MeshInstance3D" parent="."]
+transform = Transform3D(-0.5, 0, 7.58965e-07, 0, 0.5, 0, -7.58965e-07, 0, -0.5, 2.78654, 1.50164, -3.47215)
 mesh = SubResource("ArrayMesh_c20nu")
 skeleton = NodePath("")
 
-[node name="RoofFrameLogEdges" type="MeshInstance3D" parent="tavern"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.68881, 2.8056, -4.5)
+[node name="RoofFrameLogEdges" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, -1.34441, 2.06209, -2.25)
 mesh = SubResource("ArrayMesh_0wowt")
 skeleton = NodePath("")
 
-[node name="BalconyLogEdges" type="MeshInstance3D" parent="tavern"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.631163, 3.62212, 0.675134)
+[node name="BalconyLogEdges" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0.315582, 2.47035, 0.337567)
 mesh = SubResource("ArrayMesh_djka4")
 skeleton = NodePath("")
 
-[node name="Level3" type="MeshInstance3D" parent="tavern"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.7, 2.8, -4.5)
+[node name="Level3" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, -1.35, 2.05929, -2.25)
 mesh = SubResource("ArrayMesh_0lsof")
 skeleton = NodePath("")
 
-[node name="Roof" type="MeshInstance3D" parent="tavern"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.7, 2.8, -4.5)
+[node name="Roof" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, -1.35, 2.05929, -2.25)
 mesh = SubResource("ArrayMesh_ciora")
 skeleton = NodePath("")
 
-[node name="ChimneyPipes" type="MeshInstance3D" parent="tavern"]
-transform = Transform3D(-0.585462, 0, 1.16786e-06, 0, 0.585462, 0, -1.16786e-06, 0, -0.585462, 2.659, 5.35274, -5.49903)
+[node name="ChimneyPipes" type="MeshInstance3D" parent="."]
+transform = Transform3D(-0.292731, 0, 5.8393e-07, 0, 0.292731, 0, -5.8393e-07, 0, -0.292731, 1.3295, 3.33566, -2.74952)
 mesh = SubResource("ArrayMesh_0vds6")
 skeleton = NodePath("")
 
-[node name="Chimney" type="MeshInstance3D" parent="tavern"]
-transform = Transform3D(-0.585462, 0, 1.16786e-06, 0, 0.585462, 0, -1.16786e-06, 0, -0.585462, 2.6664, 4.28418, -5.4951)
+[node name="Chimney" type="MeshInstance3D" parent="."]
+transform = Transform3D(-0.292731, 0, 5.8393e-07, 0, 0.292731, 0, -5.8393e-07, 0, -0.292731, 1.3332, 2.80138, -2.74755)
 mesh = SubResource("ArrayMesh_l2bs7")
 skeleton = NodePath("")
 
-[node name="WindowsLevel3Left3" type="MeshInstance3D" parent="tavern"]
-transform = Transform3D(-8.34465e-07, 0, -1, 0, 1, 0, 1, 0, -8.34465e-07, -5.33563, 5.08947, -0.2183)
+[node name="WindowsLevel3Left3" type="MeshInstance3D" parent="."]
+transform = Transform3D(-4.17232e-07, 0, -0.5, 0, 0.5, 0, 0.5, 0, -4.17232e-07, -2.66781, 3.20402, -0.10915)
 mesh = SubResource("ArrayMesh_jkd7p")
 skeleton = NodePath("")
 
-[node name="WindowsLevel2Left3" type="MeshInstance3D" parent="tavern"]
-transform = Transform3D(-9.42041e-07, 0, -1.12892, 0, 1.12892, 0, 1.12892, 0, -9.42041e-07, -5.4392, 3.02475, -5.03265)
+[node name="WindowsLevel2Left3" type="MeshInstance3D" parent="."]
+transform = Transform3D(-4.7102e-07, 0, -0.56446, 0, 0.56446, 0, 0.56446, 0, -4.7102e-07, -2.7196, 2.17166, -2.51632)
 mesh = SubResource("ArrayMesh_807vc")
 skeleton = NodePath("")
 
-[node name="WindowsLevel2Left2" type="MeshInstance3D" parent="tavern"]
-transform = Transform3D(-9.42041e-07, 0, -1.12892, 0, 1.12892, 0, 1.12892, 0, -9.42041e-07, -5.4392, 3.02475, -7.40041)
+[node name="WindowsLevel2Left2" type="MeshInstance3D" parent="."]
+transform = Transform3D(-4.7102e-07, 0, -0.56446, 0, 0.56446, 0, 0.56446, 0, -4.7102e-07, -2.7196, 2.17166, -3.70021)
 mesh = SubResource("ArrayMesh_okqp4")
 skeleton = NodePath("")
 
-[node name="WindowsLevel2Left1" type="MeshInstance3D" parent="tavern"]
-transform = Transform3D(-9.42041e-07, 0, -1.12892, 0, 1.12892, 0, 1.12892, 0, -9.42041e-07, -5.4392, 3.01699, -9.79024)
+[node name="WindowsLevel2Left1" type="MeshInstance3D" parent="."]
+transform = Transform3D(-4.7102e-07, 0, -0.56446, 0, 0.56446, 0, 0.56446, 0, -4.7102e-07, -2.7196, 2.16778, -4.89512)
 mesh = SubResource("ArrayMesh_807vc")
 skeleton = NodePath("")
 
-[node name="WindowsLevel1Left1" type="MeshInstance3D" parent="tavern"]
-transform = Transform3D(-9.42041e-07, 0, -1.12892, 0, 1.12892, 0, 1.12892, 0, -9.42041e-07, -5.29175, 0.385962, -9.8986)
+[node name="WindowsLevel1Left1" type="MeshInstance3D" parent="."]
+transform = Transform3D(-4.7102e-07, 0, -0.56446, 0, 0.56446, 0, 0.56446, 0, -4.7102e-07, -2.64587, 0.852269, -4.9493)
 mesh = SubResource("ArrayMesh_807vc")
 skeleton = NodePath("")
 
-[node name="WindowsLevel1Left2" type="MeshInstance3D" parent="tavern"]
-transform = Transform3D(-9.42041e-07, 0, -1.12892, 0, 1.12892, 0, 1.12892, 0, -9.42041e-07, -5.29175, 0.385962, -6.29772)
+[node name="WindowsLevel1Left2" type="MeshInstance3D" parent="."]
+transform = Transform3D(-4.7102e-07, 0, -0.56446, 0, 0.56446, 0, 0.56446, 0, -4.7102e-07, -2.64587, 0.852269, -3.14886)
 mesh = SubResource("ArrayMesh_807vc")
 skeleton = NodePath("")
 
-[node name="WindowsLevel1Left3" type="MeshInstance3D" parent="tavern"]
-transform = Transform3D(-9.42041e-07, 0, -1.12892, 0, 1.12892, 0, 1.12892, 0, -9.42041e-07, -5.29175, 0.387368, -0.911237)
+[node name="WindowsLevel1Left3" type="MeshInstance3D" parent="."]
+transform = Transform3D(-4.7102e-07, 0, -0.56446, 0, 0.56446, 0, 0.56446, 0, -4.7102e-07, -2.64587, 0.852972, -0.455618)
 mesh = SubResource("ArrayMesh_807vc")
 skeleton = NodePath("")
 
-[node name="WindowsLevel2Front2" type="MeshInstance3D" parent="tavern"]
-transform = Transform3D(1.12892, 0, 0, 0, 1.12892, 0, 0, 0, 1.12892, -1.59561, 3.03173, 1.78997)
+[node name="WindowsLevel2Front2" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.56446, 0, 0, 0, 0.56446, 0, 0, 0, 0.56446, -0.797805, 2.17515, 0.894985)
 mesh = SubResource("ArrayMesh_807vc")
 skeleton = NodePath("")
 
-[node name="WindowsLevel2Front1" type="MeshInstance3D" parent="tavern"]
-transform = Transform3D(1.12892, 0, 0, 0, 1.12892, 0, 0, 0, 1.12892, -3.80989, 3.03173, 1.78997)
+[node name="WindowsLevel2Front1" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.56446, 0, 0, 0, 0.56446, 0, 0, 0, 0.56446, -1.90494, 2.17515, 0.894985)
 mesh = SubResource("ArrayMesh_8l5u4")
 skeleton = NodePath("")
 
-[node name="WindowsLevel2Right3" type="MeshInstance3D" parent="tavern"]
-transform = Transform3D(-8.07464e-07, 0, 1.12892, 0, 1.12892, 0, -1.12892, 0, -8.07464e-07, 9.05757, 3.03045, -7.40419)
+[node name="WindowsLevel2Right3" type="MeshInstance3D" parent="."]
+transform = Transform3D(-4.03732e-07, 0, 0.56446, 0, 0.56446, 0, -0.56446, 0, -4.03732e-07, 4.52878, 2.17451, -3.7021)
 mesh = SubResource("ArrayMesh_807vc")
 skeleton = NodePath("")
 
-[node name="WindowsLevel2Right2" type="MeshInstance3D" parent="tavern"]
-transform = Transform3D(-8.07464e-07, 0, 1.12892, 0, 1.12892, 0, -1.12892, 0, -8.07464e-07, 9.05757, 3.03045, -3.87666)
+[node name="WindowsLevel2Right2" type="MeshInstance3D" parent="."]
+transform = Transform3D(-4.03732e-07, 0, 0.56446, 0, 0.56446, 0, -0.56446, 0, -4.03732e-07, 4.52878, 2.17451, -1.93833)
 mesh = SubResource("ArrayMesh_807vc")
 skeleton = NodePath("")
 
-[node name="WindowsLevel2Right1" type="MeshInstance3D" parent="tavern"]
-transform = Transform3D(-8.07464e-07, 0, 1.12892, 0, 1.12892, 0, -1.12892, 0, -8.07464e-07, 9.05757, 3.03045, -1.31726)
+[node name="WindowsLevel2Right1" type="MeshInstance3D" parent="."]
+transform = Transform3D(-4.03732e-07, 0, 0.56446, 0, 0.56446, 0, -0.56446, 0, -4.03732e-07, 4.52878, 2.17451, -0.65863)
 mesh = SubResource("ArrayMesh_807vc")
 skeleton = NodePath("")
 
-[node name="WindowsLevel1Right1" type="MeshInstance3D" parent="tavern"]
-transform = Transform3D(-8.07464e-07, 0, 1.12892, 0, 1.12892, 0, -1.12892, 0, -8.07464e-07, 8.9275, 0.387501, -4.50428)
+[node name="WindowsLevel1Right1" type="MeshInstance3D" parent="."]
+transform = Transform3D(-4.03732e-07, 0, 0.56446, 0, 0.56446, 0, -0.56446, 0, -4.03732e-07, 4.46375, 0.853038, -2.25214)
 mesh = SubResource("ArrayMesh_807vc")
 skeleton = NodePath("")
 
-[node name="Level1" type="MeshInstance3D" parent="tavern"]
-transform = Transform3D(-7.15256e-07, 0, 1, 0, 1, 0, -1, 0, -7.15256e-07, 10.8, 0, 1.8)
+[node name="Level1" type="MeshInstance3D" parent="."]
+transform = Transform3D(-3.57628e-07, 0, 0.5, 0, 0.5, 0, -0.5, 0, -3.57628e-07, 5.4, 0.659288, 0.9)
 mesh = SubResource("ArrayMesh_r2mbt")
 skeleton = NodePath("")
 
-[node name="WindowsLevel2Front4" type="MeshInstance3D" parent="tavern"]
-transform = Transform3D(1.12892, 0, 0, 0, 1.12892, 0, 0, 0, 1.12892, 3.70574, 3.0385, 0.0308774)
+[node name="WindowsLevel2Front4" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.56446, 0, 0, 0, 0.56446, 0, 0, 0, 0.56446, 1.85287, 2.17854, 0.0154387)
 mesh = SubResource("ArrayMesh_5dqft")
 skeleton = NodePath("")
 
-[node name="WindowsLevel2Front3" type="MeshInstance3D" parent="tavern"]
-transform = Transform3D(1.12892, 0, 0, 0, 1.12892, 0, 0, 0, 1.12892, 1.40869, 3.03173, 0.0306368)
+[node name="WindowsLevel2Front3" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.56446, 0, 0, 0, 0.56446, 0, 0, 0, 0.56446, 0.704345, 2.17515, 0.0153184)
 mesh = SubResource("ArrayMesh_807vc")
 skeleton = NodePath("")
 
-[node name="WindowsLevel3Left1" type="MeshInstance3D" parent="tavern"]
-transform = Transform3D(-8.34465e-07, 0, -1, 0, 1, 0, 1, 0, -8.34465e-07, -5.33563, 5.08947, -9.33683)
+[node name="WindowsLevel3Left1" type="MeshInstance3D" parent="."]
+transform = Transform3D(-4.17232e-07, 0, -0.5, 0, 0.5, 0, 0.5, 0, -4.17232e-07, -2.66781, 3.20402, -4.66842)
 mesh = SubResource("ArrayMesh_1b1nu")
 skeleton = NodePath("")
 
-[node name="DoorSteps" type="MeshInstance3D" parent="tavern"]
-transform = Transform3D(-7.15256e-07, 0, 1, 0, 1, 0, -1, 0, -7.15256e-07, -1.00459, -0.0844997, -6.28031)
+[node name="DoorSteps" type="MeshInstance3D" parent="."]
+transform = Transform3D(-3.57628e-07, 0, 0.5, 0, 0.5, 0, -0.5, 0, -3.57628e-07, -0.502295, 0.617038, -3.14015)
 mesh = SubResource("ArrayMesh_dro2c")
 skeleton = NodePath("")
 
-[node name="DoorHandleBack" type="MeshInstance3D" parent="tavern"]
-transform = Transform3D(-7.15256e-07, 0, 1, 0, 1, 0, -1, 0, -7.15256e-07, -0.926516, -0.0218459, -6.35997)
+[node name="DoorHandleBack" type="MeshInstance3D" parent="."]
+transform = Transform3D(-3.57628e-07, 0, 0.5, 0, 0.5, 0, -0.5, 0, -3.57628e-07, -0.463258, 0.648365, -3.17999)
 mesh = SubResource("ArrayMesh_tcd3k")
 skeleton = NodePath("")
 
-[node name="DoorBack" type="MeshInstance3D" parent="tavern"]
-transform = Transform3D(-7.15256e-07, 0, 1, 0, 1, 0, -1, 0, -7.15256e-07, -1.00459, -0.0844997, -6.28031)
+[node name="DoorBack" type="MeshInstance3D" parent="."]
+transform = Transform3D(-3.57628e-07, 0, 0.5, 0, 0.5, 0, -0.5, 0, -3.57628e-07, -0.502295, 0.617038, -3.14015)
 mesh = SubResource("ArrayMesh_2siod")
 skeleton = NodePath("")
 
-[node name="DoorHandleBalcony" type="MeshInstance3D" parent="tavern"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.15288, 2.71794, -0.729855)
+[node name="DoorHandleBalcony" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 3.07644, 2.01826, -0.364928)
 mesh = SubResource("ArrayMesh_2k236")
 skeleton = NodePath("")
 
-[node name="DoorBalcony" type="MeshInstance3D" parent="tavern"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.07322, 2.65529, -0.807925)
+[node name="DoorBalcony" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 3.03661, 1.98693, -0.403962)
 mesh = SubResource("ArrayMesh_clipb")
 skeleton = NodePath("")
 
-[node name="DoorHandleKitchen" type="MeshInstance3D" parent="tavern"]
-transform = Transform3D(-7.15256e-07, 0, 1, 0, 1, 0, -1, 0, -7.15256e-07, -0.932228, -0.0218464, 0.806793)
+[node name="DoorHandleKitchen" type="MeshInstance3D" parent="."]
+transform = Transform3D(-3.57628e-07, 0, 0.5, 0, 0.5, 0, -0.5, 0, -3.57628e-07, -0.466114, 0.648365, 0.403396)
 mesh = SubResource("ArrayMesh_lwq3k")
 skeleton = NodePath("")
 
-[node name="DoorKitchen" type="MeshInstance3D" parent="tavern"]
-transform = Transform3D(-7.15256e-07, 0, 1, 0, 1, 0, -1, 0, -7.15256e-07, -1.0103, -0.0845002, 0.886448)
+[node name="DoorKitchen" type="MeshInstance3D" parent="."]
+transform = Transform3D(-3.57628e-07, 0, 0.5, 0, 0.5, 0, -0.5, 0, -3.57628e-07, -0.50515, 0.617038, 0.443224)
 mesh = SubResource("ArrayMesh_vxvw6")
 skeleton = NodePath("")
 
-[node name="WindowsLevel1Front1" type="MeshInstance3D" parent="tavern"]
-transform = Transform3D(1.12892, 0, 0, 0, 1.12892, 0, 0, 0, 1.12892, -4.49572, 0.387501, 1.72336)
+[node name="WindowsLevel1Front1" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.56446, 0, 0, 0, 0.56446, 0, 0, 0, 0.56446, -2.24786, 0.853038, 0.86168)
 mesh = SubResource("ArrayMesh_gmv7d")
 skeleton = NodePath("")
 
-[node name="WindowsLevel1Front2" type="MeshInstance3D" parent="tavern"]
-transform = Transform3D(1.12892, 0, 0, 0, 1.12892, 0, 0, 0, 1.12892, -0.895722, 0.387501, 1.72336)
+[node name="WindowsLevel1Front2" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.56446, 0, 0, 0, 0.56446, 0, 0, 0, 0.56446, -0.447861, 0.853038, 0.86168)
 mesh = SubResource("ArrayMesh_807vc")
 skeleton = NodePath("")
 
-[node name="WindowsLevel1Front6" type="MeshInstance3D" parent="tavern"]
-transform = Transform3D(1.12892, 0, 0, 0, 1.12892, 0, 0, 0, 1.12892, 6.30428, 0.387501, -0.0745555)
+[node name="WindowsLevel1Front6" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.56446, 0, 0, 0, 0.56446, 0, 0, 0, 0.56446, 3.15214, 0.853038, -0.0372777)
 mesh = SubResource("ArrayMesh_807vc")
 skeleton = NodePath("")
 
-[node name="WindowsLevel1Front5" type="MeshInstance3D" parent="tavern"]
-transform = Transform3D(1.12892, 0, 0, 0, 1.12892, 0, 0, 0, 1.12892, 4.50428, 0.387501, -0.0745555)
+[node name="WindowsLevel1Front5" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.56446, 0, 0, 0, 0.56446, 0, 0, 0, 0.56446, 2.25214, 0.853038, -0.0372777)
 mesh = SubResource("ArrayMesh_807vc")
 skeleton = NodePath("")
 
-[node name="WindowsLevel1Front4" type="MeshInstance3D" parent="tavern"]
-transform = Transform3D(1.12892, 0, 0, 0, 1.12892, 0, 0, 0, 1.12892, 2.70428, 0.387501, -0.0745555)
+[node name="WindowsLevel1Front4" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.56446, 0, 0, 0, 0.56446, 0, 0, 0, 0.56446, 1.35214, 0.853038, -0.0372777)
 mesh = SubResource("ArrayMesh_807vc")
 skeleton = NodePath("")
 
-[node name="Entrance" type="MeshInstance3D" parent="tavern"]
+[node name="Entrance" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0.659288, 0)
 mesh = SubResource("ArrayMesh_hy35p")
 skeleton = NodePath("")
 
-[node name="RoofWood" type="MeshInstance3D" parent="tavern"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.7, 2.81619, -4.5)
+[node name="RoofWood" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, -1.35, 2.06738, -2.25)
 mesh = SubResource("ArrayMesh_loddl")
 skeleton = NodePath("")
 
-[node name="RoofFrame" type="MeshInstance3D" parent="tavern"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.68881, 2.8056, -4.5)
+[node name="RoofFrame" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, -1.34441, 2.06209, -2.25)
 mesh = SubResource("ArrayMesh_ftcki")
 skeleton = NodePath("")
 
-[node name="Level2" type="MeshInstance3D" parent="tavern"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.7, 2.8, -4.5)
+[node name="Level2" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, -1.35, 2.05929, -2.25)
 mesh = SubResource("ArrayMesh_c1gsq")
 skeleton = NodePath("")
 
-[node name="Foundation" type="MeshInstance3D" parent="tavern"]
+[node name="Foundation" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0.659288, 0)
 mesh = SubResource("ArrayMesh_i7aiw")
 skeleton = NodePath("")
 
-[node name="Level2Frame" type="MeshInstance3D" parent="tavern"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.05, 1.4, -0.9)
+[node name="Level2Frame" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 5.025, 1.35929, -0.45)
 mesh = SubResource("ArrayMesh_mkwxl")
 skeleton = NodePath("")
 
-[node name="WindowsLevel1Front3" type="MeshInstance3D" parent="tavern"]
-transform = Transform3D(1.12892, 0, 0, 0, 1.12892, 0, 0, 0, 1.12892, 0.904278, 0.387501, -0.0745555)
+[node name="WindowsLevel1Front3" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.56446, 0, 0, 0, 0.56446, 0, 0, 0, 0.56446, 0.452139, 0.853038, -0.0372777)
 mesh = SubResource("ArrayMesh_807vc")
 skeleton = NodePath("")
 
-[node name="DoorEntrance" type="MeshInstance3D" parent="tavern"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.3305, -0.0845002, -0.812994)
+[node name="DoorEntrance" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 5.16525, 0.617038, -0.406497)
 mesh = SubResource("ArrayMesh_2siod")
 skeleton = NodePath("")
 
-[node name="DoorFrames" type="MeshInstance3D" parent="tavern"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.3305, -0.0845002, -0.812994)
+[node name="DoorFrames" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 5.16525, 0.617038, -0.406497)
 mesh = SubResource("ArrayMesh_jp7yc")
 skeleton = NodePath("")
 
-[node name="DoorHandleEntrance" type="MeshInstance3D" parent="tavern"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.4102, -0.0218464, -0.734925)
+[node name="DoorHandleEntrance" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 5.2051, 0.648365, -0.367462)
 mesh = SubResource("ArrayMesh_tcd3k")
 skeleton = NodePath("")
 
-[node name="WindowsLevel3Left2" type="MeshInstance3D" parent="tavern"]
-transform = Transform3D(-8.34465e-07, 0, -1, 0, 1, 0, 1, 0, -8.34465e-07, -5.33563, 5.08947, -7.04034)
+[node name="WindowsLevel3Left2" type="MeshInstance3D" parent="."]
+transform = Transform3D(-4.17232e-07, 0, -0.5, 0, 0.5, 0, 0.5, 0, -4.17232e-07, -2.66781, 3.20402, -3.52017)
 mesh = SubResource("ArrayMesh_rs5cf")
 skeleton = NodePath("")
 
-[node name="WindowsLevel3Front1" type="MeshInstance3D" parent="tavern"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.71763, 5.40585, 2.03489)
+[node name="WindowsLevel3Front1" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, -1.35881, 3.36221, 1.01744)
 mesh = SubResource("ArrayMesh_b4cg3")
 skeleton = NodePath("")
 
-[node name="WindowFrames" type="MeshInstance3D" parent="tavern"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.71763, 5.40585, 2.03489)
+[node name="WindowFrames" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, -1.35881, 3.36221, 1.01744)
 mesh = SubResource("ArrayMesh_oeg48")
 skeleton = NodePath("")
 
-[node name="Balcony" type="MeshInstance3D" parent="tavern"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.631163, 3.62212, 0.675134)
+[node name="Balcony" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0.315582, 2.47035, 0.337567)
 mesh = SubResource("ArrayMesh_ei5s6")
 skeleton = NodePath("")
 
-[node name="BackBalcony" type="MeshInstance3D" parent="tavern"]
-transform = Transform3D(-1, 0, 1.51793e-06, 0, 1, 0, -1.51793e-06, 0, -1, 5.57308, 1.6847, -6.94431)
+[node name="BackBalcony" type="MeshInstance3D" parent="."]
+transform = Transform3D(-0.5, 0, 7.58965e-07, 0, 0.5, 0, -7.58965e-07, 0, -0.5, 2.78654, 1.50164, -3.47215)
 mesh = SubResource("ArrayMesh_briup")
 skeleton = NodePath("")
 
-[node name="Level3Frames" type="MeshInstance3D" parent="tavern"]
-transform = Transform3D(9.53674e-07, -7.15256e-07, -1, -1, 0, -9.53674e-07, 0, 1, -7.15256e-07, 9.0796, 4.05115, -3.0473)
+[node name="Level3Frames" type="MeshInstance3D" parent="."]
+transform = Transform3D(4.76837e-07, -3.57628e-07, -0.5, -0.5, 0, -4.76837e-07, 0, 0.5, -3.57628e-07, 4.5398, 2.68486, -1.52365)
 mesh = SubResource("ArrayMesh_mnulw")
 skeleton = NodePath("")
