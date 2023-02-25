@@ -84,6 +84,7 @@ size = Vector3(0.5, 1, 0.5)
 
 [node name="hops_farm" type="Node3D"]
 script = ExtResource("1_sajco")
+team_no = null
 entity_type = 43
 
 [node name="entry" type="Area3D" parent="."]

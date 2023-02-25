@@ -30,6 +30,8 @@ func _ready():
 	SCENES[Enums.ENTITY.BUILDING_HOPSFARM] = ResourceLoader.load("res://scenes/buildings/hops_farm.tscn")
 	SCENES[Enums.ENTITY.BUILDING_BREWERY] = ResourceLoader.load("res://scenes/buildings/brewery.tscn")
 	SCENES[Enums.ENTITY.BUILDING_TAVERN] = ResourceLoader.load("res://scenes/buildings/tavern.tscn")
+	SCENES[Enums.ENTITY.BUILDING_CHANDLERY] = ResourceLoader.load("res://scenes/buildings/chandlery.tscn")
+	SCENES[Enums.ENTITY.BUILDING_CHURCH] = ResourceLoader.load("res://scenes/buildings/church.tscn")
 	pass
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -58,6 +60,14 @@ func process_entity_game_tick():
 					var ale_left: int = ent.player_owner.resources.get_resource_value(Enums.ENTITY.RESOURCE_ALE)
 					if ale_left > 0:
 						ent.player_owner.resources.add_resource(Enums.ENTITY.RESOURCE_ALE, -1)
+						ent.time = 0
+			Enums.ENTITY.BUILDING_CHURCH:
+				# TODO - consumption of candles levels for happiness modifiers
+				ent.time += 1
+				if ent.time >= 10:
+					var candles_left: int = ent.player_owner.resources.get_resource_value(Enums.ENTITY.RESOURCE_CANDLES)
+					if candles_left > 0:
+						ent.player_owner.resources.add_resource(Enums.ENTITY.RESOURCE_CANDLES, -1)
 						ent.time = 0
 					
 				
@@ -257,6 +267,7 @@ func find_work_target(e_type: Enums.ENTITY, worker: fh_unit) -> fh_entity:
 
 	if fh_entity.is_resource_producer(worker.workplace.entity_type):
 		var rand = randi_range(0, len(worker.workplace.resource_nodes)-1)
+		# FIXME - resource is consumed after x trips, workplace needs to grow more/replenish
 		targ = worker.workplace.resource_nodes[rand]
 	elif fh_entity.resource_collection_point(worker.entity_type) == Enums.RESOURCE_PROCESS_POINT.WAREHOUSE:
 		var wh: fh_entity = null

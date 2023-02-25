@@ -59,6 +59,10 @@ static func get_entity_category(ent_type) -> Enums.ENTITY_CATEGORY:
 			return Enums.ENTITY_CATEGORY.BUILDING
 		Enums.ENTITY.BUILDING_TAVERN:
 			return Enums.ENTITY_CATEGORY.BUILDING
+		Enums.ENTITY.BUILDING_CHANDLERY:
+			return Enums.ENTITY_CATEGORY.BUILDING
+		Enums.ENTITY.BUILDING_CHURCH:
+			return Enums.ENTITY_CATEGORY.BUILDING
 		Enums.ENTITY.UNIT_UNEMPLOYED:
 			return Enums.ENTITY_CATEGORY.UNIT
 		Enums.ENTITY.UNIT_WOODCHOPPER:
@@ -84,6 +88,10 @@ static func get_entity_category(ent_type) -> Enums.ENTITY_CATEGORY:
 		Enums.ENTITY.UNIT_BREWER:
 			return Enums.ENTITY_CATEGORY.UNIT
 		Enums.ENTITY.UNIT_INNKEEPER:
+			return Enums.ENTITY_CATEGORY.UNIT
+		Enums.ENTITY.UNIT_CHANDLER:
+			return Enums.ENTITY_CATEGORY.UNIT
+		Enums.ENTITY.UNIT_PRIEST:
 			return Enums.ENTITY_CATEGORY.UNIT
 		Enums.ENTITY.RESOURCE_TREE:
 			return Enums.ENTITY_CATEGORY.RESOURCE
@@ -113,6 +121,11 @@ static func get_entity_category(ent_type) -> Enums.ENTITY_CATEGORY:
 			return Enums.ENTITY_CATEGORY.RESOURCE
 		Enums.ENTITY.RESOURCE_ALE:
 			return Enums.ENTITY_CATEGORY.RESOURCE
+		Enums.ENTITY.RESOURCE_CANDLES:
+			return Enums.ENTITY_CATEGORY.RESOURCE
+		Enums.ENTITY.RESOURCE_CANDLE_PRECURSOR:
+			return Enums.ENTITY_CATEGORY.RESOURCE
+		
 	
 	return Enums.ENTITY_CATEGORY.NOT_SET
 
@@ -129,6 +142,8 @@ static func is_resource_producer(e_type: Enums.ENTITY) -> bool:
 		Enums.ENTITY.BUILDING_PIGFARM:
 			return true
 		Enums.ENTITY.BUILDING_HOPSFARM:
+			return true
+		Enums.ENTITY.BUILDING_CHANDLERY:
 			return true
 			
 	return false
@@ -161,6 +176,10 @@ static func get_work_target_type(e_type: Enums.ENTITY):
 			return Enums.ENTITY.RESOURCE_HOPS
 		Enums.ENTITY.UNIT_INNKEEPER:
 			return Enums.ENTITY.RESOURCE_ALE
+		Enums.ENTITY.UNIT_CHANDLER:
+			return Enums.ENTITY.RESOURCE_CANDLE_PRECURSOR
+		Enums.ENTITY.UNIT_PRIEST:
+			return Enums.ENTITY.RESOURCE_CANDLES
 			
 	return Enums.ENTITY.NOT_SET
 
@@ -193,6 +212,10 @@ static func get_entity_type_resource(ent_type: Enums.ENTITY):
 			return Enums.ENTITY.RESOURCE_HOPS
 		Enums.ENTITY.UNIT_INNKEEPER:
 			return Enums.ENTITY.RESOURCE_ALE
+		Enums.ENTITY.UNIT_CHANDLER:
+			return Enums.ENTITY.RESOURCE_CANDLE_PRECURSOR
+		Enums.ENTITY.UNIT_PRIEST:
+			return Enums.ENTITY.RESOURCE_CANDLES
 			
 	return Enums.ENTITY.NOT_SET
 	
@@ -222,8 +245,8 @@ static func get_entity_type_processed_resource(ent_type: Enums.ENTITY):
 			return Enums.ENTITY.RESOURCE_HOPS
 		Enums.ENTITY.UNIT_BREWER:
 			return Enums.ENTITY.RESOURCE_ALE
-#		Enums.ENTITY.UNIT_INNKEEPER:
-#			return Enums.ENTITY.RESOURCE_ALE
+		Enums.ENTITY.UNIT_CHANDLER:
+			return Enums.ENTITY.RESOURCE_CANDLES
 			
 	return Enums.ENTITY.NOT_SET
 
@@ -257,6 +280,10 @@ static func get_unit_type(ent_type: Enums.ENTITY) -> Enums.UNIT_TYPE:
 			return Enums.UNIT_TYPE.CIVILIAN
 		Enums.ENTITY.UNIT_INNKEEPER:
 			return Enums.UNIT_TYPE.CIVILIAN
+		Enums.ENTITY.UNIT_CHANDLER:
+			return Enums.UNIT_TYPE.CIVILIAN
+		Enums.ENTITY.UNIT_PRIEST:
+			return Enums.UNIT_TYPE.CIVILIAN
 
 	return Enums.UNIT_TYPE.NOT_SET
 
@@ -270,6 +297,8 @@ static func resource_collection_point(e_type: Enums.ENTITY) -> Enums.RESOURCE_PR
 		Enums.ENTITY.UNIT_BREWER:
 			return Enums.RESOURCE_PROCESS_POINT.WAREHOUSE
 		Enums.ENTITY.UNIT_INNKEEPER:
+			return Enums.RESOURCE_PROCESS_POINT.WAREHOUSE
+		Enums.ENTITY.UNIT_PRIEST:
 			return Enums.RESOURCE_PROCESS_POINT.WAREHOUSE
 		_:
 			return Enums.RESOURCE_PROCESS_POINT.MAP
@@ -295,6 +324,8 @@ static func resource_dropoff_point(e_type: Enums.ENTITY) -> Enums.RESOURCE_PROCE
 			return Enums.RESOURCE_PROCESS_POINT.WAREHOUSE
 		Enums.ENTITY.RESOURCE_HOPS:
 			return Enums.RESOURCE_PROCESS_POINT.WAREHOUSE
+#		Enums.ENTITY.RESOURCE_CANDLES:
+#			return Enums.RESOURCE_PROCESS_POINT.WAREHOUSE
 		_:
 			return Enums.RESOURCE_PROCESS_POINT.WORKPLACE
 
@@ -335,6 +366,11 @@ static func get_max_resources(ret_res, ent_type: Enums.ENTITY) -> fh_resources:
 			ret_res.ale = 10
 		Enums.ENTITY.UNIT_INNKEEPER:
 			ret_res.ale = 0
+		Enums.ENTITY.UNIT_CHANDLER:
+			ret_res.candles = 10
+			ret_res.candle_precursor = 10
+		Enums.ENTITY.UNIT_PRIEST:
+			ret_res.candles = 0
 			
 	return ret_res
 
@@ -366,6 +402,10 @@ static func get_occupation(e_type: Enums.ENTITY):
 			return Enums.ENTITY.UNIT_BREWER
 		Enums.ENTITY.BUILDING_TAVERN:
 			return Enums.ENTITY.UNIT_INNKEEPER
+		Enums.ENTITY.BUILDING_CHANDLERY:
+			return Enums.ENTITY.UNIT_CHANDLER
+		Enums.ENTITY.BUILDING_CHURCH:
+			return Enums.ENTITY.UNIT_PRIEST
 			
 	return Enums.ENTITY.NOT_SET
 
@@ -399,5 +439,9 @@ static func get_entity_required_resources(ent_type: Enums.ENTITY) -> fh_resource
 		Enums.ENTITY.BUILDING_BREWERY:
 			required_resources.wooden_planks = 50
 		Enums.ENTITY.BUILDING_TAVERN:
+			required_resources.wooden_planks = 50
+		Enums.ENTITY.BUILDING_CHANDLERY:
+			required_resources.wooden_planks = 50
+		Enums.ENTITY.BUILDING_CHURCH:
 			required_resources.wooden_planks = 50
 	return required_resources

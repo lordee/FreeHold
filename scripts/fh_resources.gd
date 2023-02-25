@@ -20,6 +20,9 @@ var pig: int = 0
 var meat: int = 0
 var hops: int = 0
 var ale: int = 0
+var candles: int = 0
+var candle_precursor: int = 0
+
 
 var reserved_resources: fh_resources = null
 var reserved_resources_dict: Dictionary = {}
@@ -58,6 +61,10 @@ func add_resource(e_type: Enums.ENTITY, val: int):
 			hops += val
 		Enums.ENTITY.RESOURCE_ALE:
 			ale += val
+		Enums.ENTITY.RESOURCE_CANDLES:
+			candles += val
+		Enums.ENTITY.RESOURCE_CANDLE_PRECURSOR:
+			candle_precursor += val
 		Enums.ENTITY.NOT_SET:
 			print("resource not set passed to add_resource")
 			
@@ -95,6 +102,10 @@ func set_resource(e_type: Enums.ENTITY, val: int):
 			hops = val
 		Enums.ENTITY.RESOURCE_ALE:
 			ale = val
+		Enums.ENTITY.RESOURCE_CANDLES:
+			candles = val
+		Enums.ENTITY.RESOURCE_CANDLE_PRECURSOR:
+			candle_precursor = val
 		Enums.ENTITY.NOT_SET:
 			print("resource not set passed to set_resource")
 
@@ -119,6 +130,8 @@ func merge_resource_objects(external_resource: fh_resources, add: bool):
 	add_resource(Enums.ENTITY.RESOURCE_MEAT, external_resource.meat * multiplier)
 	add_resource(Enums.ENTITY.RESOURCE_HOPS, external_resource.hops * multiplier)
 	add_resource(Enums.ENTITY.RESOURCE_ALE, external_resource.ale * multiplier)
+	add_resource(Enums.ENTITY.RESOURCE_CANDLES, external_resource.candles * multiplier)
+	add_resource(Enums.ENTITY.RESOURCE_CANDLE_PRECURSOR, external_resource.candle_precursor * multiplier)
 
 func get_resource_value(e_type: Enums.ENTITY, include_reserved: bool = true) -> int:
 	if reserved_resources == null:
@@ -159,6 +172,10 @@ func get_resource_value(e_type: Enums.ENTITY, include_reserved: bool = true) -> 
 			return hops if include_reserved else hops - reserved_resources.hops
 		Enums.ENTITY.RESOURCE_ALE:
 			return ale if include_reserved else ale - reserved_resources.ale
+		Enums.ENTITY.RESOURCE_CANDLES:
+			return candles if include_reserved else candles - reserved_resources.candles
+		Enums.ENTITY.RESOURCE_CANDLE_PRECURSOR:
+			return candle_precursor if include_reserved else candle_precursor - reserved_resources.candle_precursor
 			
 	print("get_resource_value enum not found")
 	return 0
@@ -257,6 +274,8 @@ func space_left(e_type: Enums.ENTITY) -> int:
 		piles += int(ceil(float(hops) / float(MAX_PILE_AMOUNT)))
 	if ale > 0:
 		piles += int(ceil(float(ale) / float(MAX_PILE_AMOUNT)))
+	if candles > 0:
+		piles += int(ceil(float(candles) / float(MAX_PILE_AMOUNT)))
 	
 	if piles < MAX_PILES:
 		return (MAX_PILES - piles) * MAX_PILE_AMOUNT
