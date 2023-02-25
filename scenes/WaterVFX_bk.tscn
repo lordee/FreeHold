@@ -1,6 +1,6 @@
-[gd_scene load_steps=13 format=3 uid="uid://ndd8y18i43ds"]
+[gd_scene load_steps=13 format=3]
 
-[ext_resource type="Shader" path="res://WaterShader.tres" id="1_b1vgi"]
+[ext_resource type="Shader" uid="uid://bbo1abph4arco" path="res://shaders/WaterShader.tres" id="1_b1vgi"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_n7xyp"]
 sky_top_color = Color(0.141176, 0.294118, 0.490196, 1)

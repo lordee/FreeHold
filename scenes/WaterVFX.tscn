@@ -1,6 +1,6 @@
-[gd_scene load_steps=10 format=3 uid="uid://bep5o4in1vs27"]
+[gd_scene load_steps=10 format=3]
 
-[ext_resource type="Shader" uid="uid://bbo1abph4arco" path="res://WaterShader.tres" id="1_wkeku"]
+[ext_resource type="Shader" uid="uid://bbo1abph4arco" path="res://shaders/WaterShader.tres" id="1_wkeku"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_fikxu"]
 render_priority = 0
