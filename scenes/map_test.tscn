@@ -1,10 +1,11 @@
-[gd_scene load_steps=15 format=3 uid="uid://byx0uhyevxlkc"]
+[gd_scene load_steps=16 format=3 uid="uid://byx0uhyevxlkc"]
 
 [ext_resource type="PackedScene" uid="uid://bbgtrymosy44i" path="res://scenes/buildings/castle.tscn" id="2_1tkut"]
 [ext_resource type="PackedScene" uid="uid://cobsmevom3mhp" path="res://scenes/tree.tscn" id="2_ngiq4"]
 [ext_resource type="PackedScene" uid="uid://d3qx11jku1rdy" path="res://scenes/stone.tscn" id="3_f2fa7"]
 [ext_resource type="PackedScene" uid="uid://2e145dr6rhsx" path="res://scenes/iron.tscn" id="4_pmvpr"]
-[ext_resource type="Shader" uid="uid://bbo1abph4arco" path="res://WaterShader.tres" id="5_khiv6"]
+[ext_resource type="Shader" uid="uid://bbo1abph4arco" path="res://shaders/WaterShader.tres" id="5_8xhxy"]
+[ext_resource type="PackedScene" uid="uid://dapkpwtvnwgv5" path="res://scenes/pitch.tscn" id="6_jokwv"]
 
 [sub_resource type="NavigationMesh" id="NavigationMesh_elq6o"]
 vertices = PackedVector3Array(-9.25, 1, -19.5, -19.5, 1, -19.5, -19.5, 1, -9.5, 0, 1, -0.25, 1, 1, -0.5, 1, 1, -19.5, -9.25, 1, -19.5, -19.5, 1, -9.5, -19.5, 1, 0.5, -19.5, 1, 0.5, 0, 1, 0.5, 0, 1, -0.25, 19.5, 1, -9.5, 19.5, 1, -19.5, 10.25, 1, -19.5, 2, 1, -0.5, 2.25, 1, 0.5, 19.5, 1, 0.5, 19.5, 1, -9.5, 10.25, 1, -19.5, 1, 1, -19.5, 1, 1, -19.5, 1, 1, -0.5, 2, 1, -0.5, -19.5, 1, 10, -19.5, 1, 19.5, -9.25, 1, 19.5, 1, 1, 19.5, 1, 1, 1.75, 0, 1, 1.5, -19.5, 1, 0.5, -19.5, 1, 10, -9.25, 1, 19.5, 0, 1, 1.5, 0, 1, 0.5, -19.5, 1, 0.5, 10.25, 1, 19.5, 19.5, 1, 19.5, 19.5, 1, 10, 19.5, 1, 0.5, 2.25, 1, 0.5, 2, 1, 1.75, 1, 1, 19.5, 10.25, 1, 19.5, 19.5, 1, 10, 2, 1, 1.75, 1, 1, 1.75, 1, 1, 19.5)
@@ -29,7 +30,7 @@ size = Vector3(40, 1, 40)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ss84j"]
 render_priority = 0
-shader = ExtResource("5_khiv6")
+shader = ExtResource("5_8xhxy")
 shader_parameter/ColorParameter = Color(0, 0.266667, 0.533333, 1)
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_ivwgj"]
@@ -95,5 +96,8 @@ skeleton = NodePath("../..")
 shape = SubResource("BoxShape3D_cfeny")
 
 [node name="Water" type="MeshInstance3D" parent="NavigationRegion3d2"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00630569, 0.910266, -0.00416851)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00630569, 0.786635, -0.00416851)
 mesh = SubResource("PlaneMesh_ivwgj")
+
+[node name="pitch" parent="NavigationRegion3d2" instance=ExtResource("6_jokwv")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.9834, 0, 14.7266)

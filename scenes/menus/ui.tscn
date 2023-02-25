@@ -97,6 +97,10 @@ text = "Chandlery"
 layout_mode = 2
 text = "Church"
 
+[node name="pitch_workshop" type="Button" parent="CenterContainer/EconomyContainer"]
+layout_mode = 2
+text = "Pitch Workshop"
+
 [node name="cancel" type="Button" parent="CenterContainer/EconomyContainer"]
 layout_mode = 2
 text = "Cancel"
@@ -260,6 +264,13 @@ layout_mode = 2
 size_flags_vertical = 3
 tooltip_text = "candles"
 
+[node name="pitch_image" type="ColorRect" parent="ResourcesContainer/VBoxContainer"]
+custom_minimum_size = Vector2(30, 4)
+layout_mode = 2
+size_flags_vertical = 3
+tooltip_text = "pitch"
+color = Color(0, 0, 0, 1)
+
 [node name="values_container" type="VBoxContainer" parent="ResourcesContainer"]
 custom_minimum_size = Vector2(25, 25)
 layout_mode = 2
@@ -358,5 +369,11 @@ text = "100"
 [node name="candles_label" type="Label" parent="ResourcesContainer/values_container"]
 layout_mode = 2
 tooltip_text = "candles"
+mouse_filter = 0
+text = "100"
+
+[node name="pitch_label" type="Label" parent="ResourcesContainer/values_container"]
+layout_mode = 2
+tooltip_text = "pitch"
 mouse_filter = 0
 text = "100"

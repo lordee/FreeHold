@@ -29,6 +29,7 @@ var military_container: GridContainer
 @onready var hops_label: Label = resources_container.get_node("values_container").get_node("hops_label")
 @onready var ale_label: Label = resources_container.get_node("values_container").get_node("ale_label")
 @onready var candles_label: Label = resources_container.get_node("values_container").get_node("candles_label")
+@onready var pitch_label: Label = resources_container.get_node("values_container").get_node("pitch_label")
 
 func _ready():
 	main_menu = $main_menu
@@ -52,6 +53,7 @@ func _ready():
 	economy_container.get_node("tavern").pressed.connect(building_button_pressed.bind(Enums.ENTITY.BUILDING_TAVERN))
 	economy_container.get_node("chandlery").pressed.connect(building_button_pressed.bind(Enums.ENTITY.BUILDING_CHANDLERY))
 	economy_container.get_node("church").pressed.connect(building_button_pressed.bind(Enums.ENTITY.BUILDING_CHURCH))
+	economy_container.get_node("pitch_workshop").pressed.connect(building_button_pressed.bind(Enums.ENTITY.BUILDING_PITCHWORKSHOP))
 	economy_container.get_node("cancel").pressed.connect(ui_cancel_button_pressed)
 	tax_container.get_node("tax_increase").pressed.connect(ui_tax_button_increased_pressed)
 	tax_container.get_node("tax_decrease").pressed.connect(ui_tax_button_decreased_pressed)
@@ -79,6 +81,7 @@ func _process(_delta):
 		hops_label.text = str(game.player_manager.current_player.resources.hops)
 		ale_label.text = str(game.player_manager.current_player.resources.ale)
 		candles_label.text = str(game.player_manager.current_player.resources.candles)
+		pitch_label.text = str(game.player_manager.current_player.resources.pitch)
 	
 # TODO - track button state/coords instead of constant node traversal
 func button_recursive(node: Node, mouse_pos: Vector2) -> bool:

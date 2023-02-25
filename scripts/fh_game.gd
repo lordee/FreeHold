@@ -6,6 +6,7 @@ class_name fh_game
 @onready var player_manager: fh_player_manager = get_node("player_manager")
 @onready var input_manager: fh_input_manager = get_node("input_manager")
 @onready var ui_manager: fh_ui_manager = get_node("ui_manager")
+var map: Node3D
 var map_floor: MeshInstance3D
 var map_nav_region: NavigationRegion3D
 var settings: game_settings = game_settings.new()
@@ -63,7 +64,7 @@ func start_game():
 
 func load_map():
 	var map_scene: PackedScene = ResourceLoader.load("res://scenes/map_test.tscn")
-	var map = map_scene.instantiate()
+	map = map_scene.instantiate()
 	map_nav_region = map.get_node("NavigationRegion3d")
 	map_floor = map.find_child("Floor")
 	add_child(map)

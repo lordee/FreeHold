@@ -63,6 +63,8 @@ static func get_entity_category(ent_type) -> Enums.ENTITY_CATEGORY:
 			return Enums.ENTITY_CATEGORY.BUILDING
 		Enums.ENTITY.BUILDING_CHURCH:
 			return Enums.ENTITY_CATEGORY.BUILDING
+		Enums.ENTITY.BUILDING_PITCHWORKSHOP:
+			return Enums.ENTITY_CATEGORY.BUILDING
 		Enums.ENTITY.UNIT_UNEMPLOYED:
 			return Enums.ENTITY_CATEGORY.UNIT
 		Enums.ENTITY.UNIT_WOODCHOPPER:
@@ -92,6 +94,8 @@ static func get_entity_category(ent_type) -> Enums.ENTITY_CATEGORY:
 		Enums.ENTITY.UNIT_CHANDLER:
 			return Enums.ENTITY_CATEGORY.UNIT
 		Enums.ENTITY.UNIT_PRIEST:
+			return Enums.ENTITY_CATEGORY.UNIT
+		Enums.ENTITY.UNIT_PITCHGATHERER:
 			return Enums.ENTITY_CATEGORY.UNIT
 		Enums.ENTITY.RESOURCE_TREE:
 			return Enums.ENTITY_CATEGORY.RESOURCE
@@ -124,6 +128,10 @@ static func get_entity_category(ent_type) -> Enums.ENTITY_CATEGORY:
 		Enums.ENTITY.RESOURCE_CANDLES:
 			return Enums.ENTITY_CATEGORY.RESOURCE
 		Enums.ENTITY.RESOURCE_CANDLE_PRECURSOR:
+			return Enums.ENTITY_CATEGORY.RESOURCE
+		Enums.ENTITY.RESOURCE_PITCH:
+			return Enums.ENTITY_CATEGORY.RESOURCE
+		Enums.ENTITY.RESOURCE_PITCH_PRECURSOR:
 			return Enums.ENTITY_CATEGORY.RESOURCE
 		
 	
@@ -180,6 +188,8 @@ static func get_work_target_type(e_type: Enums.ENTITY):
 			return Enums.ENTITY.RESOURCE_CANDLE_PRECURSOR
 		Enums.ENTITY.UNIT_PRIEST:
 			return Enums.ENTITY.RESOURCE_CANDLES
+		Enums.ENTITY.UNIT_PITCHGATHERER:
+			return Enums.ENTITY.RESOURCE_PITCH_PRECURSOR
 			
 	return Enums.ENTITY.NOT_SET
 
@@ -216,6 +226,8 @@ static func get_entity_type_resource(ent_type: Enums.ENTITY):
 			return Enums.ENTITY.RESOURCE_CANDLE_PRECURSOR
 		Enums.ENTITY.UNIT_PRIEST:
 			return Enums.ENTITY.RESOURCE_CANDLES
+		Enums.ENTITY.UNIT_PITCHGATHERER:
+			return Enums.ENTITY.RESOURCE_PITCH_PRECURSOR
 			
 	return Enums.ENTITY.NOT_SET
 	
@@ -247,6 +259,8 @@ static func get_entity_type_processed_resource(ent_type: Enums.ENTITY):
 			return Enums.ENTITY.RESOURCE_ALE
 		Enums.ENTITY.UNIT_CHANDLER:
 			return Enums.ENTITY.RESOURCE_CANDLES
+		Enums.ENTITY.UNIT_PITCHGATHERER:
+			return Enums.ENTITY.RESOURCE_PITCH
 			
 	return Enums.ENTITY.NOT_SET
 
@@ -283,6 +297,8 @@ static func get_unit_type(ent_type: Enums.ENTITY) -> Enums.UNIT_TYPE:
 		Enums.ENTITY.UNIT_CHANDLER:
 			return Enums.UNIT_TYPE.CIVILIAN
 		Enums.ENTITY.UNIT_PRIEST:
+			return Enums.UNIT_TYPE.CIVILIAN
+		Enums.ENTITY.UNIT_PITCHGATHERER:
 			return Enums.UNIT_TYPE.CIVILIAN
 
 	return Enums.UNIT_TYPE.NOT_SET
@@ -371,6 +387,9 @@ static func get_max_resources(ret_res, ent_type: Enums.ENTITY) -> fh_resources:
 			ret_res.candle_precursor = 10
 		Enums.ENTITY.UNIT_PRIEST:
 			ret_res.candles = 0
+		Enums.ENTITY.UNIT_PITCHGATHERER:
+			ret_res.pitch = 10
+			ret_res.pitch_precursor = 10
 			
 	return ret_res
 
@@ -406,6 +425,8 @@ static func get_occupation(e_type: Enums.ENTITY):
 			return Enums.ENTITY.UNIT_CHANDLER
 		Enums.ENTITY.BUILDING_CHURCH:
 			return Enums.ENTITY.UNIT_PRIEST
+		Enums.ENTITY.BUILDING_PITCHWORKSHOP:
+			return Enums.ENTITY.UNIT_PITCHGATHERER
 			
 	return Enums.ENTITY.NOT_SET
 
@@ -443,5 +464,7 @@ static func get_entity_required_resources(ent_type: Enums.ENTITY) -> fh_resource
 		Enums.ENTITY.BUILDING_CHANDLERY:
 			required_resources.wooden_planks = 50
 		Enums.ENTITY.BUILDING_CHURCH:
+			required_resources.wooden_planks = 50
+		Enums.ENTITY.BUILDING_PITCHWORKSHOP:
 			required_resources.wooden_planks = 50
 	return required_resources

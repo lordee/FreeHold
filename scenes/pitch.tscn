@@ -1,0 +1,20 @@
+[gd_scene load_steps=5 format=3 uid="uid://dapkpwtvnwgv5"]
+
+[ext_resource type="Script" path="res://scripts/fh_entity_resource.gd" id="1_x8dtr"]
+[ext_resource type="Shader" uid="uid://dakx3lnkep60q" path="res://shaders/PitchShader.tres" id="2_mf16n"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_11uwj"]
+render_priority = 0
+shader = ExtResource("2_mf16n")
+shader_parameter/ColorParameter = Color(0, 0, 0, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_slf0a"]
+material = SubResource("ShaderMaterial_11uwj")
+size = Vector3(2, 2, 2)
+
+[node name="pitch" type="Node3D"]
+script = ExtResource("1_x8dtr")
+entity_type = 56
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_slf0a")

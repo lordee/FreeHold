@@ -32,6 +32,7 @@ func _ready():
 	SCENES[Enums.ENTITY.BUILDING_TAVERN] = ResourceLoader.load("res://scenes/buildings/tavern.tscn")
 	SCENES[Enums.ENTITY.BUILDING_CHANDLERY] = ResourceLoader.load("res://scenes/buildings/chandlery.tscn")
 	SCENES[Enums.ENTITY.BUILDING_CHURCH] = ResourceLoader.load("res://scenes/buildings/church.tscn")
+	SCENES[Enums.ENTITY.BUILDING_PITCHWORKSHOP] = ResourceLoader.load("res://scenes/buildings/pitch_workshop.tscn")
 	pass
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -222,11 +223,13 @@ func build() -> bool:
 	return true
 
 func populate_entities():
-	for node in game.map_nav_region.get_children():
-		if node is fh_entity:
-			entities.append(node)
-			move_to_floor(node)
-			process_entity(node, true)
+	for nav_region in game.map.get_children():
+		if nav_region is NavigationRegion3D:
+			for node in nav_region.get_children():
+				if node is fh_entity:
+					entities.append(node)
+					move_to_floor(node)
+					process_entity(node, true)
 			
 func spawn_peasant(player_owner: fh_player):
 	var scene: PackedScene = get_entity_scene(Enums.ENTITY.UNIT_UNEMPLOYED)

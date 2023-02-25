@@ -6,7 +6,7 @@ class_name fh_unit
 @onready var game: fh_game = get_node("/root/game")
 
 var SPEED: float = .2
-var MIN_DISTANCE: float = 1 # min distance to destinations before counted as being there
+var MIN_DISTANCE: float = 1.5 # min distance to destinations before counted as being there
 var WORK_TIME_MAX: float = 1 # currently 1 swing of an axe, resource entity tracks progress of getting resource amount
 
 # state
