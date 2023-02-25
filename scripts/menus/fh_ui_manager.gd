@@ -30,6 +30,7 @@ var military_container: GridContainer
 @onready var ale_label: Label = resources_container.get_node("values_container").get_node("ale_label")
 @onready var candles_label: Label = resources_container.get_node("values_container").get_node("candles_label")
 @onready var pitch_label: Label = resources_container.get_node("values_container").get_node("pitch_label")
+@onready var bow_label: Label = resources_container.get_node("values_container").get_node("bow_label")
 
 func _ready():
 	main_menu = $main_menu
@@ -57,7 +58,9 @@ func _ready():
 	economy_container.get_node("cancel").pressed.connect(ui_cancel_button_pressed)
 	tax_container.get_node("tax_increase").pressed.connect(ui_tax_button_increased_pressed)
 	tax_container.get_node("tax_decrease").pressed.connect(ui_tax_button_decreased_pressed)
-#	military_container = ui.get_node("CenterContainer/MilitaryContainer")
+	military_container = ui.get_node("CenterContainer/MilitaryContainer")
+	military_container.get_node("cancel").pressed.connect(ui_cancel_button_pressed)
+	military_container.get_node("fletcher_workshop").pressed.connect(building_button_pressed.bind(Enums.ENTITY.BUILDING_FLETCHERWORKSHOP))
 	
 func setup_ui():
 	update_tax_label()
@@ -82,6 +85,7 @@ func _process(_delta):
 		ale_label.text = str(game.player_manager.current_player.resources.ale)
 		candles_label.text = str(game.player_manager.current_player.resources.candles)
 		pitch_label.text = str(game.player_manager.current_player.resources.pitch)
+		bow_label.text = str(game.player_manager.current_player.resources.bow)
 	
 # TODO - track button state/coords instead of constant node traversal
 func button_recursive(node: Node, mouse_pos: Vector2) -> bool:
@@ -112,6 +116,7 @@ func reset_ui_menus():
 func ui_cancel_button_pressed():
 	base_container.visible = true
 	economy_container.visible = false
+	military_container.visible = false
 	game.entity_manager.cancel_building_placement()
 
 func building_button_pressed(entity_type: Enums.ENTITY):
@@ -122,7 +127,8 @@ func economy_button_pressed():
 	economy_container.visible = true
 
 func military_button_pressed():
-	ui_print("military_button_pressed")
+	base_container.visible = false
+	military_container.visible = true
 
 func ui_tax_button_increased_pressed():
 	var _success: bool = game.player_manager.current_player.tax_rate_change(true)

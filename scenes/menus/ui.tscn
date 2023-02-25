@@ -105,6 +105,19 @@ text = "Pitch Workshop"
 layout_mode = 2
 text = "Cancel"
 
+[node name="MilitaryContainer" type="GridContainer" parent="CenterContainer"]
+visible = false
+layout_mode = 2
+columns = 3
+
+[node name="fletcher_workshop" type="Button" parent="CenterContainer/MilitaryContainer"]
+layout_mode = 2
+text = "Fletcher Workshop"
+
+[node name="cancel" type="Button" parent="CenterContainer/MilitaryContainer"]
+layout_mode = 2
+text = "Cancel"
+
 [node name="TaxContainerCenter" type="CenterContainer" parent="."]
 layout_mode = 0
 offset_top = 568.0
@@ -271,6 +284,13 @@ size_flags_vertical = 3
 tooltip_text = "pitch"
 color = Color(0, 0, 0, 1)
 
+[node name="bow_image" type="ColorRect" parent="ResourcesContainer/VBoxContainer"]
+custom_minimum_size = Vector2(30, 4)
+layout_mode = 2
+size_flags_vertical = 3
+tooltip_text = "arrows"
+color = Color(0.513726, 0.392157, 0.12549, 1)
+
 [node name="values_container" type="VBoxContainer" parent="ResourcesContainer"]
 custom_minimum_size = Vector2(25, 25)
 layout_mode = 2
@@ -375,5 +395,11 @@ text = "100"
 [node name="pitch_label" type="Label" parent="ResourcesContainer/values_container"]
 layout_mode = 2
 tooltip_text = "pitch"
+mouse_filter = 0
+text = "100"
+
+[node name="bow_label" type="Label" parent="ResourcesContainer/values_container"]
+layout_mode = 2
+tooltip_text = "bows"
 mouse_filter = 0
 text = "100"

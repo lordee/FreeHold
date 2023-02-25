@@ -11,6 +11,7 @@ var population: int = 0
 var population_max: int = 0
 var work_population: int = 0
 var last_spawn_time: float = 0
+var warehouse_count: int = 0
 
 @onready var tax_rate: int = game.settings.tax_rate_min
 

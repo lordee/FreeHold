@@ -24,6 +24,7 @@ var candles: int = 0
 var candle_precursor: int = 0
 var pitch: int = 0
 var pitch_precursor: int = 0
+var bow: int = 0
 
 
 var reserved_resources: fh_resources = null
@@ -71,6 +72,8 @@ func add_resource(e_type: Enums.ENTITY, val: int):
 			pitch += val
 		Enums.ENTITY.RESOURCE_PITCH_PRECURSOR:
 			pitch_precursor += val
+		Enums.ENTITY.RESOURCE_BOW:
+			bow += val
 		Enums.ENTITY.NOT_SET:
 			print("resource not set passed to add_resource")
 			
@@ -116,6 +119,8 @@ func set_resource(e_type: Enums.ENTITY, val: int):
 			pitch = val
 		Enums.ENTITY.RESOURCE_PITCH_PRECURSOR:
 			pitch_precursor = val
+		Enums.ENTITY.RESOURCE_BOW:
+			bow = val
 		Enums.ENTITY.NOT_SET:
 			print("resource not set passed to set_resource")
 
@@ -144,6 +149,7 @@ func merge_resource_objects(external_resource: fh_resources, add: bool):
 	add_resource(Enums.ENTITY.RESOURCE_CANDLE_PRECURSOR, external_resource.candle_precursor * multiplier)
 	add_resource(Enums.ENTITY.RESOURCE_PITCH, external_resource.pitch * multiplier)
 	add_resource(Enums.ENTITY.RESOURCE_PITCH_PRECURSOR, external_resource.pitch_precursor * multiplier)
+	add_resource(Enums.ENTITY.RESOURCE_BOW, external_resource.bow * multiplier)
 
 func get_resource_value(e_type: Enums.ENTITY, include_reserved: bool = true) -> int:
 	if reserved_resources == null:
@@ -192,6 +198,8 @@ func get_resource_value(e_type: Enums.ENTITY, include_reserved: bool = true) -> 
 			return pitch if include_reserved else pitch - reserved_resources.pitch
 		Enums.ENTITY.RESOURCE_PITCH_PRECURSOR:
 			return pitch_precursor if include_reserved else pitch_precursor - reserved_resources.pitch_precursor
+		Enums.ENTITY.RESOURCE_BOW:
+			return bow if include_reserved else bow - reserved_resources.bow
 			
 	print("get_resource_value enum not found")
 	return 0

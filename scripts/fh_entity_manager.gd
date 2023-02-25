@@ -33,6 +33,7 @@ func _ready():
 	SCENES[Enums.ENTITY.BUILDING_CHANDLERY] = ResourceLoader.load("res://scenes/buildings/chandlery.tscn")
 	SCENES[Enums.ENTITY.BUILDING_CHURCH] = ResourceLoader.load("res://scenes/buildings/church.tscn")
 	SCENES[Enums.ENTITY.BUILDING_PITCHWORKSHOP] = ResourceLoader.load("res://scenes/buildings/pitch_workshop.tscn")
+	SCENES[Enums.ENTITY.BUILDING_FLETCHERWORKSHOP] = ResourceLoader.load("res://scenes/buildings/fletcher_workshop.tscn")
 	pass
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -202,13 +203,21 @@ func build() -> bool:
 		# TODO - sounds effects, message
 		return false
 		
+	var p_owner: fh_player = building_being_placed.player_owner
 	# check for resources required for building
-	if (!player_has_resources_to_create_entity(building_being_placed.player_owner, building_being_placed.entity_type)):
+	if (!player_has_resources_to_create_entity(p_owner, building_being_placed.entity_type)):
 		# TODO - play a sound
 		game.ui_manager.ui_print("You do not have the resources for that")
 		return false
 		
-	building_being_placed.player_owner.resources.merge_resource_objects(get_entity_required_resources(building_being_placed.entity_type), false)
+	p_owner.resources.merge_resource_objects(get_entity_required_resources(building_being_placed.entity_type), false)
+	
+	# if it's the players first warehouse, add resources from player to it
+	# FIXME - this method sucks and we need to manage for warehouse death now too
+	if building_being_placed.entity_type == Enums.ENTITY.BUILDING_WAREHOUSE:
+		p_owner.warehouse_count += 1
+		if p_owner.warehouse_count == 1:
+			building_being_placed.resources.merge_resource_objects(p_owner.resources, true)
 		
 	entities.append(building_being_placed)
 	var area: Area3D = building_being_placed.get_node("Area3D")
