@@ -14,25 +14,24 @@ var destination: Vector3
 var destination_goal: fh_entity
 
 var resources: fh_resources
-var max_resources: fh_resources
 var current_state: Enums.STATE = Enums.STATE.IDLE
 var collecting_resources: bool = false #dirty hack
 var unit_type: Enums.UNIT_TYPE = Enums.UNIT_TYPE.CIVILIAN 
 var entity_category: Enums.ENTITY_CATEGORY:
 	get:
-		return fh_entity.get_entity_category(entity_type)
+		return game.data.items[entity_type].entity_category
 
 var _entity_type: Enums.ENTITY = Enums.ENTITY.UNIT_UNEMPLOYED
 var entity_type: Enums.ENTITY:
 	get:
 		return _entity_type
 	set(value):
-		var u_type: Enums.UNIT_TYPE = fh_entity.get_unit_type(value)
-		unit_type = u_type
-		workplace_resource_type = fh_entity.get_entity_type_resource(value)
-		workplace_processed_resource_type = fh_entity.get_entity_type_processed_resource(value)
-		max_resources = fh_entity.get_max_resources(max_resources, value)
-		if u_type == Enums.UNIT_TYPE.CIVILIAN:
+		var data_item: fh_data_item = game.data.items[value]
+		unit_type = data_item.unit_type
+		workplace_resource_type = data_item.resource_level_one
+		workplace_processed_resource_type = data_item.resource_level_two
+
+		if data_item.unit_type == Enums.UNIT_TYPE.CIVILIAN:
 			if value != Enums.ENTITY.UNIT_UNEMPLOYED:
 				player_owner.work_population += 1
 		_entity_type = value
@@ -52,7 +51,6 @@ func _ready():
 	agent.path_changed.connect(on_path_changed)
 	agent.target_reached.connect(on_target_reached)
 	resources = fh_resources.new()
-	max_resources = fh_resources.new()
 
 func _physics_process(delta: float) -> void:
 	match current_state:
@@ -139,7 +137,7 @@ func civilian_idle():
 					current_state = Enums.STATE.IDLE
 					destination_goal = null
 			# going to work target
-			elif destination_goal.entity_type == fh_entity.get_work_target_type(entity_type):
+			elif destination_goal.entity_type == game.data.items[entity_type].resource_level_one:
 				current_state = Enums.STATE.WORKING
 		else:
 			# not near destination, change state
@@ -154,15 +152,14 @@ func collect_resource(delta: float):
 		var res_val: int = destination_goal.action_performed()
 		resources.add_resource(workplace_resource_type, res_val)
 		
-		if resources.get_resource_value(workplace_resource_type) >= max_resources.get_resource_value(workplace_resource_type):
-			match fh_entity.resource_dropoff_point(workplace_resource_type):
+		if resources.get_resource_value(workplace_resource_type) >= game.data.items[entity_type].resource_level_one_max_carry:
+			match game.data.items[entity_type].resource_level_one_dropoff_point:
 				Enums.RESOURCE_PROCESS_POINT.WAREHOUSE:
 					go_to_warehouse()
 				Enums.RESOURCE_PROCESS_POINT.WORKPLACE:
 					go_to_work_building()
 				Enums.RESOURCE_PROCESS_POINT.NOT_SET:
 					game.ui_manager.ui_print("collect_resource resource process point not set")
-
 			
 		work_time = 0
 	
@@ -180,7 +177,7 @@ func do_work(delta: float):
 		resources.set_resource(workplace_resource_type, 0)
 		
 		# add new resource
-		resources.set_resource(workplace_processed_resource_type, max_resources.get_resource_value(workplace_processed_resource_type))
+		resources.set_resource(workplace_processed_resource_type, game.data.items[entity_type].resource_level_two_max_carry)
 		# send them to warehouse
 		var gone_warehouse: bool = go_to_warehouse()
 		if !gone_warehouse:

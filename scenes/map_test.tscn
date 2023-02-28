@@ -74,9 +74,11 @@ team_no = 1
 
 [node name="stone" parent="NavigationRegion3d" instance=ExtResource("3_f2fa7")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.89983, 1.13391, 4.66427)
+team_no = null
 
 [node name="iron" parent="NavigationRegion3d" instance=ExtResource("4_pmvpr")]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.856035, 1.11301, 9.21497)
+team_no = null
 
 [node name="NavigationRegion3d2" type="NavigationRegion3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 39.0929, 0.0315256, -0.0426116)

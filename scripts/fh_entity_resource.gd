@@ -6,7 +6,6 @@ class_name fh_entity_resource
 
 var resources_per_action_complete: int = 10
 var progress_per_action: int = 10
-@onready var game = get_node("/root/game")
 var total_progress: int = 0
 
 #@export var resource_type: Enums.ENTITY = Enums.ENTITY.NOT_SET

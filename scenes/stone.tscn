@@ -11,7 +11,7 @@ albedo_texture = ExtResource("2_m2c6j")
 
 [node name="stone" type="Node3D"]
 script = ExtResource("1_tvhjl")
-entity_type = 9
+entity_type = 62
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(0.01, 0, 0, 0, 0.01, 0, 0, 0, 0.01, 0, 0, 0)

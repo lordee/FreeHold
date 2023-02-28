@@ -288,7 +288,7 @@ color = Color(0, 0, 0, 1)
 custom_minimum_size = Vector2(30, 4)
 layout_mode = 2
 size_flags_vertical = 3
-tooltip_text = "arrows"
+tooltip_text = "bows"
 color = Color(0.513726, 0.392157, 0.12549, 1)
 
 [node name="values_container" type="VBoxContainer" parent="ResourcesContainer"]

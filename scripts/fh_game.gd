@@ -10,6 +10,7 @@ var map: Node3D
 var map_floor: MeshInstance3D
 var map_nav_region: NavigationRegion3D
 var settings: game_settings = game_settings.new()
+var data: fh_data = fh_data.new()
 
 var game_started: bool = false
 var game_tick: float = 0

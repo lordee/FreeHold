@@ -7,18 +7,24 @@ var MAX_PILES: int = 16
 var wood: int = 0
 var gold: int = 0
 var stone: int = 0
+var stone_precursor: int = 0
 var flour: int = 0
 var wooden_planks: int = 0
 var iron: int = 0
+var iron_precursor: int = 0
 var fruit: int = 0
+var fruit_precursor: int = 0
 var vegetable: int = 0
+var vegetable_precursor: int = 0
 var wheat: int = 0
+var wheat_precursor: int = 0
 var bread: int = 0
 var cheese: int = 0
 var milk: int = 0
 var pig: int = 0
 var meat: int = 0
 var hops: int = 0
+var hops_precursor: int = 0
 var ale: int = 0
 var candles: int = 0
 var candle_precursor: int = 0
@@ -38,18 +44,28 @@ func add_resource(e_type: Enums.ENTITY, val: int):
 			gold += val
 		Enums.ENTITY.RESOURCE_STONE:
 			stone += val
+		Enums.ENTITY.RESOURCE_STONE_PRECURSOR:
+			stone_precursor += val
 		Enums.ENTITY.RESOURCE_FLOUR:
 			flour += val 
 		Enums.ENTITY.RESOURCE_WOODEN_PLANKS:
 			wooden_planks += val
 		Enums.ENTITY.RESOURCE_IRON:
 			iron += val
+		Enums.ENTITY.RESOURCE_IRON_PRECURSOR:
+			iron_precursor += val
 		Enums.ENTITY.RESOURCE_FRUIT:
 			fruit += val
+		Enums.ENTITY.RESOURCE_FRUIT_PRECURSOR:
+			fruit_precursor += val
 		Enums.ENTITY.RESOURCE_VEGETABLE:
 			vegetable += val
+		Enums.ENTITY.RESOURCE_VEGETABLE_PRECURSOR:
+			vegetable_precursor += val
 		Enums.ENTITY.RESOURCE_WHEAT:
 			wheat += val
+		Enums.ENTITY.RESOURCE_WHEAT_PRECURSOR:
+			wheat_precursor += val
 		Enums.ENTITY.RESOURCE_BREAD:
 			bread += val
 		Enums.ENTITY.RESOURCE_CHEESE:
@@ -62,6 +78,8 @@ func add_resource(e_type: Enums.ENTITY, val: int):
 			meat += val
 		Enums.ENTITY.RESOURCE_HOPS:
 			hops += val
+		Enums.ENTITY.RESOURCE_HOPS_PRECURSOR:
+			hops_precursor += val
 		Enums.ENTITY.RESOURCE_ALE:
 			ale += val
 		Enums.ENTITY.RESOURCE_CANDLES:
@@ -85,18 +103,28 @@ func set_resource(e_type: Enums.ENTITY, val: int):
 			gold = val
 		Enums.ENTITY.RESOURCE_STONE:
 			stone = val
+		Enums.ENTITY.RESOURCE_STONE_PRECURSOR:
+			stone_precursor = val
 		Enums.ENTITY.RESOURCE_FLOUR:
 			flour = val 
 		Enums.ENTITY.RESOURCE_WOODEN_PLANKS:
 			wooden_planks = val
 		Enums.ENTITY.RESOURCE_IRON:
 			iron = val
+		Enums.ENTITY.RESOURCE_IRON_PRECURSOR:
+			iron_precursor = val
 		Enums.ENTITY.RESOURCE_FRUIT:
 			fruit = val
+		Enums.ENTITY.RESOURCE_FRUIT_PRECURSOR:
+			fruit_precursor = val
 		Enums.ENTITY.RESOURCE_VEGETABLE:
 			vegetable = val
+		Enums.ENTITY.RESOURCE_VEGETABLE_PRECURSOR:
+			vegetable_precursor = val
 		Enums.ENTITY.RESOURCE_WHEAT:
 			wheat = val
+		Enums.ENTITY.RESOURCE_WHEAT_PRECURSOR:
+			wheat_precursor = val
 		Enums.ENTITY.RESOURCE_BREAD:
 			bread = val
 		Enums.ENTITY.RESOURCE_CHEESE:
@@ -109,6 +137,8 @@ func set_resource(e_type: Enums.ENTITY, val: int):
 			meat = val
 		Enums.ENTITY.RESOURCE_HOPS:
 			hops = val
+		Enums.ENTITY.RESOURCE_HOPS_PRECURSOR:
+			hops_precursor = val
 		Enums.ENTITY.RESOURCE_ALE:
 			ale = val
 		Enums.ENTITY.RESOURCE_CANDLES:
@@ -132,18 +162,24 @@ func merge_resource_objects(external_resource: fh_resources, add: bool):
 	add_resource(Enums.ENTITY.RESOURCE_WOOD, external_resource.wood * multiplier)
 	add_resource(Enums.ENTITY.RESOURCE_GOLD, external_resource.gold * multiplier)
 	add_resource(Enums.ENTITY.RESOURCE_STONE, external_resource.stone * multiplier)
+	add_resource(Enums.ENTITY.RESOURCE_STONE_PRECURSOR, external_resource.stone_precursor * multiplier)
 	add_resource(Enums.ENTITY.RESOURCE_FLOUR, external_resource.flour * multiplier)
 	add_resource(Enums.ENTITY.RESOURCE_WOODEN_PLANKS, external_resource.wooden_planks * multiplier)
 	add_resource(Enums.ENTITY.RESOURCE_IRON, external_resource.iron * multiplier)
+	add_resource(Enums.ENTITY.RESOURCE_IRON_PRECURSOR, external_resource.iron_precursor * multiplier)
 	add_resource(Enums.ENTITY.RESOURCE_FRUIT, external_resource.fruit * multiplier)
+	add_resource(Enums.ENTITY.RESOURCE_FRUIT_PRECURSOR, external_resource.fruit_precursor * multiplier)
 	add_resource(Enums.ENTITY.RESOURCE_VEGETABLE, external_resource.vegetable * multiplier)
+	add_resource(Enums.ENTITY.RESOURCE_VEGETABLE_PRECURSOR, external_resource.vegetable_precursor * multiplier)
 	add_resource(Enums.ENTITY.RESOURCE_WHEAT, external_resource.wheat * multiplier)
+	add_resource(Enums.ENTITY.RESOURCE_WHEAT_PRECURSOR, external_resource.wheat_precursor * multiplier)
 	add_resource(Enums.ENTITY.RESOURCE_BREAD, external_resource.bread * multiplier)
 	add_resource(Enums.ENTITY.RESOURCE_CHEESE, external_resource.cheese * multiplier)
 	add_resource(Enums.ENTITY.RESOURCE_MILK, external_resource.milk * multiplier)
 	add_resource(Enums.ENTITY.RESOURCE_PIG, external_resource.pig * multiplier)
 	add_resource(Enums.ENTITY.RESOURCE_MEAT, external_resource.meat * multiplier)
 	add_resource(Enums.ENTITY.RESOURCE_HOPS, external_resource.hops * multiplier)
+	add_resource(Enums.ENTITY.RESOURCE_HOPS_PRECURSOR, external_resource.hops_precursor * multiplier)
 	add_resource(Enums.ENTITY.RESOURCE_ALE, external_resource.ale * multiplier)
 	add_resource(Enums.ENTITY.RESOURCE_CANDLES, external_resource.candles * multiplier)
 	add_resource(Enums.ENTITY.RESOURCE_CANDLE_PRECURSOR, external_resource.candle_precursor * multiplier)
@@ -164,18 +200,28 @@ func get_resource_value(e_type: Enums.ENTITY, include_reserved: bool = true) -> 
 			return gold if include_reserved else gold - reserved_resources.gold
 		Enums.ENTITY.RESOURCE_STONE:
 			return stone if include_reserved else stone - reserved_resources.stone
+		Enums.ENTITY.RESOURCE_STONE_PRECURSOR:
+			return stone_precursor if include_reserved else stone_precursor - reserved_resources.stone_precursor
 		Enums.ENTITY.RESOURCE_FLOUR:
 			return flour if include_reserved else flour - reserved_resources.flour
 		Enums.ENTITY.RESOURCE_WOODEN_PLANKS:
 			return wooden_planks if include_reserved else wooden_planks - reserved_resources.wooden_planks
 		Enums.ENTITY.RESOURCE_IRON:
 			return iron if include_reserved else iron - reserved_resources.iron
+		Enums.ENTITY.RESOURCE_IRON_PRECURSOR:
+			return iron_precursor if include_reserved else iron_precursor - reserved_resources.iron_precursor
 		Enums.ENTITY.RESOURCE_FRUIT:
 			return fruit if include_reserved else fruit - reserved_resources.fruit
+		Enums.ENTITY.RESOURCE_FRUIT_PRECURSOR:
+			return fruit_precursor if include_reserved else fruit_precursor - reserved_resources.fruit_precursor
 		Enums.ENTITY.RESOURCE_VEGETABLE:
 			return vegetable if include_reserved else vegetable - reserved_resources.vegetable
+		Enums.ENTITY.RESOURCE_VEGETABLE_PRECURSOR:
+			return vegetable_precursor if include_reserved else vegetable_precursor - reserved_resources.vegetable_precursor
 		Enums.ENTITY.RESOURCE_WHEAT:
 			return wheat if include_reserved else wheat - reserved_resources.wheat
+		Enums.ENTITY.RESOURCE_WHEAT_PRECURSOR:
+			return wheat_precursor if include_reserved else wheat_precursor - reserved_resources.wheat_precursor
 		Enums.ENTITY.RESOURCE_BREAD:
 			return bread if include_reserved else bread - reserved_resources.bread
 		Enums.ENTITY.RESOURCE_CHEESE:
@@ -188,6 +234,8 @@ func get_resource_value(e_type: Enums.ENTITY, include_reserved: bool = true) -> 
 			return meat if include_reserved else meat - reserved_resources.meat
 		Enums.ENTITY.RESOURCE_HOPS:
 			return hops if include_reserved else hops - reserved_resources.hops
+		Enums.ENTITY.RESOURCE_HOPS_PRECURSOR:
+			return hops_precursor if include_reserved else hops_precursor - reserved_resources.hops_precursor
 		Enums.ENTITY.RESOURCE_ALE:
 			return ale if include_reserved else ale - reserved_resources.ale
 		Enums.ENTITY.RESOURCE_CANDLES:

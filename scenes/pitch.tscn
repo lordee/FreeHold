@@ -14,6 +14,7 @@ size = Vector3(2, 2, 2)
 
 [node name="pitch" type="Node3D"]
 script = ExtResource("1_x8dtr")
+team_no = null
 entity_type = 56
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]

@@ -125,7 +125,7 @@ skeleton = NodePath("")
 [node name="Node3D" type="Node3D" parent="resources"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.84585, 0, 3.30695)
 script = ExtResource("4_kn3av")
-entity_type = 15
+entity_type = 65
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="resources/Node3D"]
 mesh = ExtResource("5_bbmks")
@@ -143,7 +143,7 @@ shape = SubResource("BoxShape3D_b2ctu")
 [node name="Node3D2" type="Node3D" parent="resources"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.29666, 0, 3.30695)
 script = ExtResource("4_kn3av")
-entity_type = 15
+entity_type = 65
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="resources/Node3D2"]
 mesh = ExtResource("5_bbmks")
@@ -161,7 +161,7 @@ shape = SubResource("BoxShape3D_b2ctu")
 [node name="Node3D3" type="Node3D" parent="resources"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.29666, 0, 5.30465)
 script = ExtResource("4_kn3av")
-entity_type = 15
+entity_type = 65
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="resources/Node3D3"]
 mesh = ExtResource("5_bbmks")
@@ -179,7 +179,7 @@ shape = SubResource("BoxShape3D_b2ctu")
 [node name="Node3D4" type="Node3D" parent="resources"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.84585, 0, 5.34127)
 script = ExtResource("4_kn3av")
-entity_type = 15
+entity_type = 65
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="resources/Node3D4"]
 mesh = ExtResource("5_bbmks")
