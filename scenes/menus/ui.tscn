@@ -110,6 +110,10 @@ visible = false
 layout_mode = 2
 columns = 3
 
+[node name="armoury" type="Button" parent="CenterContainer/MilitaryContainer"]
+layout_mode = 2
+text = "Armoury"
+
 [node name="fletcher_workshop" type="Button" parent="CenterContainer/MilitaryContainer"]
 layout_mode = 2
 text = "Fletcher Workshop"

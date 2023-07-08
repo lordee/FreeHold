@@ -274,8 +274,9 @@ func find_work_target(e_type: Enums.ENTITY, worker: fh_unit) -> fh_entity:
 			# we have closest warehouse with unreserved resources
 			# FIXME - allow multiple collection sites
 			if targ != null:
-				var val_needed: int = worker.max_resources.get_resource_value(targ_type) - worker.resources.get_resource_value(targ_type)
+				var val_needed: int = game.data.items[worker.entity_type].resource_level_one_max_carry - worker.resources.get_resource_value(targ_type)
 				targ.resources.reserve_resource(worker, targ_type, val_needed)
+			
 		_:
 			var ent: fh_entity = find_entity(null, targ_type)
 			if ent == null:

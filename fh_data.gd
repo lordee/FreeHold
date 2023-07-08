@@ -145,6 +145,13 @@ func _init():
 			{Enums.ENTITY.RESOURCE_WOODEN_PLANKS: 50},
 			"res://scenes/buildings/fletcher_workshop.tscn",
 			)
+	add_building(
+			Enums.ENTITY.BUILDING_ARMOURY, 
+			Enums.ENTITY_CATEGORY.BUILDING,
+			Enums.ENTITY.NOT_SET,
+			{Enums.ENTITY.RESOURCE_WOODEN_PLANKS: 50},
+			"res://scenes/buildings/armoury.tscn",
+			)
 	
 
 	add_unit(
@@ -377,7 +384,7 @@ func _init():
 			10,
 			Enums.ENTITY.RESOURCE_BOW,
 			Enums.RESOURCE_PROCESS_POINT.WORKPLACE,
-			Enums.RESOURCE_PROCESS_POINT.WAREHOUSE,
+			Enums.RESOURCE_PROCESS_POINT.ARMOURY,
 			10,
 			Enums.UNIT_TYPE.CIVILIAN
 			)

@@ -119,29 +119,36 @@ func civilian_idle():
 							collecting_resources = true
 			# going to warehouse
 			elif destination_goal.entity_type == Enums.ENTITY.BUILDING_WAREHOUSE:
-				if collecting_resources == true:
-					# get the resources we reserved + extra if needed
-					var req_amount = self.max_resources.get_resource_value(workplace_resource_type)
-					req_amount = req_amount - self.resources.get_resource_value(workplace_resource_type)
-					destination_goal.resources.collect_resource(self, workplace_resource_type, req_amount)
-					player_owner.resources.collect_resource(self, workplace_resource_type, req_amount)
-					
-					# return to work
-					go_to_work_building()
-					collecting_resources = false
-				else:
-					# drop off resources
-					destination_goal.resources.add_resource(workplace_processed_resource_type, resources.get_resource_value(workplace_processed_resource_type))
-					player_owner.resources.add_resource(workplace_processed_resource_type, resources.get_resource_value(workplace_processed_resource_type))
-					resources.set_resource(workplace_processed_resource_type, 0)
-					current_state = Enums.STATE.IDLE
-					destination_goal = null
+				at_destination_drop_or_collect()
+			# going to armoury
+			elif destination_goal.entity_type == Enums.ENTITY.BUILDING_ARMOURY:
+				at_destination_drop_or_collect()
 			# going to work target
 			elif destination_goal.entity_type == game.data.items[entity_type].resource_level_one:
 				current_state = Enums.STATE.WORKING
 		else:
 			# not near destination, change state
 			current_state = Enums.STATE.MOVING
+
+func at_destination_drop_or_collect():
+	if collecting_resources == true:
+		# get the resources we reserved + extra if needed
+		var req_amount: int = game.data.items[self.entity_type].resource_level_one_max_carry
+		req_amount = req_amount - self.resources.get_resource_value(game.data.items[self.entity_type].resource_level_one)
+		destination_goal.resources.collect_resource(self, workplace_resource_type, req_amount)
+		player_owner.resources.collect_resource(self, workplace_resource_type, req_amount)
+		
+		# return to work
+		go_to_work_building()
+		collecting_resources = false
+	else:
+		# drop off resources
+		destination_goal.resources.add_resource(workplace_processed_resource_type, resources.get_resource_value(workplace_processed_resource_type))
+		player_owner.resources.add_resource(workplace_processed_resource_type, resources.get_resource_value(workplace_processed_resource_type))
+		resources.set_resource(workplace_processed_resource_type, 0)
+		current_state = Enums.STATE.IDLE
+		destination_goal = null
+
 
 func collect_resource(delta: float):
 	if work_time == 0:
@@ -155,7 +162,9 @@ func collect_resource(delta: float):
 		if resources.get_resource_value(workplace_resource_type) >= game.data.items[entity_type].resource_level_one_max_carry:
 			match game.data.items[entity_type].resource_level_one_dropoff_point:
 				Enums.RESOURCE_PROCESS_POINT.WAREHOUSE:
-					go_to_warehouse()
+					go_to_resource_drop(Enums.ENTITY.BUILDING_WAREHOUSE)
+				Enums.RESOURCE_PROCESS_POINT.ARMOURY:
+					go_to_resource_drop(Enums.ENTITY.BUILDING_ARMOURY)
 				Enums.RESOURCE_PROCESS_POINT.WORKPLACE:
 					go_to_work_building()
 				Enums.RESOURCE_PROCESS_POINT.NOT_SET:
@@ -179,16 +188,23 @@ func do_work(delta: float):
 		# add new resource
 		resources.set_resource(workplace_processed_resource_type, game.data.items[entity_type].resource_level_two_max_carry)
 		# send them to warehouse
-		var gone_warehouse: bool = go_to_warehouse()
-		if !gone_warehouse:
+		var e_type: Enums.ENTITY = Enums.ENTITY.NOT_SET
+		match game.data.items[entity_type].resource_level_two_dropoff_point:
+			Enums.RESOURCE_PROCESS_POINT.WAREHOUSE:
+				e_type = Enums.ENTITY.BUILDING_WAREHOUSE
+			Enums.RESOURCE_PROCESS_POINT.ARMOURY:
+				e_type = Enums.ENTITY.BUILDING_ARMOURY
+			Enums.RESOURCE_PROCESS_POINT.NOT_SET:
+				game.ui_manager.ui_print("do_work resource process point not set")
+		var gone: bool = go_to_resource_drop(e_type)
+		if !gone:
 			return
-		
 	
 	work_time += delta
 
-func go_to_warehouse() -> bool:
+func go_to_resource_drop(e_type: Enums.ENTITY) -> bool:
 	var wh: fh_entity = null
-	wh = game.entity_manager.find_entity(wh, Enums.ENTITY.BUILDING_WAREHOUSE)
+	wh = game.entity_manager.find_entity(wh, e_type)
 	while (wh != null):
 		if wh.player_owner == self.player_owner:
 			if wh.resources.space_left(workplace_processed_resource_type) >= resources.get_resource_value(workplace_processed_resource_type):
@@ -196,11 +212,11 @@ func go_to_warehouse() -> bool:
 				move_to(game.entity_manager.get_entity_destination(wh))
 				current_state = Enums.STATE.MOVING
 				break
-		wh = game.entity_manager.find_entity(wh, Enums.ENTITY.BUILDING_WAREHOUSE)
+		wh = game.entity_manager.find_entity(wh, e_type)
 		
 	if wh == null:
 		# not found, wait a bit before checking again
-		print("No warehouse found!")
+		print("No resource_drop found!")
 		work_time -= 1
 		return false
 		

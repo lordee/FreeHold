@@ -61,6 +61,7 @@ func _ready():
 	military_container = ui.get_node("CenterContainer/MilitaryContainer")
 	military_container.get_node("cancel").pressed.connect(ui_cancel_button_pressed)
 	military_container.get_node("fletcher_workshop").pressed.connect(building_button_pressed.bind(Enums.ENTITY.BUILDING_FLETCHERWORKSHOP))
+	military_container.get_node("armoury").pressed.connect(building_button_pressed.bind(Enums.ENTITY.BUILDING_ARMOURY))
 	
 func setup_ui():
 	update_tax_label()

@@ -38,6 +38,8 @@ var reserved_resources_dict: Dictionary = {}
 
 func add_resource(e_type: Enums.ENTITY, val: int):
 	match e_type:
+		Enums.ENTITY.RESOURCE_TREE:
+			wood += val
 		Enums.ENTITY.RESOURCE_WOOD:
 			wood += val
 		Enums.ENTITY.RESOURCE_GOLD:
@@ -97,6 +99,8 @@ func add_resource(e_type: Enums.ENTITY, val: int):
 			
 func set_resource(e_type: Enums.ENTITY, val: int):
 	match e_type:
+		Enums.ENTITY.RESOURCE_TREE:
+			wood = val
 		Enums.ENTITY.RESOURCE_WOOD:
 			wood = val
 		Enums.ENTITY.RESOURCE_GOLD:
