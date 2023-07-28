@@ -12,6 +12,17 @@ var population_max: int = 0
 var work_population: int = 0
 var last_spawn_time: float = 0
 var warehouse_count: int = 0
+var _barracks_count: int = 0
+var barracks_count: int:
+	get:
+		return _barracks_count
+	set(value):
+		if value <= 0:
+			game.ui_manager.enable_unit_buttons(false)
+		else:
+			game.ui_manager.enable_unit_buttons(true)
+		_barracks_count = value
+		
 
 @onready var tax_rate: int = game.settings.tax_rate_min
 

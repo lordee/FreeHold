@@ -10,6 +10,9 @@ var entity_required_resources: Dictionary = {}
 var building_being_placed: Node3D
 var building_being_placed_valid: bool = false
 
+var build_unit_queue: Array = Array()
+var reserve_unit_queue: Dictionary = {}
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	pass
@@ -191,6 +194,8 @@ func build() -> bool:
 		p_owner.warehouse_count += 1
 		if p_owner.warehouse_count == 1:
 			building_being_placed.resources.merge_resource_objects(p_owner.resources, true)
+	elif building_being_placed.entity_type == Enums.ENTITY.BUILDING_BARRACKS:
+		p_owner.barracks_count += 1
 		
 	entities.append(building_being_placed)
 	var area: Area3D = building_being_placed.get_node("Area3D")
@@ -202,6 +207,45 @@ func build() -> bool:
 	game.map_nav_region.bake_navigation_mesh()
 	building_being_placed = null
 	game.ui_manager.reset_ui_menus()
+	return true
+	
+func build_unit(p_owner: fh_player, unit_name: String) -> Enums.ENTITY:
+	var ret_val: Enums.ENTITY = Enums.ENTITY.NOT_SET
+	
+	if build_unit_queue.is_empty():
+		return ret_val
+		
+	var pos = 0
+	var res = null
+	for item in build_unit_queue:
+		if item[1] == p_owner.name:
+			ret_val = item[0]
+			res = item
+			break
+		pos = pos + 1
+	
+	if ret_val != Enums.ENTITY.NOT_SET:
+		build_unit_queue.remove_at(pos)
+		reserve_unit_queue[unit_name] = ret_val
+	
+	return ret_val
+
+func set_model(entity: fh_unit, model_scene: PackedScene):
+	entity.remove_child(entity.model)
+	entity.model.queue_free()
+#	for child in entity.model.get_children():
+#		entity.remove_child(child)
+#		child.queue_free()
+		
+	var child_node = model_scene.instantiate()
+	entity.add_child(child_node)
+
+func queue_unit(e_type: Enums.ENTITY, p_owner: fh_player) -> bool:
+	if (!player_has_resources_to_create_entity(p_owner, e_type)):
+		return false
+	
+	var item = [e_type, p_owner.name]
+	build_unit_queue.append(item)
 	return true
 
 func populate_entities():

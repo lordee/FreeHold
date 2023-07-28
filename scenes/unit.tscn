@@ -4,14 +4,14 @@
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_103gd"]
 
-[sub_resource type="BoxMesh" id="BoxMesh_8afky"]
-size = Vector3(1, 1.5, 1)
-
 [sub_resource type="BoxMesh" id="BoxMesh_8msjo"]
 size = Vector3(0.5, 0.5, 0.5)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_htwtj"]
 albedo_color = Color(0.988235, 0.415686, 0.85098, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_8afky"]
+size = Vector3(1, 1.5, 1)
 
 [sub_resource type="CylinderMesh" id="CylinderMesh_e216v"]
 
@@ -25,19 +25,24 @@ script = ExtResource("1_1utxj")
 transform = Transform3D(1.6, 0, 0, 0, 1.43093, 0, 0, 0, 1.074, -0.283485, 0, 0)
 shape = SubResource("BoxShape3D_103gd")
 
-[node name="MeshInstance3d" type="MeshInstance3D" parent="."]
-mesh = SubResource("BoxMesh_8afky")
+[node name="NavigationAgent3d" type="NavigationAgent3D" parent="."]
+avoidance_enabled = true
 
-[node name="MeshInstance3d2" type="MeshInstance3D" parent="."]
+[node name="model" type="Node3D" parent="."]
+
+[node name="MeshInstance3d2" type="MeshInstance3D" parent="model"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.5)
 mesh = SubResource("BoxMesh_8msjo")
+skeleton = NodePath("../..")
 surface_material_override/0 = SubResource("StandardMaterial3D_htwtj")
 
-[node name="selector" type="MeshInstance3D" parent="."]
+[node name="MeshInstance3d" type="MeshInstance3D" parent="model"]
+mesh = SubResource("BoxMesh_8afky")
+skeleton = NodePath("../..")
+
+[node name="selector" type="MeshInstance3D" parent="model"]
 transform = Transform3D(1.69, 0, 0, 0, 0.11, 0, 0, 0, 1.6, 0, -0.700717, 0)
 visible = false
 mesh = SubResource("CylinderMesh_e216v")
+skeleton = NodePath("../..")
 surface_material_override/0 = SubResource("StandardMaterial3D_mswdt")
-
-[node name="NavigationAgent3d" type="NavigationAgent3D" parent="."]
-avoidance_enabled = true

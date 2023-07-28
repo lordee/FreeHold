@@ -1,7 +1,8 @@
 extends CharacterBody3D
 class_name fh_unit
 # nodes
-@onready var selector: MeshInstance3D = $selector
+@onready var model: Node3D = $model
+@onready var selector: MeshInstance3D = $model/selector
 @onready var agent: NavigationAgent3D = $NavigationAgent3d
 @onready var game: fh_game = get_node("/root/game")
 
@@ -62,7 +63,7 @@ func _physics_process(delta: float) -> void:
 			if unit_type == Enums.UNIT_TYPE.CIVILIAN:
 				civilian_idle()
 			elif unit_type == Enums.UNIT_TYPE.MILITARY:
-				return # TODO
+				military_idle()
 		Enums.STATE.MOVING:
 			moving_tick(delta)
 		Enums.STATE.WORKING:
@@ -73,6 +74,12 @@ func _physics_process(delta: float) -> void:
 
 func unemployed_idle():
 	if is_near(game.entity_manager.get_entity_destination(player_owner.castle)):
+		# search for military work first
+		var mil_type: Enums.ENTITY = game.entity_manager.build_unit(player_owner, self.name)
+		if mil_type != Enums.ENTITY.NOT_SET:
+			self.entity_type = mil_type
+			return
+		
 		# search for employment
 		var building = game.entity_manager.get_unoccupied_building(player_owner)
 		if building == null:
@@ -88,6 +95,43 @@ func unemployed_idle():
 	else:
 		move_to(game.entity_manager.get_entity_destination(player_owner.castle))
 		current_state = Enums.STATE.MOVING
+		
+func military_idle():
+	# if no resources, unit is reserved, head to barracks
+	if !self.has_resources():
+		collecting_resources = true
+		# if near barracks, get resources
+		if destination_goal.entity_type == Enums.ENTITY.BUILDING_BARRACKS:
+			if is_near(destination):
+				# collect resources
+				at_destination_drop_or_collect()
+			else: #
+				go_to_barracks()
+				return
+		else: # go to barracks
+			go_to_barracks()
+			return
+	
+	# FIXME check for targets in range
+	
+func refresh_model():
+	if collecting_resources == false:
+		var model_scene: PackedScene = game.data.items[entity_type].scene
+		game.entity_manager.set_model(self, model_scene)
+	
+
+func go_to_barracks():
+	# TODO - limit barracks to 1 building allowed
+	var goal: fh_entity = null
+	goal = game.entity_manager.find_entity(goal, Enums.ENTITY.BUILDING_BARRACKS)
+	while goal != null:
+		if goal.player_owner == self.player_owner:
+			destination_goal = goal
+			move_to(game.entity_manager.get_entity_destination(destination_goal))
+			self.current_state = Enums.STATE.MOVING
+			break
+		else:
+			goal = game.entity_manager.find_entity(goal, Enums.ENTITY.BUILDING_BARRACKS)
 	
 func civilian_idle():
 	# if they don't have a destination or are heading to the castle
@@ -130,17 +174,33 @@ func civilian_idle():
 			# not near destination, change state
 			current_state = Enums.STATE.MOVING
 
+func civilian_collect():
+	# get the resources we reserved + extra if needed
+	var req_amount: int = game.data.items[self.entity_type].resource_level_one_max_carry
+	req_amount = req_amount - self.resources.get_resource_value(game.data.items[self.entity_type].resource_level_one)
+	destination_goal.resources.collect_resource(self, workplace_resource_type, req_amount)
+	player_owner.resources.collect_resource(self, workplace_resource_type, req_amount)
+	collecting_resources = false
+
+func military_collect():
+	for key in game.data.items[entity_type].required_resources:
+		var value_req = game.data.items[entity_type].required_resources[key]
+		if self.resources.get_resource_value(key, true) < value_req:
+			destination_goal.resources.collect_resource(self, key, value_req)
+			player_owner.resources.collect_resource(self, key, value_req)
+			
+			# change mesh
+			collecting_resources = false
+			refresh_model()
+
 func at_destination_drop_or_collect():
 	if collecting_resources == true:
-		# get the resources we reserved + extra if needed
-		var req_amount: int = game.data.items[self.entity_type].resource_level_one_max_carry
-		req_amount = req_amount - self.resources.get_resource_value(game.data.items[self.entity_type].resource_level_one)
-		destination_goal.resources.collect_resource(self, workplace_resource_type, req_amount)
-		player_owner.resources.collect_resource(self, workplace_resource_type, req_amount)
-		
-		# return to work
-		go_to_work_building()
-		collecting_resources = false
+		if self.unit_type == Enums.UNIT_TYPE.CIVILIAN:
+			civilian_collect()
+			# return to work
+			go_to_work_building()
+		elif self.unit_type == Enums.UNIT_TYPE.MILITARY:
+			military_collect()
 	else:
 		# drop off resources
 		destination_goal.resources.add_resource(workplace_processed_resource_type, resources.get_resource_value(workplace_processed_resource_type))
@@ -223,9 +283,16 @@ func go_to_resource_drop(e_type: Enums.ENTITY) -> bool:
 	return true
 
 func has_resources() -> bool:
-	if resources.get_resource_value(workplace_resource_type) > 0:
+	if unit_type == Enums.UNIT_TYPE.CIVILIAN:
+		if resources.get_resource_value(workplace_resource_type) > 0:
+			return true
+	elif unit_type == Enums.UNIT_TYPE.MILITARY:
+		for key in game.data.items[entity_type].required_resources:
+			var value_req = game.data.items[entity_type].required_resources[key]
+			if self.resources.get_resource_value(key, true) < value_req:
+				return false
 		return true
-		
+				
 	return false
 
 func is_near(org: Vector3) -> bool:

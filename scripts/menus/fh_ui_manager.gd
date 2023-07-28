@@ -6,6 +6,7 @@ var main_menu
 var base_container: GridContainer
 var economy_container: GridContainer
 var military_container: GridContainer
+var unit_container: GridContainer
 
 @onready var game: fh_game = get_node("/root/game")
 
@@ -37,6 +38,8 @@ func _ready():
 	base_container = ui.get_node("CenterContainer/UIBaseContainer")
 	base_container.get_node("economy").pressed.connect(economy_button_pressed)
 	base_container.get_node("military").pressed.connect(military_button_pressed)
+	unit_container = base_container.get_node("UnitButtonContainer")
+	unit_container.get_node("archer").pressed.connect(unit_button_pressed.bind(Enums.ENTITY.UNIT_ARCHER))
 	economy_container = ui.get_node("CenterContainer/EconomyContainer")
 	economy_container.get_node("warehouse").pressed.connect(building_button_pressed.bind(Enums.ENTITY.BUILDING_WAREHOUSE))
 	economy_container.get_node("woodchopper").pressed.connect(building_button_pressed.bind(Enums.ENTITY.BUILDING_WOODCHOPPER))
@@ -62,6 +65,7 @@ func _ready():
 	military_container.get_node("cancel").pressed.connect(ui_cancel_button_pressed)
 	military_container.get_node("fletcher_workshop").pressed.connect(building_button_pressed.bind(Enums.ENTITY.BUILDING_FLETCHERWORKSHOP))
 	military_container.get_node("armoury").pressed.connect(building_button_pressed.bind(Enums.ENTITY.BUILDING_ARMOURY))
+	military_container.get_node("barracks").pressed.connect(building_button_pressed.bind(Enums.ENTITY.BUILDING_BARRACKS))
 	
 func setup_ui():
 	update_tax_label()
@@ -113,12 +117,20 @@ func hovering_over_button(mouse_pos) -> bool:
 func reset_ui_menus():
 	ui_cancel_button_pressed()
 	
+
+func enable_unit_buttons(enable: bool):
+	for child in unit_container.get_children():
+		child.disabled = !enable
+
 # FIXME - one day we'll track this
 func ui_cancel_button_pressed():
 	base_container.visible = true
 	economy_container.visible = false
 	military_container.visible = false
 	game.entity_manager.cancel_building_placement()
+	
+func unit_button_pressed(entity_type: Enums.ENTITY):
+	game.entity_manager.queue_unit(entity_type, game.player_manager.current_player)
 
 func building_button_pressed(entity_type: Enums.ENTITY):
 	game.entity_manager.start_building_placement(entity_type, game.player_manager.current_player)

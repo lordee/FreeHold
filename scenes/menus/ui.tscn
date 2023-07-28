@@ -11,14 +11,18 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="CenterContainer" type="CenterContainer" parent="."]
-layout_mode = 0
-offset_top = 608.0
-offset_right = 1152.0
-offset_bottom = 648.0
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -31.0
+grow_horizontal = 2
+grow_vertical = 0
 
 [node name="UIBaseContainer" type="GridContainer" parent="CenterContainer"]
 layout_mode = 2
-columns = 2
+columns = 3
 
 [node name="economy" type="Button" parent="CenterContainer/UIBaseContainer"]
 layout_mode = 2
@@ -27,6 +31,35 @@ text = "Economy"
 [node name="military" type="Button" parent="CenterContainer/UIBaseContainer"]
 layout_mode = 2
 text = "Military"
+
+[node name="UnitButtonContainer" type="GridContainer" parent="CenterContainer/UIBaseContainer"]
+layout_mode = 2
+
+[node name="archer" type="Button" parent="CenterContainer/UIBaseContainer/UnitButtonContainer"]
+layout_mode = 2
+disabled = true
+text = "Archer"
+
+[node name="MilitaryContainer" type="GridContainer" parent="CenterContainer"]
+visible = false
+layout_mode = 2
+columns = 3
+
+[node name="armoury" type="Button" parent="CenterContainer/MilitaryContainer"]
+layout_mode = 2
+text = "Armoury"
+
+[node name="barracks" type="Button" parent="CenterContainer/MilitaryContainer"]
+layout_mode = 2
+text = "Barracks"
+
+[node name="fletcher_workshop" type="Button" parent="CenterContainer/MilitaryContainer"]
+layout_mode = 2
+text = "Fletcher Workshop"
+
+[node name="cancel" type="Button" parent="CenterContainer/MilitaryContainer"]
+layout_mode = 2
+text = "Cancel"
 
 [node name="EconomyContainer" type="GridContainer" parent="CenterContainer"]
 visible = false
@@ -105,28 +138,12 @@ text = "Pitch Workshop"
 layout_mode = 2
 text = "Cancel"
 
-[node name="MilitaryContainer" type="GridContainer" parent="CenterContainer"]
-visible = false
-layout_mode = 2
-columns = 3
-
-[node name="armoury" type="Button" parent="CenterContainer/MilitaryContainer"]
-layout_mode = 2
-text = "Armoury"
-
-[node name="fletcher_workshop" type="Button" parent="CenterContainer/MilitaryContainer"]
-layout_mode = 2
-text = "Fletcher Workshop"
-
-[node name="cancel" type="Button" parent="CenterContainer/MilitaryContainer"]
-layout_mode = 2
-text = "Cancel"
-
 [node name="TaxContainerCenter" type="CenterContainer" parent="."]
 layout_mode = 0
-offset_top = 568.0
-offset_right = 1152.0
-offset_bottom = 608.0
+offset_left = 4.0
+offset_top = 5.0
+offset_right = 1156.0
+offset_bottom = 45.0
 
 [node name="TaxContainer" type="GridContainer" parent="TaxContainerCenter"]
 layout_mode = 2

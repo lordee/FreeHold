@@ -152,6 +152,13 @@ func _init():
 			{Enums.ENTITY.RESOURCE_WOODEN_PLANKS: 50},
 			"res://scenes/buildings/armoury.tscn",
 			)
+	add_building(
+			Enums.ENTITY.BUILDING_BARRACKS, 
+			Enums.ENTITY_CATEGORY.BUILDING,
+			Enums.ENTITY.NOT_SET,
+			{Enums.ENTITY.RESOURCE_WOODEN_PLANKS: 50},
+			"res://scenes/buildings/barracks.tscn",
+			)
 	
 
 	add_unit(
@@ -388,6 +395,15 @@ func _init():
 			10,
 			Enums.UNIT_TYPE.CIVILIAN
 			)
+	
+	
+	add_military_unit(
+			Enums.ENTITY.UNIT_ARCHER, 
+			Enums.ENTITY_CATEGORY.UNIT, 
+			Enums.UNIT_TYPE.MILITARY,
+			{Enums.ENTITY.RESOURCE_BOW: 1},
+			"res://scenes/units/archer.tscn",
+		)
 
 	add_resource(Enums.ENTITY.RESOURCE_TREE, Enums.ENTITY_CATEGORY.RESOURCE)
 	add_resource(Enums.ENTITY.RESOURCE_STONE, Enums.ENTITY_CATEGORY.RESOURCE)
@@ -433,6 +449,23 @@ func add_building(
 	)
 	items[entity_type] = ent_item
 
+func add_military_unit(
+	entity_type: Enums.ENTITY, 
+	entity_category: Enums.ENTITY_CATEGORY, 
+	unit_type: Enums.UNIT_TYPE,
+	required_resources: Dictionary,
+	scene_string: String
+):
+	var ent_item: fh_data_item = fh_data_item.new()
+	ent_item.process_military_unit(
+		entity_type, 
+		entity_category,
+		unit_type,
+		required_resources,
+		scene_string
+	)
+	
+	items[entity_type] = ent_item
 
 func add_unit(
 		entity_type: Enums.ENTITY, 

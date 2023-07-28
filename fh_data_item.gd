@@ -30,7 +30,20 @@ func process_building(
 	required_resources = req_resources
 	if len(scene_string) > 0:
 		scene = ResourceLoader.load(scene_string)
-	
+
+func process_military_unit(
+	e_type: Enums.ENTITY, 
+	e_category: Enums.ENTITY_CATEGORY, 
+	u_type: Enums.UNIT_TYPE,
+	req_resources: Dictionary,
+	scene_string: String
+):
+	entity_type = e_type
+	entity_category = e_category
+	unit_type = u_type
+	required_resources = req_resources
+	if len(scene_string) > 0:
+		scene = ResourceLoader.load(scene_string)
 
 func process_unit(
 		e_type: Enums.ENTITY, 
